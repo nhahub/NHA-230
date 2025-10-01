@@ -53,7 +53,7 @@ class CategoriesCard extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: isSelected ? primaryBlue : placeholderColor,
+                        color: isSelected ?  primaryBlue :  placeholderColor,
                       ),
                     ),
                   ],

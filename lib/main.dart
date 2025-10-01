@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:splash_screen/core/themes/light_theme.dart';
-import 'package:splash_screen/features/home/screens/home_page.dart';
-import 'package:splash_screen/screens/splash_screen.dart';
 import 'features/onboarding/onboarding_first_screen.dart';
 
 void main() {

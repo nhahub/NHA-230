@@ -7,6 +7,8 @@ const String promotion = '$_imagePath/Promotion.png';
 const String stanley='$_imagePath/stanley.png';
 const String taxi='$_imagePath/taxi.png';
 const String tram='$_imagePath/tram.png';
+const String signupImage='$_imagePath/signup_image.png';
+const String loginImage = '$_imagePath/login_image.png';
 
 
 
