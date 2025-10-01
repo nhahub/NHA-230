@@ -1,13 +1,15 @@
-import 'package:final_project/core/constants/app_assets.dart';
-import 'package:final_project/core/constants/colors.dart';
-import 'package:final_project/features/home/providers/category_provider.dart';
-import 'package:final_project/features/home/widgets/background_container.dart';
-import 'package:final_project/features/home/widgets/categories_card.dart';
-import 'package:final_project/features/home/widgets/promotion_slider.dart';
-import 'package:final_project/features/home/screens/search_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:splash_screen/core/constants/app_assets.dart';
+import 'package:splash_screen/core/constants/colors.dart';
+import 'package:splash_screen/features/home/providers/category_provider.dart';
+import 'package:splash_screen/features/home/screens/search_screen.dart';
+import 'package:splash_screen/features/home/widgets/background_container.dart';
+import 'package:splash_screen/features/home/widgets/categories_card.dart';
+import 'package:splash_screen/features/home/widgets/promotion_slider.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

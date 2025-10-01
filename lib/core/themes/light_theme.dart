@@ -1,7 +1,7 @@
-import 'package:final_project/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:splash_screen/core/constants/colors.dart';
 
 class AppTheme {
   static ThemeData lightTheme(BuildContext context) {

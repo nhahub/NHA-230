@@ -1,10 +1,10 @@
-import 'package:final_project/features/home/Providers/bottom_navigation_bar_provider.dart';
-import 'package:final_project/features/home/Screens/home_screen.dart';
-import 'package:final_project/features/map/map_screen.dart';
-import 'package:final_project/features/profile/profile_screen.dart';
-import 'package:final_project/features/home/Widgets/main_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:splash_screen/features/home/providers/bottom_navigation_bar_provider.dart';
+import 'package:splash_screen/features/home/screens/home_screen.dart';
+import 'package:splash_screen/features/home/widgets/main_bottom_navigation_bar.dart';
+import 'package:splash_screen/features/map/map_screen.dart';
+import 'package:splash_screen/features/profile/profile_screen.dart';
 
 
 const List<Widget> _screens = [MapScreen(), HomeScreen(), ProfileScreen()];

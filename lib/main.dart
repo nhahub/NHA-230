@@ -1,7 +1,8 @@
-import 'package:final_project/core/themes/light_theme.dart';
-import 'package:final_project/features/home/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:splash_screen/core/themes/light_theme.dart';
+import 'package:splash_screen/features/home/screens/home_page.dart';
+import 'package:splash_screen/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,11 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const HomePage(),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const SplashVideoScreen(),
+            '/home': (context) => const HomePage(),
+          },
           theme: AppTheme.lightTheme(context),
         );
       },
