@@ -1,6 +1,6 @@
-import 'package:final_project/Constants/app_colors.dart';
-import 'package:final_project/Utils/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:splash_screen/core/constants/colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -35,11 +35,11 @@ class CustomTextFormField extends StatelessWidget {
         hintText: hintText,
         hintStyle: theme.textTheme.bodyLarge,
         contentPadding: EdgeInsets.symmetric(
-          horizontal: Responsive(context).width(8),
+          horizontal: 8.w,
         ),
         errorStyle: theme.textTheme.bodyLarge!.copyWith(color: Colors.red),
         filled: true,
-        fillColor: AppColors.offWhite,
+        fillColor: offWhite,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: theme.primaryColor, width: 1.0),
           borderRadius: const BorderRadius.all(

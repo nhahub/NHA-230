@@ -1,10 +1,11 @@
-import 'package:final_project/Constants/assets.dart';
-import 'package:final_project/features/authentication/login_screen.dart';
-import 'package:final_project/features/home/widgets/custom_elevated_button.dart';
-import 'package:final_project/features/home/widgets/custom_text_form_field.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:splash_screen/core/constants/app_assets.dart';
+import 'package:splash_screen/core/constants/colors.dart';
+import 'package:splash_screen/features/authentication/login_screen.dart';
+import 'package:splash_screen/features/home/widgets/custom_elevated_button.dart';
+import 'package:splash_screen/features/home/widgets/custom_text_form_field.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
@@ -26,10 +27,10 @@ class SignupScreen extends StatelessWidget {
           key: formKey,
           child: Column(
             children: [
-              Image.asset(AppImages.signupImage),
+              Image.asset(signupImage),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Responsive(context).width(36),
+                  horizontal: 36.w,
                 ),
                 child: Column(
                   children: [
@@ -48,7 +49,7 @@ class SignupScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        vertical: Responsive(context).height(36),
+                        vertical: 36.h,
                       ),
                       child: CustomTextFormField(
                         hintText: "Email",
@@ -79,7 +80,7 @@ class SignupScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        vertical: Responsive(context).height(36),
+                        vertical: 36.h,
                       ),
                       child: CustomTextFormField(
                         hintText: "Confirm Password",
@@ -111,7 +112,7 @@ class SignupScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        vertical: Responsive(context).height(15),
+                        vertical: 15.h,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +125,7 @@ class SignupScreen extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: Responsive(context).width(15),
+                              horizontal: 15.w,
                             ),
                             child: Text("OR", style: theme.textTheme.bodyLarge),
                           ),
@@ -138,13 +139,13 @@ class SignupScreen extends StatelessWidget {
                       ),
                     ),
                     CustomElevatedButton(
-                      backgroundColor: AppColors.offWhite,
+                      backgroundColor: offWhite,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              right: Responsive(context).width(15),
+                              right: 15.w,
                             ),
                             child: SvgPicture.asset("assets/icons/google.svg"),
                           ),
@@ -161,7 +162,7 @@ class SignupScreen extends StatelessWidget {
                       },
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: Responsive(context).height(15),),
+                      padding: EdgeInsets.symmetric(vertical: 15.h,),
                       child: GestureDetector(
                         onTap: () {
                           Navigator.of(context).pushAndRemoveUntil(

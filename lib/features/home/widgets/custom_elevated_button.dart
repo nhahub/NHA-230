@@ -1,5 +1,5 @@
-import 'package:final_project/Utils/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
@@ -14,14 +14,14 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final theme = Theme.of(context);
+    final screenWidth = MediaQuery.of(context).size.width;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.all(Radius.circular(15)),
         ),
-        fixedSize: Size(Responsive(context).screenWidth * 0.95 ,Responsive(context).height(100)),
+        fixedSize: Size(screenWidth * 0.95 ,100.h),
       ),
       onPressed: onPressed,
       child: child,
