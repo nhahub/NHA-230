@@ -1,5 +1,4 @@
 import 'package:final_project/Constants/assets.dart';
-import 'package:final_project/Constants/colors.dart';
 import 'package:final_project/Utils/responsive.dart';
 import 'package:final_project/Widgets/background_container.dart';
 import 'package:final_project/Widgets/categories_card.dart';
@@ -22,6 +21,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
+    final theme = Theme.of(context);
     return Scaffold(
       body: BackgroundContainer(
         child: Center(
@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                               hintText: "Search",
                               prefixIcon: Icon(
                                 Icons.search,
-                                color: placeholderColor,
+                                color:theme.iconTheme.color,
                                 size: Responsive(context).width(50),
                               ),
                             ),

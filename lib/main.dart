@@ -1,6 +1,7 @@
 import 'package:final_project/Constants/Themes/light_theme.dart';
 import 'package:final_project/Providers/category_provider.dart';
-import 'package:final_project/Screens/home_page.dart';
+import 'package:final_project/Screens/login_screen.dart';
+import 'package:final_project/Screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: LoginScreen (),
       theme: AppTheme.lightTheme(context)
     );
   }

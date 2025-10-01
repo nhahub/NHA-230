@@ -2,6 +2,9 @@ class AppImages{
   static const String homeScreenBackground='assets/images/Home_screen_background.png';
   static const String blueTopCircle='assets/images/Blue_Top_Circle.png';
   static const String promotion='assets/images/Promotion.png';
+  static const String signupImage='assets/images/signup_image.png';
+  static const String loginImage = "assets/images/login_image.png";
+
 }
 class AppIcons{
   static const String coffeeIcon='assets/icons/Coffee_icon.png';
