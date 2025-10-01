@@ -30,6 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  provider: ^6.1.2
+  google_fonts: ^6.3.2
+  flutter_screenutil: ^5.9.3
+  video_player: ^2.6.1
   lottie: ^3.3.2
 
   # The following adds the Cupertino Icons font to your application.
@@ -62,15 +67,12 @@ flutter_launcher_icons:
 
 # The following section is specific to Flutter packages.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/
+    - assets/icons/
     - lib/assets/animations/splash_screen_2.json
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
