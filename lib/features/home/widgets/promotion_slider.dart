@@ -1,5 +1,5 @@
-import 'package:final_project/Utils/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PromotionSlider extends StatelessWidget {
   final List<String> imagePaths;
@@ -9,17 +9,15 @@ class PromotionSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Responsive(context).height(400),
-      child: ListView.builder(
-        itemExtent: Responsive(context).height(750),
+      height:480.w,
+      child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: imagePaths.length,
-        padding:  EdgeInsets.symmetric(horizontal: Responsive(context).width(40)),
+        padding:  EdgeInsets.symmetric(horizontal: 38.w),
         itemBuilder: (context, index) {
           return Card(
-            margin: EdgeInsets.only(right: Responsive(context).height(40)),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(40.r),
             ),
             clipBehavior: Clip.antiAlias,
             child: Image.asset(
@@ -27,7 +25,7 @@ class PromotionSlider extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           );
-        },
+        }, separatorBuilder: (BuildContext context, int index) =>SizedBox(width: 40.w),
       ),
     );
   }

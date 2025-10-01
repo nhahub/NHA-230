@@ -1,9 +1,8 @@
-import 'package:final_project/Constants/app_colors.dart';
 import 'package:final_project/Constants/assets.dart';
-import 'package:final_project/Screens/signup_screen.dart';
-import 'package:final_project/Utils/responsive.dart';
-import 'package:final_project/Widgets/custom_elevated_button.dart';
-import 'package:final_project/Widgets/custom_text_form_field.dart';
+import 'package:final_project/features/authentication/signup_screen.dart';
+import 'package:final_project/features/home/widgets/custom_elevated_button.dart';
+import 'package:final_project/features/home/widgets/custom_text_form_field.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
