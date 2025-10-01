@@ -1,7 +1,7 @@
-import 'package:final_project/Utils/responsive.dart';
+import 'package:final_project/features/home/providers/bottom_navigation_bar_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../Providers/bottom_navigation_bar_provider.dart';
 
 class MainBottomNavBar extends StatelessWidget {
   const MainBottomNavBar({super.key});
@@ -11,13 +11,13 @@ class MainBottomNavBar extends StatelessWidget {
     return Selector<BottomNavigationBarProvider, int>(
       selector: (_, provider) => provider.currentIndex,
       builder: (context, currentIndex, child) {
-        return SizedBox(height: Responsive(context).height(200),
+        return SizedBox(height: 200.h,
           child: BottomNavigationBar(
             currentIndex: currentIndex,
             onTap: (index) {
               context.read<BottomNavigationBarProvider>().changeIndex(index);
             },
-            iconSize: Responsive(context).fontSize(80),
+            iconSize:80.sp,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.location_pin),
