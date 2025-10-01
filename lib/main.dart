@@ -1,15 +1,12 @@
-import 'package:final_project/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:splash_screen/screens/splash_screen.dart';
 
 void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => SplashVideoScreen(),
-        '/home': (context) => HomePage(), // your main screen
-      },
+      home: SplashScreen(),
+      routes: {'/home': (context) => HomePage()},
     ),
   );
 }
