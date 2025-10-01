@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:splash_screen/core/themes/light_theme.dart';
 import 'package:splash_screen/features/home/screens/home_page.dart';
 import 'package:splash_screen/screens/splash_screen.dart';
+import 'features/onboarding/onboarding_first_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,11 +22,12 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme(context),
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const SplashVideoScreen(),
-            '/home': (context) => const HomePage(),
-          },
+          // initialRoute: '/',
+          // routes: {
+          //   '/': (context) => const SplashVideoScreen(),
+          //   '/home': (context) => const HomePage(),
+          // },
+          home: OnboardingFirstScreen(),
         );
       },
     );

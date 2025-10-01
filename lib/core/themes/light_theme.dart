@@ -16,6 +16,10 @@ class AppTheme {
           fontSize: 35.sp,
           fontWeight: FontWeight.bold,
           color: placeholderColor,
+        ),titleLarge: GoogleFonts.montserrat(
+          fontSize: 80.sp,
+          fontWeight: FontWeight.w900,
+        color: white,
         ),
         bodyMedium: GoogleFonts.montserrat(
           fontSize: 40.sp,
