@@ -51,7 +51,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "lib/assets/Icons/app_icon.png"
+  image_path: "assets/Icons/app_icon.png"
 
 
  
@@ -73,7 +73,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - lib/assets/animations/splash_screen_2.json
+    - assets/animations/splash_screen_2.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
