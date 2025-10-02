@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:splash_screen/screens/splash_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:splash_screen/core/themes/light_theme.dart';
+import 'features/onboarding/onboarding_first_screen.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-      routes: {'/home': (context) => HomePage()},
-    ),
-  );
+  runApp(const MyApp());
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Home Page')),
-      body: Center(child: Text('Welcome to the Home Page!')),
+    return ScreenUtilInit(
+      designSize: const Size(1080, 1920),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme(context),
+          // initialRoute: '/',
+          // routes: {
+          //   '/': (context) => const SplashVideoScreen(),
+          //   '/home': (context) => const HomePage(),
+          // },
+          home: OnboardingFirstScreen(),
+        );
+      },
     );
   }
 }
