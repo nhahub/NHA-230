@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:splash_screen/core/constants/app_assets.dart';
-import 'package:splash_screen/features/home/screens/home_screen.dart';
+import 'package:tal3a/core/constants/app_assets.dart';
+import 'package:tal3a/features/home/screens/home_screen.dart';
 
 
 class OnboardingThirdScreen extends StatelessWidget {
