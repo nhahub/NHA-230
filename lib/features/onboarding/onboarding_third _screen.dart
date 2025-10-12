@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:splash_screen/core/constants/app_assets.dart';
+import 'package:splash_screen/features/authentication/login_screen.dart';
 import 'package:splash_screen/features/home/screens/home_screen.dart';
 
 
@@ -41,7 +42,7 @@ class OnboardingThirdScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
+                      pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
                       transitionDuration: Duration(milliseconds: 300),
                       reverseTransitionDuration: Duration(milliseconds: 300),
                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
