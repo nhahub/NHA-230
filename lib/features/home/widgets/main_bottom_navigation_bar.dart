@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:splash_screen/features/home/providers/bottom_navigation_bar_provider.dart';
+import 'package:tal3a/features/home/providers/bottom_navigation_bar_provider.dart';
 
 class MainBottomNavBar extends StatelessWidget {
   const MainBottomNavBar({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:splash_screen/core/constants/app_assets.dart';
+import 'package:tal3a/core/constants/app_assets.dart';
 
 class BackgroundContainer extends StatelessWidget {
   final Widget child;
