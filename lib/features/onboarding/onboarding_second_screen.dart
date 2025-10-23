@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../core/constants/app_assets.dart';
 import 'onboarding_third _screen.dart';
+import 'package:tal3a/core/core.dart';
+
 
 class OnboardingSecondScreen extends StatelessWidget {
   const OnboardingSecondScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage(stanley),
+                  image: DecorationImage(image: AssetImage(AppAssets.stanley),
                     fit: BoxFit.cover,
                   )
               ),
             ),
             Positioned(
               bottom: 400.h,
-              left:8.h,
-              child: Text(onboardingFirstLine,
-                  style: Theme.of(context).textTheme.titleLarge
+              left: 8.h,
+              child: Text(
+                AppStrings.onboardingFirstLine,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-            ),Positioned(
+            ),
+            Positioned(
               bottom: 320.h,
-              left:200.h,
-              child: Text(onboardingSecondLine,
-                  style: Theme.of(context).textTheme.titleLarge
+              left: 200.h,
+              child: Text(
+                AppStrings.onboardingSecondLine,
+                style: theme.textTheme.titleLarge,
               ),
             ),
             Positioned(
                 bottom: 90.h,
                 left:320.h,
                 child: IconButton(
-                  icon: SvgPicture.asset(firstIconOnboarding), onPressed: () {
+                  icon: SvgPicture.asset(AppAssets.firstIconOnboarding), onPressed: () {
                   Navigator.push(
                     context,
                     PageRouteBuilder(

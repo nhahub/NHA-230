@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:splash_screen/core/constants/app_assets.dart';
-import 'package:splash_screen/core/constants/colors.dart';
-import 'package:splash_screen/core/constants/globals.dart';
-import 'package:splash_screen/features/authentication/signup_screen.dart';
-import 'package:splash_screen/features/home/screens/home_screen.dart';
-import 'package:splash_screen/features/home/widgets/custom_elevated_button.dart';
-import 'package:splash_screen/features/home/widgets/custom_text_form_field.dart';
-import 'package:splash_screen/services/firebase_service.dart';
+import 'package:tal3a/features/authentication/presentation/screens/signup_screen.dart';
+import 'package:tal3a/features/authentication/presentation/widgets/custom_text_form_field.dart';
+import 'package:tal3a/services/firebase_service.dart';
+import '../../../../core/core.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -33,14 +29,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return ModalProgressHUD(
       inAsyncCall: isloading,
       child: Scaffold(
-        backgroundColor: Color(0XFFFAEA00),
+        backgroundColor: AppColors.yellow,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Form(
             key: formKey,
             child: Column(
               children: [
-                Image.asset(loginImage),
+                Image.asset(AppAssets.loginImage),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 36.w),
                   child: Column(
@@ -80,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             snackbarKey.currentState?.showSnackBar(
                               SnackBar(
                                 content: Text("Please Enter Your Email"),
-                                backgroundColor: primaryBlue,
+                                backgroundColor: AppColors.primaryBlue,
                               ),
                             );
                           } else {
@@ -118,12 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     email: email.text,
                                     password: password.text,
                                   );
-
                               setState(() {
                                 isloading = false;
                               });
-
-                              
                             }
                           },
                           backgroundColor: theme.primaryColor,
@@ -157,15 +150,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 15.h),
                         child: CustomElevatedButton(
-                          backgroundColor: offWhite,
+                          backgroundColor: AppColors.offWhite,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(right: 15.w),
-                                child: SvgPicture.asset(
-                                  "assets/icons/google.svg",
-                                ),
+                                child: SvgPicture.asset(AppAssets.googleIcon),
                               ),
                               Text(
                                 "Sign in with google",
@@ -183,7 +174,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               isloading = false;
                             });
-                           
                           },
                         ),
                       ),

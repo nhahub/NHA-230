@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:splash_screen/core/constants/app_assets.dart';
-import 'package:splash_screen/core/constants/colors.dart';
-import 'package:splash_screen/core/constants/globals.dart';
-import 'package:splash_screen/features/authentication/login_screen.dart';
-import 'package:splash_screen/features/home/widgets/custom_elevated_button.dart';
-import 'package:splash_screen/features/home/widgets/custom_text_form_field.dart';
-import 'package:splash_screen/services/firebase_service.dart';
+import 'package:tal3a/core/core.dart';
+import 'package:tal3a/features/authentication/presentation/screens/login_screen.dart';
+import 'package:tal3a/features/authentication/presentation/widgets/custom_text_form_field.dart';
+import 'package:tal3a/services/firebase_service.dart';
 
 class SignupScreen extends StatefulWidget {
   SignupScreen({super.key});
@@ -43,7 +40,7 @@ class _SignupScreenState extends State<SignupScreen> {
             key: formKey,
             child: Column(
               children: [
-                Image.asset(signupImage),
+                Image.asset(AppAssets.signupImage),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 36.w),
                   child: Column(
@@ -158,14 +155,14 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       CustomElevatedButton(
-                        backgroundColor: offWhite,
+                        backgroundColor: AppColors.offWhite,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 15.w),
                               child: SvgPicture.asset(
-                                "assets/icons/google.svg",
+                                AppAssets.googleIcon,
                               ),
                             ),
                             Text(

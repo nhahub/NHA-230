@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tal3a/core/constants/app_assets.dart';
+import 'package:tal3a/core/core.dart';
 
 class BackgroundContainer extends StatelessWidget {
   final Widget child;
@@ -12,7 +12,7 @@ class BackgroundContainer extends StatelessWidget {
       children: [
         Positioned.fill(
           child: Image.asset(
-            homeScreenBackground,
+            AppAssets.homeScreenBackground,
             fit: BoxFit.cover,
           ),
         ),

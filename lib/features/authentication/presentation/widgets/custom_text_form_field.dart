@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tal3a/core/constants/colors.dart';
+import 'package:tal3a/core/core.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -39,7 +39,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
         errorStyle: theme.textTheme.bodyLarge!.copyWith(color: Colors.red),
         filled: true,
-        fillColor: offWhite,
+        fillColor: AppColors.offWhite,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: theme.primaryColor, width: 1.0),
           borderRadius: const BorderRadius.all(
