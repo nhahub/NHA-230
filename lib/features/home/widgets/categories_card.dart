@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:tal3a/core/constants/colors.dart';
+import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/home/providers/category_provider.dart';
 
 class CategoriesCard extends StatelessWidget {
@@ -30,11 +30,11 @@ class CategoriesCard extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 10.h),
             child: Card(
-              color: isSelected ? white : offWhite,
+              color: isSelected ? AppColors.white : AppColors.offWhite,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100.r),
                 side: BorderSide(
-                  color: isSelected ? primaryBlue : offWhite,
+                  color: isSelected ? AppColors.primaryBlue : AppColors.offWhite,
                   width: 4.w,
                 ),
               ),
@@ -53,7 +53,7 @@ class CategoriesCard extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: isSelected ?  primaryBlue :  placeholderColor,
+                        color: isSelected ? AppColors.primaryBlue : AppColors.placeholderColor,
                       ),
                     ),
                   ],

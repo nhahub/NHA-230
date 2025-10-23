@@ -5,11 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:splash_screen/core/constants/colors.dart';
-import 'package:splash_screen/core/constants/globals.dart';
-import 'package:splash_screen/features/authentication/login_screen.dart';
-import 'package:splash_screen/features/home/screens/home_screen.dart';
-import 'package:splash_screen/firebase_options.dart';
+import 'package:tal3a/core/core.dart';
+import 'package:tal3a/features/authentication/presentation/screens/login_screen.dart';
+import 'package:tal3a/features/home/screens/home_screen.dart';
+import 'package:tal3a/firebase_options.dart';
+
 
 class FirebaseService {
   static FirebaseService instance = FirebaseService._internal();
@@ -45,7 +45,7 @@ class FirebaseService {
           SnackBar(
             content: Text('Try Adding Valid User'),
             duration: Duration(seconds: 2),
-            backgroundColor: primaryBlue,
+            backgroundColor:  AppColors.primaryBlue,
           ),
         );
       } else if (e.code == 'wrong-password') {
@@ -53,7 +53,7 @@ class FirebaseService {
           SnackBar(
             content: Text('Wrong Password Provided For That User'),
             duration: Duration(seconds: 2),
-            backgroundColor: primaryBlue,
+            backgroundColor: AppColors.primaryBlue,
           ),
         );
       } else {
@@ -61,7 +61,7 @@ class FirebaseService {
           SnackBar(
             content: Text('Please Check Your Credintials'),
             duration: Duration(seconds: 2),
-            backgroundColor: primaryBlue,
+            backgroundColor:  AppColors.primaryBlue,
           ),
         );
       }
@@ -118,7 +118,7 @@ class FirebaseService {
         SnackBar(
           content: Text('No Account Provided For That Email'),
           duration: Duration(seconds: 2),
-          backgroundColor: primaryBlue,
+          backgroundColor:  AppColors.primaryBlue,
         ),
       );
     }
@@ -135,7 +135,7 @@ class FirebaseService {
             'If this email is registered, a reset link has been sent.',
           ),
           duration: Duration(seconds: 2),
-          backgroundColor: primaryBlue,
+          backgroundColor:  AppColors.primaryBlue,
         ),
       );
     } on FirebaseAuthException catch (e) {
@@ -146,7 +146,7 @@ class FirebaseService {
         message = 'Your email is invalid';
       }
       snackbarKey.currentState?.showSnackBar(
-        SnackBar(content: Text(message), backgroundColor: primaryBlue),
+        SnackBar(content: Text(message), backgroundColor:  AppColors.primaryBlue),
       );
     }
   }
@@ -183,7 +183,7 @@ class FirebaseService {
         message = "The email is already used";
       }
       snackbarKey.currentState?.showSnackBar(
-        SnackBar(content: Text(message), backgroundColor: primaryBlue),
+        SnackBar(content: Text(message), backgroundColor:  AppColors.primaryBlue),
       );
     }
   }
@@ -250,7 +250,7 @@ class FirebaseService {
         SnackBar(
           content: Text('There was an error'),
           duration: Duration(seconds: 2),
-          backgroundColor: primaryBlue,
+          backgroundColor:  AppColors.primaryBlue,
         ),
       );
     }
