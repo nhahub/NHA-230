@@ -10,6 +10,7 @@ static final String taxi = '$_imagePath/taxi.png';
 static final String tram = '$_imagePath/tram.png';
 static final String signupImage = '$_imagePath/signup_image.png';
 static final String loginImage = '$_imagePath/login_image.png';
+static final String profileImage = '$_imagePath/profie_image.png';
 
 //icons
 static final String coffeeIcon = '$_iconPath/Coffee_icon.png';
@@ -19,6 +20,7 @@ static final String restaurantIcon = '$_iconPath/Restaurant_icon.png';
 static final String firstIconOnboarding = '$_iconPath/first_icon_onboarding.svg';
 static final String secondIconOnboarding = '$_iconPath/second_icon_onboarding.svg';
 static final String googleIcon = '$_iconPath/google.svg'; 
+static final String appBarLeadingIcon = '$_iconPath/boat.svg';
 
 
 }

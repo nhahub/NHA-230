@@ -55,6 +55,21 @@ class AppTheme {
           fontWeight: FontWeight.bold,
           color: AppColors.primaryBlue,
         ), //*used in authenitcation screens
+        headlineLarge: GoogleFonts.montserrat(
+          fontSize: 70.sp,
+          fontWeight: FontWeight.bold,
+          color: AppColors.offWhite,
+        ),//*used for the appbar title  
+        headlineMedium: GoogleFonts.montserrat(
+          fontSize: 60.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.black,
+        ),
+        headlineSmall: GoogleFonts.montserrat(
+          fontSize: 50.sp,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
+        ),
       ),
       inputDecorationTheme: InputDecorationThemeData(
         hintStyle: TextStyle(color: AppColors.placeholderColor, fontSize: 40.sp),
@@ -73,6 +88,21 @@ class AppTheme {
         selectedLabelStyle: TextStyle(fontSize: 40.sp),
         unselectedLabelStyle: TextStyle(fontSize: 40.sp),
       ),
+     switchTheme: SwitchThemeData(
+  thumbColor: WidgetStateProperty.resolveWith((states) {
+    if (states.contains(WidgetState.selected)) {
+      return AppColors.yellow; // when ON
+    }
+    return AppColors.placeholderColor; // when OFF
+  }),
+  trackColor: WidgetStateProperty.resolveWith((states) {
+    if (states.contains(WidgetState.selected)) {
+      return AppColors.offWhite; // when ON
+    }
+    return AppColors.placeholderColor.withAlpha(3); 
+  }),
+),
+
     );
   }
 }
