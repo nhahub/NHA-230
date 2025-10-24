@@ -3,16 +3,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppSizes {
   //*horizontal padding
   static double pd12h = 12.w;
-  static double pd20h = 20.w;
+  static double pd16h = 16.w;
+  static double pd24h = 24.w;
+  static double pd32h = 32.w;
+  static double pd36h = 36.w;
+
 
 
   //*vertical padding
+  static double pd12v = 12.h;  
   static double pd16v = 16.h;
-  static double pd12v = 12.h;
+  static double pd32v = 32.h;
+
 
 
   //*padding all sides
   static double pd16a = 16.w;
+  static double pd12a = 12.w;
 
   //*radius
   static double borderRadius16 = 16.r;
