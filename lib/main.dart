@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/home/screens/home_page.dart';
+import 'package:tal3a/features/profile/presenation/screens/profile_screen.dart';
 import 'package:tal3a/features/splash_screen/splash_screen.dart';
 import 'package:tal3a/services/firebase_service.dart';
 
