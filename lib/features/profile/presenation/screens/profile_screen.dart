@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Center(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: AppSizes.pd16v),
+                padding: EdgeInsets.symmetric(vertical: AppSizes.pd12v),
                 child: Stack(
                   children: [
                     Container(
@@ -80,8 +80,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Text("Ahmed Magdy", style: theme.textTheme.headlineMedium),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: AppSizes.pd20h, vertical: AppSizes.pd12v),
-              padding: EdgeInsets.all(AppSizes.pd12h),
+              margin: EdgeInsets.symmetric(horizontal: AppSizes.pd36h, vertical: AppSizes.pd32v),
+              padding: EdgeInsets.all(AppSizes.pd12a),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(AppSizes.borderRadius16),
