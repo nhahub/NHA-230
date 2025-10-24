@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/authentication/presentation/screens/login_screen.dart';
-import 'package:tal3a/features/home/screens/home_screen.dart';
+import 'package:tal3a/features/home/screens/home_page.dart';
 import 'package:tal3a/firebase_options.dart';
 
 
@@ -34,7 +34,7 @@ class FirebaseService {
       navigationkey.currentState?.push(
         MaterialPageRoute(
           builder: (context) {
-            return HomeScreen();
+            return HomePage();
           },
         ),
       );
@@ -59,7 +59,7 @@ class FirebaseService {
       } else {
         snackbarKey.currentState?.showSnackBar(
           SnackBar(
-            content: Text('Please Check Your Credintials'),
+            content: Text('User not found'),
             duration: Duration(seconds: 2),
             backgroundColor:  AppColors.primaryBlue,
           ),
@@ -107,7 +107,7 @@ class FirebaseService {
       navigationkey.currentState?.push(
         MaterialPageRoute(
           builder: (context) {
-            return HomeScreen();
+            return HomePage();
           },
         ),
       );
