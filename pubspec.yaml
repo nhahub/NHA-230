@@ -47,6 +47,10 @@ dependencies:
   modal_progress_hud_nsn: ^0.5.1
   google_sign_in: ^7.2.0
   cloud_firestore: ^6.0.2
+  flutter_map: ^8.2.2
+  location: ^8.0.1
+  latlong2: ^0.9.1
+  http: ^1.5.0
   
 
 dev_dependencies:
