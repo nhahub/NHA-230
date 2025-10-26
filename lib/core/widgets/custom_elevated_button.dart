@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tal3a/core/constants/app_sizes.dart';
+
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
@@ -21,7 +22,7 @@ class CustomElevatedButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.all(Radius.circular(15)),
         ),
-        fixedSize: Size(screenWidth * 0.95 ,100.h),
+        fixedSize: Size(screenWidth * 0.95 ,AppSizes.height100),
       ),
       onPressed: onPressed,
       child: child,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tal3a/core/constants/app_sizes.dart';
 import 'package:tal3a/core/core.dart';
-import 'package:tal3a/features/profile/presenation/widgets/custom_list_tile.dart';
+import 'package:tal3a/features/profile/presentation/widgets/custom_list_tile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -23,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
-          height: AppSizes.appBarHeight,
+          height: AppSizes.height200,
           decoration: BoxDecoration(gradient: AppColors.primaryGradient),
         ),
         title: Text("Tal3a", style: theme.textTheme.headlineLarge),
@@ -43,28 +42,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       padding: EdgeInsets.all(AppSizes.pd16a),
                       alignment: Alignment.center,
-                      width: AppSizes.avatarWidth,
-                      height: AppSizes.avatarHeight,
+                      width: AppSizes.width600,
+                      height: AppSizes.height600,
                       decoration: BoxDecoration(
                         gradient: AppColors.primaryGradient,
                         shape: BoxShape.circle,
                       ),
                       child: CircleAvatar(
-                        radius: AppSizes.avatarRadius,
+                        radius: AppSizes.radius300,
                         backgroundImage: AssetImage(AppAssets.profileImage),
                       ),
                     ),
                     Positioned(
-                      bottom: AppSizes.bottomPositioned,
-                      right: AppSizes.rightPositioned,
+                      bottom: AppSizes.height25,
+                      right: AppSizes.width25,
                       child: Container(
-                        width: AppSizes.avatarWidth / 5,
-                        height: AppSizes.avatarHeight / 5,
+                        width: AppSizes.width600/ 5,
+                        height: AppSizes.height600/ 5,
                         decoration: BoxDecoration(
                           color: AppColors.offWhite,
                           border: Border.all(
                             color: AppColors.placeholderColor,
-                            width: 1,
+                            width: AppSizes.width1,
                           ),
                           shape: BoxShape.circle,
                         ),
@@ -84,11 +83,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: EdgeInsets.all(AppSizes.pd12a),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(AppSizes.borderRadius16),
+                borderRadius: BorderRadius.circular(AppSizes.radius16),
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.shadowColor,
-                    blurRadius: 10,
+                    blurRadius: AppSizes.width10,
                     offset: const Offset(0, 5),
                   ),
                 ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/authentication/presentation/screens/login_screen.dart';
@@ -22,23 +21,23 @@ class OnboardingThirdScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: 400.h,
-              left: 8.h,
+              bottom: AppSizes.height400,
+              left: AppSizes.width8,
               child: Text(
                 AppStrings.onboardingFirstLine,
                 style: theme.textTheme.titleLarge,
               ),
             ),Positioned(
-              bottom: 320.h,
-              left: 200.h,
+              bottom: AppSizes.height320,
+              left: AppSizes.width200,
               child: Text(
                 AppStrings.onboardingSecondLine,
                 style: theme.textTheme.titleLarge,
               ),
             ),
             Positioned(
-                bottom: 90.h,
-                left:320.h,
+                bottom: AppSizes.height90,
+                left: AppSizes.width400,
                 child: IconButton(
                   icon: SvgPicture.asset(AppAssets.secondIconOnboarding), onPressed: () {
                   Navigator.push(

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -21,13 +20,11 @@ class _MapScreenState extends State<MapScreen> {
   List<Marker> markers = [];
   List<LatLng> routePoints = [];
   bool showRoute = true;
-
   final TextEditingController searchController = TextEditingController();
   List<Map<String, dynamic>> searchResults = [];
   bool searching = false;
   bool isLoadingRoute = false;
   bool isLoadingSearch = false;
-
   StreamSubscription<LocationData>? _locationSubscription;
   Timer? _debounce;
   Timer? _locationUpdateTimer;
@@ -44,7 +41,9 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    _initLocation();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initLocation();
+    });
   }
 
   @override
@@ -58,7 +57,6 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _initLocation() async {
     final location = Location();
-
     bool serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
@@ -116,8 +114,8 @@ class _MapScreenState extends State<MapScreen> {
       markers.add(
         Marker(
           key: const ValueKey('current'),
-          width: 112.w,
-          height: 112.w,
+          width: AppSizes.width112,
+          height: AppSizes.height112,
           point: LatLng(loc.latitude!, loc.longitude!),
           child: _buildCurrentLocationMarker(),
         ),
@@ -129,8 +127,8 @@ class _MapScreenState extends State<MapScreen> {
     return Container(
       alignment: Alignment.center,
       child: Container(
-        width: 80.w,
-        height: 80.w,
+        width: AppSizes.width80,
+        height: AppSizes.height80,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.primaryBlue, AppColors.secondaryBlue],
@@ -141,13 +139,13 @@ class _MapScreenState extends State<MapScreen> {
           boxShadow: [
             BoxShadow(
               color: AppColors.primaryBlue,
-              blurRadius: 16.r,
+              blurRadius: AppSizes.width16,
             ),
           ],
         ),
         child: Icon(
           Icons.my_location,
-          size: 36.sp,
+          size: AppSizes.radius36,
           color: AppColors.white,
         ),
       ),
@@ -156,43 +154,43 @@ class _MapScreenState extends State<MapScreen> {
 
   Widget _buildDestinationPin() {
     return SizedBox(
-      width: 100.w,
-      height: 140.h,
+      width: AppSizes.width100,
+      height: AppSizes.height140,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 72.w,
-            height: 72.w,
+            width: AppSizes.width72,
+            height: AppSizes.height72,
             decoration: BoxDecoration(
               color: AppColors.yellow,
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primaryBlue, width: 4.w),
+              border: Border.all(color: AppColors.primaryBlue, width: AppSizes.width4),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black12,
-                  blurRadius: 12.r,
+                  blurRadius: AppSizes.radius12,
                 ),
               ],
             ),
             child: Icon(
               Icons.place,
-              size: 36.sp,
+              size: AppSizes.radius36,
               color: Colors.black87,
             ),
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: AppSizes.height12),
           Transform.rotate(
             angle: 3.1416 / 4,
             child: Container(
-              width: 36.w,
-              height: 36.w,
+              width: AppSizes.width36,
+              height: AppSizes.height36,
               decoration: BoxDecoration(
                 color: AppColors.primaryBlue,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black12,
-                    blurRadius: 8.r,
+                    blurRadius: AppSizes.radius8,
                   ),
                 ],
               ),
@@ -208,8 +206,8 @@ class _MapScreenState extends State<MapScreen> {
     markers.add(
       Marker(
         key: const ValueKey('destination'),
-        width: 112.w,
-        height: 152.h,
+        width: AppSizes.width112,
+        height: AppSizes.height152,
         point: point,
         child: _buildDestinationPin(),
       ),
@@ -240,6 +238,7 @@ class _MapScreenState extends State<MapScreen> {
         final List<dynamic> coords =
         data['features'][0]['geometry']['coordinates'];
         final newPoints = coords.map((c) => LatLng(c[1], c[0])).toList();
+
         if (mounted) {
           setState(() {
             routePoints = newPoints;
@@ -284,7 +283,6 @@ class _MapScreenState extends State<MapScreen> {
       final lat = currentLocation!.latitude!;
       final lon = currentLocation!.longitude!;
       final encodedQuery = Uri.encodeComponent(query);
-
       final viewBox =
           '${lon - _viewBoxOffset},${lat - _viewBoxOffset},${lon + _viewBoxOffset},${lat + _viewBoxOffset}';
 
@@ -369,9 +367,9 @@ class _MapScreenState extends State<MapScreen> {
           duration: const Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.r),
+            borderRadius: BorderRadius.circular(AppSizes.radius20),
           ),
-          margin: EdgeInsets.all(32.w),
+          margin: EdgeInsets.all(AppSizes.pd32a),
         ),
       );
     }
@@ -397,7 +395,7 @@ class _MapScreenState extends State<MapScreen> {
               mapController: _mapController,
               options: MapOptions(
                 initialCenter: const LatLng(30.0444, 31.2357),
-                initialZoom: 13.0,
+                initialZoom: 15.0,
                 onTap: (tap, latlng) {
                   _addDestination(latlng);
                   if (searching) {
@@ -410,9 +408,7 @@ class _MapScreenState extends State<MapScreen> {
               ),
               children: [
                 TileLayer(
-                  urlTemplate:
-                  'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-                  subdomains: const ['a', 'b'],
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   userAgentPackageName: 'com.tal3a.app',
                   maxZoom: 19,
                 ),
@@ -421,9 +417,9 @@ class _MapScreenState extends State<MapScreen> {
                     polylines: [
                       Polyline(
                         points: routePoints,
-                        strokeWidth: 12.w,
+                        strokeWidth: AppSizes.width12,
                         color: AppColors.primaryBlue,
-                        borderStrokeWidth: 4.w,
+                        borderStrokeWidth: AppSizes.width4,
                         borderColor: AppColors.white,
                       ),
                     ],
@@ -435,22 +431,22 @@ class _MapScreenState extends State<MapScreen> {
             // Loading Indicator for Route
             if (isLoadingRoute)
               Positioned(
-                top: 200.h,
+                top: AppSizes.height200,
                 left: 0,
                 right: 0,
                 child: Center(
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 48.w,
-                      vertical: 32.h,
+                      horizontal: AppSizes.pd48h,
+                      vertical: AppSizes.pd32v,
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.white,
-                      borderRadius: BorderRadius.circular(28.r),
+                      borderRadius: BorderRadius.circular(AppSizes.radius28),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black26,
-                          blurRadius: 20.r,
+                          blurRadius: AppSizes.radius20,
                         ),
                       ],
                     ),
@@ -458,23 +454,19 @@ class _MapScreenState extends State<MapScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
-                          width: 48.w,
-                          height: 48.w,
+                          width: AppSizes.width48,
+                          height: AppSizes.height48,
                           child: CircularProgressIndicator(
-                            strokeWidth: 6.w,
+                            strokeWidth: AppSizes.width6,
                             valueColor: AlwaysStoppedAnimation<Color>(
                               AppColors.primaryBlue,
                             ),
                           ),
                         ),
-                        SizedBox(width: 32.w),
+                        SizedBox(width: AppSizes.width32),
                         Text(
                           'Finding route...',
-                          style: TextStyle(
-                            fontSize: 32.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryBlue,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge
                         ),
                       ],
                     ),
@@ -484,9 +476,9 @@ class _MapScreenState extends State<MapScreen> {
 
             // Search Bar
             Positioned(
-              top: 120.h,
-              left: 32.w,
-              right: 32.w,
+              top: AppSizes.height120,
+              left:AppSizes.width32,
+              right:AppSizes.width32,
               child: Column(
                 children: [
                   GestureDetector(
@@ -495,17 +487,17 @@ class _MapScreenState extends State<MapScreen> {
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 28.w,
-                        vertical: 20.h,
+                        horizontal: AppSizes.pd28h,
+                        vertical: AppSizes.pd20v,
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.white,
-                        borderRadius: BorderRadius.circular(28.r),
+                        borderRadius: BorderRadius.circular(AppSizes.radius28),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12,
-                            blurRadius: 40.r,
-                            offset: Offset(0, 12.h),
+                            blurRadius: AppSizes.radius40,
+                            offset: Offset(0, AppSizes.height12),
                           ),
                         ],
                       ),
@@ -514,26 +506,27 @@ class _MapScreenState extends State<MapScreen> {
                           Icon(
                             Icons.search,
                             color: AppColors.placeholderColor,
-                            size: 48.sp,
+                            size: AppSizes.radius48,
                           ),
-                          SizedBox(width: 24.w),
+                          SizedBox(width: AppSizes.width24),
                           Expanded(
                             child: searching
                                 ? TextField(
                               controller: searchController,
                               autofocus: true,
                               textInputAction: TextInputAction.search,
-                              style: TextStyle(fontSize: 32.sp),
+                              style: Theme.of(context).textTheme.titleLarge,
                               decoration: InputDecoration(
                                 hintText: 'Search place or address',
-                                hintStyle: TextStyle(fontSize: 32.sp),
+                                hintStyle:  Theme.of(context).textTheme.titleLarge,
                                 border: InputBorder.none,
                                 isCollapsed: true,
-                                suffixIcon: searchController.text.isNotEmpty
+                                suffixIcon:
+                                searchController.text.isNotEmpty
                                     ? IconButton(
                                   icon: Icon(
                                     Icons.clear,
-                                    size: 48.sp,
+                                    size: AppSizes.radius48,
                                   ),
                                   onPressed: () {
                                     searchController.clear();
@@ -552,10 +545,7 @@ class _MapScreenState extends State<MapScreen> {
                             )
                                 : Text(
                               'Search for a place',
-                              style: TextStyle(
-                                color: AppColors.placeholderColor,
-                                fontSize: 32.sp,
-                              ),
+                              style:  Theme.of(context).textTheme.titleLarge,
                             ),
                           ),
                         ],
@@ -564,24 +554,24 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                   if (isLoadingSearch)
                     Container(
-                      margin: EdgeInsets.only(top: 8.h),
-                      padding: EdgeInsets.all(32.w),
+                      margin: EdgeInsets.only(top: AppSizes.height8),
+                      padding: EdgeInsets.all(AppSizes.pd32a),
                       decoration: BoxDecoration(
                         color: AppColors.white,
-                        borderRadius: BorderRadius.circular(20.r),
+                        borderRadius: BorderRadius.circular(AppSizes.radius20),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12,
-                            blurRadius: 12.r,
+                            blurRadius: AppSizes.radius12,
                           ),
                         ],
                       ),
                       child: Center(
                         child: SizedBox(
-                          width: 48.w,
-                          height: 48.w,
+                          width: AppSizes.width48,
+                          height: AppSizes.height48,
                           child: CircularProgressIndicator(
-                            strokeWidth: 6.w,
+                            strokeWidth: AppSizes.width6,
                             valueColor: AlwaysStoppedAnimation<Color>(
                               AppColors.primaryBlue,
                             ),
@@ -591,15 +581,15 @@ class _MapScreenState extends State<MapScreen> {
                     ),
                   if (searchResults.isNotEmpty && !isLoadingSearch)
                     Container(
-                      margin: EdgeInsets.only(top: 8.h),
-                      constraints: BoxConstraints(maxHeight: 800.h),
+                      margin: EdgeInsets.only(top: AppSizes.height8),
+                      constraints: BoxConstraints(maxHeight: AppSizes.height800),
                       decoration: BoxDecoration(
                         color: AppColors.white,
-                        borderRadius: BorderRadius.circular(20.r),
+                        borderRadius: BorderRadius.circular(AppSizes.radius20),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12,
-                            blurRadius: 12.r,
+                            blurRadius: AppSizes.radius12,
                           ),
                         ],
                       ),
@@ -607,28 +597,25 @@ class _MapScreenState extends State<MapScreen> {
                         shrinkWrap: true,
                         itemCount: searchResults.length,
                         separatorBuilder: (context, index) => Divider(
-                          height: 1.h,
-                          indent: 28.w,
-                          endIndent: 28.w,
+                          height:AppSizes.height1,
+                          indent: AppSizes.width28,
+                          endIndent: AppSizes.width28,
                         ),
                         itemBuilder: (context, index) {
                           final result = searchResults[index];
                           return ListTile(
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 28.w,
-                              vertical: 16.h,
+                              horizontal: AppSizes.pd28h,
+                              vertical: AppSizes.pd16v,
                             ),
                             leading: Icon(
                               Icons.location_on,
                               color: AppColors.primaryBlue,
-                              size: 48.sp,
+                              size: AppSizes.radius48,
                             ),
                             title: Text(
                               result['name'],
-                              style: TextStyle(
-                                fontSize: 28.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style:  Theme.of(context).textTheme.titleLarge,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -656,8 +643,8 @@ class _MapScreenState extends State<MapScreen> {
 
             // Floating Action Buttons
             Positioned(
-              right: 32.w,
-              top: 540.h,
+              right: AppSizes.width32,
+              top: AppSizes.height540,
               child: Column(
                 children: [
                   Semantics(
@@ -669,7 +656,7 @@ class _MapScreenState extends State<MapScreen> {
                       tooltip: 'My Location',
                     ),
                   ),
-                  SizedBox(height: 24.h),
+                  SizedBox(height: AppSizes.height24),
                   if (routePoints.isNotEmpty)
                     Semantics(
                       label: showRoute ? 'Hide route' : 'Show route',
@@ -682,9 +669,11 @@ class _MapScreenState extends State<MapScreen> {
                         tooltip: showRoute ? 'Hide Route' : 'Show Route',
                       ),
                     ),
-                  if (markers.any((m) => m.key == const ValueKey('destination')))
-                    SizedBox(height: 24.h),
-                  if (markers.any((m) => m.key == const ValueKey('destination')))
+                  if (markers
+                      .any((m) => m.key == const ValueKey('destination')))
+                    SizedBox(height: AppSizes.height24),
+                  if (markers
+                      .any((m) => m.key == const ValueKey('destination')))
                     Semantics(
                       label: 'Clear destination',
                       button: true,
@@ -713,23 +702,23 @@ class _MapScreenState extends State<MapScreen> {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: 104.w,
-          height: 104.w,
+          width: AppSizes.width104,
+          height: AppSizes.height104,
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(28.r),
+            borderRadius: BorderRadius.circular(AppSizes.radius28),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
-                blurRadius: 28.r,
-                offset: Offset(0, 16.h),
+                blurRadius:AppSizes.radius28,
+                offset: Offset(0, AppSizes.height16),
               ),
             ],
           ),
           child: Icon(
             icon,
             color: AppColors.primaryBlue,
-            size: 52.sp,
+            size: AppSizes.radius52,
           ),
         ),
       ),

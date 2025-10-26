@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:tal3a/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:tal3a/features/authentication/presentation/widgets/custom_text_form_field.dart';
 import 'package:tal3a/services/firebase_service.dart';
-import '../../../../core/core.dart';
+import 'package:tal3a/core/core.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,13 +20,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController password = TextEditingController();
 
-  bool isloading = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ModalProgressHUD(
-      inAsyncCall: isloading,
+      inAsyncCall: isLoading,
       child: Scaffold(
         backgroundColor: AppColors.yellow,
         resizeToAvoidBottomInset: false,
@@ -38,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Image.asset(AppAssets.loginImage),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 36.w),
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.pd36h),
                   child: Column(
                     children: [
                       CustomTextFormField(
@@ -55,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon: Icons.email_outlined,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 36.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
                           hintText: "Password",
                           controller: password,
@@ -73,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       GestureDetector(
                         onTap: () async {
                           if (email.text.isEmpty) {
-                            snackbarKey.currentState?.showSnackBar(
+                            snackBarKey.currentState?.showSnackBar(
                               SnackBar(
                                 content: Text("Please Enter Your Email"),
                                 backgroundColor: AppColors.primaryBlue,
@@ -81,13 +80,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           } else {
                             setState(() {
-                              isloading = true;
+                              isLoading = true;
                             });
                             await FirebaseService.instance.forgetPassword(
                               email: email.text,
                             );
                             setState(() {
-                              isloading = false;
+                              isLoading = false;
                             });
                           }
                         },
@@ -102,20 +101,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd15v),
                         child: CustomElevatedButton(
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               setState(() {
-                                isloading = true;
+                                isLoading = true;
                               });
                               await FirebaseService.instance
-                                  .signInemailPassword(
+                                  .signInEmailPassword(
                                     email: email.text,
                                     password: password.text,
                                   );
                               setState(() {
-                                isloading = false;
+                                isLoading = false;
                               });
                             }
                           },
@@ -136,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15.w),
+                            padding: EdgeInsets.symmetric(horizontal: AppSizes.pd15h),
                             child: Text("OR", style: theme.textTheme.bodyLarge),
                           ),
                           Expanded(
@@ -148,14 +147,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd15v),
                         child: CustomElevatedButton(
                           backgroundColor: AppColors.offWhite,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(right: 15.w),
+                                padding: EdgeInsets.only(right: AppSizes.pd15h),
                                 child: SvgPicture.asset(AppAssets.googleIcon),
                               ),
                               Text(
@@ -168,11 +167,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () async {
                             setState(() {
-                              isloading = true;
+                              isLoading = true;
                             });
                             await FirebaseService.instance.signInWithGoogle();
                             setState(() {
-                              isloading = false;
+                              isLoading = false;
                             });
                           },
                         ),

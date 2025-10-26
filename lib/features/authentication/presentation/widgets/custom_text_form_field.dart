@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tal3a/core/core.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -35,39 +34,39 @@ class CustomTextFormField extends StatelessWidget {
         hintText: hintText,
         hintStyle: theme.textTheme.bodyLarge,
         contentPadding: EdgeInsets.symmetric(
-          horizontal: 8.w,
+          horizontal: AppSizes.pd8h,
         ),
         errorStyle: theme.textTheme.bodyLarge!.copyWith(color: Colors.red),
         filled: true,
         fillColor: AppColors.offWhite,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: theme.primaryColor, width: 1.0),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(25),
+          borderSide: BorderSide(color: theme.primaryColor, width: AppSizes.width1),
+          borderRadius: BorderRadius.all(
+            Radius.circular(AppSizes.radius25),
           ), // Border radius
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: theme.primaryColor, width: 2.0),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(25),
+          borderSide: BorderSide(color: theme.primaryColor, width: AppSizes.width2),
+          borderRadius:  BorderRadius.all(
+            Radius.circular(AppSizes.radius25),
           ), // Border radius
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: theme.primaryColor, 
-            width: 2.0, 
+            width: AppSizes.width2,
           ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(25),
+          borderRadius:  BorderRadius.all(
+            Radius.circular(AppSizes.radius25),
           ), // Border radius
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: theme.primaryColor,
-            width: 2.0, 
+            width: AppSizes.width2,
           ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(25),
+          borderRadius:  BorderRadius.all(
+            Radius.circular(AppSizes.radius25),
           ), // Border radius
         ),
         suffixIcon: (suffixIcon != null) ? suffixIcon! : null,

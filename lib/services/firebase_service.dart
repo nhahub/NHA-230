@@ -13,9 +13,9 @@ import 'package:tal3a/firebase_options.dart';
 
 class FirebaseService {
   static FirebaseService instance = FirebaseService._internal();
-  bool isloading = false;
+  bool isLoading = false;
   FirebaseService._internal();
-  String webClientid =
+  String webClientId =
       "531231308653-sek6esieuvt592t7vqtmgapf4on52dgd.apps.googleusercontent.com";
 
   init() async {
@@ -24,14 +24,14 @@ class FirebaseService {
     );
   }
 
-  signInemailPassword({required String email, required String password}) async {
+  signInEmailPassword({required String email, required String password}) async {
     try {
-      isloading = true;
+      isLoading = true;
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      navigationkey.currentState?.push(
+      navigationKey.currentState?.push(
         MaterialPageRoute(
           builder: (context) {
             return HomePage();
@@ -39,9 +39,9 @@ class FirebaseService {
         ),
       );
     } on FirebaseAuthException catch (e) {
-      isloading = false;
+      isLoading = false;
       if (e.code == 'user-not-found') {
-        snackbarKey.currentState?.showSnackBar(
+        snackBarKey.currentState?.showSnackBar(
           SnackBar(
             content: Text('Try Adding Valid User'),
             duration: Duration(seconds: 2),
@@ -49,7 +49,7 @@ class FirebaseService {
           ),
         );
       } else if (e.code == 'wrong-password') {
-        snackbarKey.currentState?.showSnackBar(
+        snackBarKey.currentState?.showSnackBar(
           SnackBar(
             content: Text('Wrong Password Provided For That User'),
             duration: Duration(seconds: 2),
@@ -57,7 +57,7 @@ class FirebaseService {
           ),
         );
       } else {
-        snackbarKey.currentState?.showSnackBar(
+        snackBarKey.currentState?.showSnackBar(
           SnackBar(
             content: Text('User not found'),
             duration: Duration(seconds: 2),
@@ -70,10 +70,10 @@ class FirebaseService {
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
-      isloading = true;
+      isLoading = true;
       final signIn = GoogleSignIn.instance;
 
-      await signIn.initialize(serverClientId: webClientid);
+      await signIn.initialize(serverClientId: webClientId);
 
       final GoogleSignInAccount? googleUser = await signIn.authenticate();
 
@@ -104,7 +104,7 @@ class FirebaseService {
         credential,
       );
 
-      navigationkey.currentState?.push(
+      navigationKey.currentState?.push(
         MaterialPageRoute(
           builder: (context) {
             return HomePage();
@@ -114,7 +114,7 @@ class FirebaseService {
 
       return userCred;
     } catch (e) {
-      snackbarKey.currentState?.showSnackBar(
+      snackBarKey.currentState?.showSnackBar(
         SnackBar(
           content: Text('No Account Provided For That Email'),
           duration: Duration(seconds: 2),
@@ -129,7 +129,7 @@ class FirebaseService {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
-      snackbarKey.currentState?.showSnackBar(
+      snackBarKey.currentState?.showSnackBar(
         SnackBar(
           content: Text(
             'If this email is registered, a reset link has been sent.',
@@ -145,7 +145,7 @@ class FirebaseService {
       } else if (e.code == 'invalid-email') {
         message = 'Your email is invalid';
       }
-      snackbarKey.currentState?.showSnackBar(
+      snackBarKey.currentState?.showSnackBar(
         SnackBar(content: Text(message), backgroundColor:  AppColors.primaryBlue),
       );
     }
@@ -168,7 +168,7 @@ class FirebaseService {
             'createdAt': FieldValue.serverTimestamp(),
           });
 
-      navigationkey.currentState?.push(
+      navigationKey.currentState?.push(
         MaterialPageRoute(
           builder: (context) {
             return LoginScreen();
@@ -182,7 +182,7 @@ class FirebaseService {
       } else if (e.code == 'email-already-in-use') {
         message = "The email is already used";
       }
-      snackbarKey.currentState?.showSnackBar(
+      snackBarKey.currentState?.showSnackBar(
         SnackBar(content: Text(message), backgroundColor:  AppColors.primaryBlue),
       );
     }
@@ -190,10 +190,10 @@ class FirebaseService {
 
   Future<UserCredential?> signUpWithGoogle() async {
     try {
-      isloading = true;
+      isLoading = true;
       final signIn = GoogleSignIn.instance;
 
-      await signIn.initialize(serverClientId: webClientid);
+      await signIn.initialize(serverClientId: webClientId);
 
       final GoogleSignInAccount? googleUser = await signIn.authenticate();
 
@@ -235,7 +235,7 @@ class FirebaseService {
               'createdAt': FieldValue.serverTimestamp(),
             });
       }
-      navigationkey.currentState?.push(
+      navigationKey.currentState?.push(
         MaterialPageRoute(
           builder: (context) {
             return LoginScreen();
@@ -246,7 +246,7 @@ class FirebaseService {
       return userCred;
     } catch (e) {
       log(e.toString());
-      snackbarKey.currentState?.showSnackBar(
+      snackBarKey.currentState?.showSnackBar(
         SnackBar(
           content: Text('There was an error'),
           duration: Duration(seconds: 2),
