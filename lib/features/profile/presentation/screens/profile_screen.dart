@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/profile/presentation/widgets/custom_list_tile.dart';
 
@@ -60,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: AppSizes.width600/ 5,
                         height: AppSizes.height600/ 5,
                         decoration: BoxDecoration(
-                          color: AppColors.offWhite,
+                          color: theme.scaffoldBackgroundColor,
                           border: Border.all(
                             color: AppColors.placeholderColor,
                             width: AppSizes.width1,
@@ -69,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         child: Icon(
                           Icons.camera_alt_outlined,
-                          color: AppColors.black,
+                          color: AppColors.offWhite,
                         ),
                       ),
                     ),
@@ -82,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               margin: EdgeInsets.symmetric(horizontal: AppSizes.pd36h, vertical: AppSizes.pd32v),
               padding: EdgeInsets.all(AppSizes.pd12a),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(AppSizes.radius16),
                 boxShadow: [
                   BoxShadow(
@@ -116,17 +117,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  CustomListTile(
-                    title: "Dark Mode",
-                    leadingIcon: Icons.dark_mode_outlined,
-                    trailing: Switch(
-                      value: isDarkMode,
-                      onChanged: (val) {
-                        setState(() {
-                          isDarkMode = val;
-                        });
-                      },
-                    ),
+                  Consumer<ThemeCubit>(
+                    builder: (BuildContext context, ThemeCubit themeCubit, Widget? child) {
+                      return CustomListTile(
+                        title: "Dark Mode",
+                        leadingIcon: Icons.dark_mode_outlined,
+                        trailing: Switch(
+                          value: themeCubit.state.isDark,
+                          onChanged: (val) {
+                            themeCubit.toggleTheme();
+                          },
+                        ),
+                      );
+                    },
                   ),
                   CustomListTile(
                     title: "Account Info",

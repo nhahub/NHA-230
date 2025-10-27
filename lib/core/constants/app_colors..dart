@@ -14,6 +14,7 @@ static final Color middleBlue = Color(0xff6fb9ff);
   static final Color offWhite = Color(0xfff4f4f4);
   static final Color yellow = Color(0XFFFAEA00);
   static final Color black = Colors.black;
+  static final Color primaryBlack = Color(0xFF1A1A1D);
   static final Color red = Colors.red;
   static final Color shadowColor = Colors.grey.withValues(alpha: 0.15);
   static const Color darkGrey = Color(0xFF2C2C2C);
