@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tal3a/features/onboarding/onboarding_first_screen.dart';
+import 'package:tal3a/features/onboarding/presentation/screens/onboarding_first_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

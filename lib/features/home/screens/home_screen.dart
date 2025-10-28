@@ -1,14 +1,11 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tal3a/features/home/providers/category_provider.dart';
 import 'package:tal3a/features/home/screens/search_screen.dart';
 import 'package:tal3a/features/home/widgets/background_container.dart';
 import 'package:tal3a/features/home/widgets/categories_card.dart';
 import 'package:tal3a/features/home/widgets/promotion_slider.dart';
-
-import '../../../core/core.dart';
+import 'package:tal3a/core/core.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -52,9 +49,9 @@ class HomeScreen extends StatelessWidget {
                   Image.asset(AppAssets.blueTopCircle),
                   Padding(
                     padding: EdgeInsets.only(
-                      top: 110.h,
-                      left: 38.w,
-                      right: 38.w,
+                      top: AppSizes.height110,
+                      left: AppSizes.width38,
+                      right: AppSizes.width38,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,9 +60,9 @@ class HomeScreen extends StatelessWidget {
                           'Good evening',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        SizedBox(height: 30.w),
+                        SizedBox(height: AppSizes.height10),
                         SizedBox(
-                          height: 100.w,
+                          height: AppSizes.height100,
                           child: TextField(
                             readOnly: true,
                             onTap: () {
@@ -81,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                               prefixIcon: Icon(
                                 Icons.search,
                                 color: AppColors.placeholderColor,
-                                size: 50.sp,
+                                size: AppSizes.radius50,
                               ),
                             ),
                           ),
@@ -92,27 +89,27 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               PromotionSlider(imagePaths: [AppAssets.promotion, AppAssets.promotion, AppAssets.promotion]),
-              SizedBox(height: 15.h),
+              SizedBox(height: AppSizes.height15),
               Row(
                 children: [
-                  SizedBox(width: 38.w),
+                  SizedBox(width: AppSizes.width38),
                   IconButton(
                     onPressed: () {},
                     icon: Icon(
                       Icons.filter_list,
-                      size: 80.w,
+                      size: AppSizes.radius80,
                       color: AppColors.primaryBlue,
                     ),
                   ),
                   Expanded(
                     child: SizedBox(
-                      height: 95.h,
+                      height: AppSizes.height95,
                       child: ChangeNotifierProvider(
                         create: (_) => CategoryProvider(),
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemCount: categories.length,
-                          separatorBuilder: (_, __) => SizedBox(width: 12.w),
+                          separatorBuilder: (_, __) => SizedBox(width: AppSizes.width12),
                           itemBuilder: (context, index) {
                             final category = categories[index];
                             return CategoriesCard(

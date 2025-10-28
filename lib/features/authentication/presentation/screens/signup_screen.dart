@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:tal3a/core/core.dart';
@@ -8,7 +7,7 @@ import 'package:tal3a/features/authentication/presentation/widgets/custom_text_f
 import 'package:tal3a/services/firebase_service.dart';
 
 class SignupScreen extends StatefulWidget {
-  SignupScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -42,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 Image.asset(AppAssets.signupImage),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 36.w),
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.pd36h),
                   child: Column(
                     children: [
                       CustomTextFormField(
@@ -59,7 +58,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         prefixIcon: Icons.person_outline_rounded,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 36.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
                           hintText: "Email",
                           controller: email,
@@ -88,7 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         prefixIcon: Icons.lock,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 36.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
                           hintText: "Confirm Password",
                           controller: confirmPassword,
@@ -128,7 +127,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd15v),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -139,7 +138,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15.w),
+                              padding: EdgeInsets.symmetric(horizontal: AppSizes.pd15h),
                               child: Text(
                                 "OR",
                                 style: theme.textTheme.bodyLarge,
@@ -160,7 +159,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(right: 15.w),
+                              padding: EdgeInsets.only(right: AppSizes.pd15h),
                               child: SvgPicture.asset(
                                 AppAssets.googleIcon,
                               ),
@@ -184,7 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd15v),
                         child: GestureDetector(
                           onTap: () {
                             Navigator.of(context).pushAndRemoveUntil(

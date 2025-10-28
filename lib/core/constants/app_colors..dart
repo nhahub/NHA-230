@@ -16,4 +16,5 @@ static final Color middleBlue = Color(0xff6fb9ff);
   static final Color black = Colors.black;
   static final Color red = Colors.red;
   static final Color shadowColor = Colors.grey.withValues(alpha: 0.15);
+  static const Color darkGrey = Color(0xFF2C2C2C);
 }

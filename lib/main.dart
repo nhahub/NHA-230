@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/home/screens/home_page.dart';
-import 'package:tal3a/features/profile/presenation/screens/profile_screen.dart';
-import 'package:tal3a/features/splash_screen/splash_screen.dart';
 import 'package:tal3a/services/firebase_service.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,15 +22,11 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp(
-          scaffoldMessengerKey: snackbarKey,
-          navigatorKey: navigationkey,
+          scaffoldMessengerKey: snackBarKey,
+          navigatorKey: navigationKey,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme(context),
-          // initialRoute: '/',
-          // routes: {
-          //   '/': (context) => const SplashVideoScreen(),
-          //   '/home': (context) => const HomePage(),
-          // },
+          // routes: AppRoutes.routes,
           home: HomePage(),
         );
       },
