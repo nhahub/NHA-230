@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:tal3a/cubit/user_cubit.dart';
+import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:tal3a/features/authentication/presentation/widgets/custom_text_form_field.dart';
 import 'package:tal3a/features/navigation/root_page.dart';
 import 'package:tal3a/services/firebase_auth_service.dart';
 import 'package:tal3a/services/user_repositry.dart';
-import '../../../../core/core.dart';
+import 'package:tal3a/core/core.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,13 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController password = TextEditingController();
 
-  bool isloading = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ModalProgressHUD(
-      inAsyncCall: isloading,
+      inAsyncCall: isLoading,
       child: Scaffold(
         backgroundColor: AppColors.yellow,
         resizeToAvoidBottomInset: false,
@@ -42,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Image.asset(AppAssets.loginImage),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 36.w),
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.pd36h),
                   child: Column(
                     children: [
                       CustomTextFormField(
@@ -59,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon: Icons.email_outlined,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 36.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
                           hintText: "Password",
                           controller: password,
@@ -78,13 +77,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () async {
                           if (formKey.currentState!.validate()) {
                             setState(() {
-                              isloading = true;
+                              isLoading = true;
                             });
                             try {
                               final isSent = await FirebaseAuthService.instance
                                   .forgetPassword(email: email.text);
                               if (isSent) {
-                                snackbarKey.currentState?.showSnackBar(
+                                snackBarKey.currentState?.showSnackBar(
                                   SnackBar(
                                     content: Text("Password reset email sent"),
                                     duration: Duration(seconds: 2),
@@ -93,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               }
                             } catch (e) {
-                              snackbarKey.currentState?.showSnackBar(
+                              snackBarKey.currentState?.showSnackBar(
                                 SnackBar(
                                   content: Text(e.toString()),
                                   duration: Duration(seconds: 2),
@@ -102,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                             }
                             setState(() {
-                              isloading = false;
+                              isLoading = false;
                             });
                           }
                         },
@@ -117,19 +116,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd15v),
                         child: CustomElevatedButton(
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               try {
                                 final credential = await FirebaseAuthService
                                     .instance
-                                    .signInemailPassword(
+                                    .signInEmailPassword(
                                       email: email.text,
                                       password: password.text,
                                     );
-                                     print("*******************");
-                              print("user id: ${credential?.user?.uid}");
+
                                 if (credential?.user != null) {
                                   final userModel = await UserRepository()
                                       .getUserFromFirestore(
@@ -138,13 +136,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   await context.read<UserCubit>().saveUser(
                                     userModel,
                                   );
-                                  navigationkey.currentState?.pushReplacement(
+                                  navigationKey.currentState?.pushReplacement(
                                     MaterialPageRoute(
                                       builder: (_) => const RootPage(),
                                     ),
                                   );
                                 } else {
-                                  snackbarKey.currentState?.showSnackBar(
+                                  snackBarKey.currentState?.showSnackBar(
                                     SnackBar(
                                       content: Text("Failed to login"),
                                       backgroundColor: AppColors.primaryBlue,
@@ -152,13 +150,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   );
                                 }
                                 setState(() {
-                                  isloading = false;
+                                  isLoading = false;
                                 });
                               } catch (e) {
                                 setState(() {
-                                  isloading = false;
+                                  isLoading = false;
                                 });
-                                snackbarKey.currentState?.showSnackBar(
+                                snackBarKey.currentState?.showSnackBar(
                                   SnackBar(
                                     content: Text(e.toString()),
                                     backgroundColor: AppColors.primaryBlue,
@@ -184,7 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15.w),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppSizes.pd15h,
+                            ),
                             child: Text("OR", style: theme.textTheme.bodyLarge),
                           ),
                           Expanded(
@@ -196,14 +196,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd15v),
                         child: CustomElevatedButton(
                           backgroundColor: AppColors.offWhite,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(right: 15.w),
+                                padding: EdgeInsets.only(right: AppSizes.pd15h),
                                 child: SvgPicture.asset(AppAssets.googleIcon),
                               ),
                               Text(
@@ -216,13 +216,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () async {
                             setState(() {
-                              isloading = true;
+                              isLoading = true;
                             });
                             try {
                               final credential = await FirebaseAuthService
                                   .instance
                                   .signInWithGoogle();
-                             
+
                               if (credential?.user != null) {
                                 final userModel = await UserRepository()
                                     .getUserFromFirestore(
@@ -231,13 +231,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 await context.read<UserCubit>().saveUser(
                                   userModel,
                                 );
-                                navigationkey.currentState?.pushReplacement(
+                                navigationKey.currentState?.pushReplacement(
                                   MaterialPageRoute(
                                     builder: (_) => const RootPage(),
                                   ),
                                 );
                               } else {
-                                snackbarKey.currentState?.showSnackBar(
+                                snackBarKey.currentState?.showSnackBar(
                                   SnackBar(
                                     content: Text("Failed to login"),
                                     backgroundColor: AppColors.primaryBlue,
@@ -245,13 +245,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               }
                               setState(() {
-                                isloading = false;
+                                isLoading = false;
                               });
                             } catch (e) {
                               setState(() {
-                                isloading = false;
+                                isLoading = false;
                               });
-                              snackbarKey.currentState?.showSnackBar(
+                              snackBarKey.currentState?.showSnackBar(
                                 SnackBar(
                                   content: Text(e.toString()),
                                   backgroundColor: AppColors.primaryBlue,

@@ -20,7 +20,7 @@ class CustomListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListTile(
-      title: Text(title, style: theme.textTheme.headlineSmall!.copyWith(color: color)),
+      title: Text(title, style: theme.textTheme.labelMedium!.copyWith(color: color)),
       leading: Icon(leadingIcon, color: color ?? theme.iconTheme.color),
       trailing: trailing,
       onTap: onTap,

@@ -3,18 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tal3a/core/constants/app_colors..dart';
 
-class LightTheme {
-  static ThemeData lightTheme(BuildContext context) {
+class DarkTheme {
+  static ThemeData darkTheme(BuildContext context) {
     return ThemeData(
       primaryColor: AppColors.primaryBlue,
-      scaffoldBackgroundColor: AppColors.offWhite,
-      iconTheme: IconThemeData(color: AppColors.primaryBlue),
+      scaffoldBackgroundColor: AppColors.primaryBlack,
+      iconTheme: IconThemeData(color: AppColors.offWhite),
       appBarTheme: AppBarTheme(backgroundColor: AppColors.primaryBlue),
       textTheme: TextTheme(
         titleSmall: GoogleFonts.montserrat(
           fontSize: 35.sp,
           fontWeight: FontWeight.bold,
-          color: AppColors.placeholderColor,
+          color: AppColors.offWhite,
         ),
         titleMedium: GoogleFonts.montserrat(
           fontSize: 50.sp,
@@ -34,57 +34,51 @@ class LightTheme {
         bodySmall: GoogleFonts.montserrat(
           fontSize: 30.sp,
           fontWeight: FontWeight.w400,
+          color: AppColors.offWhite,
         ),
         bodyLarge: GoogleFonts.montserrat(
           fontSize: 30.sp,
           fontWeight: FontWeight.bold,
           color: AppColors.primaryBlue,
         ),
-
-        ///*used for textformfields
         displayLarge: GoogleFonts.montserrat(
           fontSize: 47.sp,
           fontWeight: FontWeight.bold,
           color: AppColors.offWhite,
-        ), //*used for buttons
+        ),
+        displayMedium: GoogleFonts.montserrat(
+          fontSize: 45.sp,
+          fontWeight: FontWeight.w400,
+          color: AppColors.primaryBlue,
+        ),
         displaySmall: GoogleFonts.montserrat(
           fontSize: 45.sp,
           fontWeight: FontWeight.bold,
           color: AppColors.primaryBlue,
-        ), //*used in authenitcation screens
+        ),
         headlineLarge: GoogleFonts.montserrat(
           fontSize: 70.sp,
           fontWeight: FontWeight.bold,
           color: AppColors.offWhite,
-        ), //*used for the appbar title
+        ),
         headlineMedium: GoogleFonts.montserrat(
           fontSize: 60.sp,
           fontWeight: FontWeight.w600,
-          color: AppColors.black,
+          color: AppColors.offWhite,
         ),
         headlineSmall: GoogleFonts.montserrat(
           fontSize: 50.sp,
           fontWeight: FontWeight.bold,
-          color: AppColors.black,
+          color: AppColors.offWhite,
         ),
-        labelLarge: GoogleFonts.montserrat(
-          fontSize: 60.sp,
-          fontWeight: FontWeight.w600,
-          color: AppColors.white,
-        ), //*used in bottomsheet
-        labelMedium: GoogleFonts.montserrat(
-          fontSize: 50.sp,
-          fontWeight: FontWeight.bold,
-          color: AppColors.black,
-        ), //*used in listtiles
       ),
-      inputDecorationTheme: InputDecorationThemeData(
+      inputDecorationTheme: InputDecorationTheme(
         hintStyle: TextStyle(
           color: AppColors.placeholderColor,
           fontSize: 40.sp,
         ),
         filled: true,
-        fillColor: AppColors.white,
+        fillColor: AppColors.primaryBlack,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(100.r),
           borderSide: BorderSide.none,
@@ -93,6 +87,7 @@ class LightTheme {
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.black,
         selectedItemColor: AppColors.primaryBlue,
         unselectedItemColor: AppColors.placeholderColor,
         selectedLabelStyle: TextStyle(fontSize: 40.sp),
@@ -109,10 +104,10 @@ class LightTheme {
           if (states.contains(WidgetState.selected)) {
             return AppColors.offWhite; // when ON
           }
-          return AppColors.placeholderColor.withAlpha(3);
+          return AppColors.placeholderColor.withAlpha(50);
         }),
       ),
-      cardColor: AppColors.offWhite,
+      cardColor: AppColors.darkGrey,
     );
   }
 }

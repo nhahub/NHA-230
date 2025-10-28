@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tal3a/core/constants/app_sizes.dart';
 import 'package:tal3a/core/core.dart';
-import 'package:tal3a/cubit/user_cubit.dart';
+import 'package:tal3a/cubit/theme/theme_cubit.dart';
+import 'package:tal3a/cubit/theme/theme_state.dart';
+import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/data/models/user_model.dart';
-import 'package:tal3a/features/profile/presenation/widgets/custom_bottom_sheet.dart';
-import 'package:tal3a/features/profile/presenation/widgets/custom_list_tile.dart';
-import 'package:tal3a/features/profile/presenation/widgets/logout_dialog.dart';
+import 'package:tal3a/features/profile/presentation/widgets/custom_bottom_sheet.dart';
+import 'package:tal3a/features/profile/presentation/widgets/custom_list_tile.dart';
+import 'package:tal3a/features/profile/presentation/widgets/logout_dialog.dart';
 import 'package:tal3a/services/user_repositry.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         flexibleSpace: Container(
-          height: AppSizes.appBarHeight,
+          height: AppSizes.height200,
           decoration: BoxDecoration(gradient: AppColors.primaryGradient),
         ),
         title: Text("Tal3a", style: theme.textTheme.headlineLarge),
@@ -56,9 +57,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // Side effects (show message, navigate, etc.)
           if (user?.profileImagePath != null &&
               user!.profileImagePath!.isNotEmpty) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text('Profile updated!')));
+            snackBarKey.currentState?.showSnackBar(
+              SnackBar(content: Text('Profile updated!')),
+            );
           }
         },
         builder: (context, user) {
@@ -76,14 +77,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Container(
                           padding: EdgeInsets.all(AppSizes.pd16a),
                           alignment: Alignment.center,
-                          width: AppSizes.avatarWidth,
-                          height: AppSizes.avatarHeight,
+                          width: AppSizes.width600,
+                          height: AppSizes.height600,
                           decoration: BoxDecoration(
                             gradient: AppColors.primaryGradient,
                             shape: BoxShape.circle,
                           ),
                           child: CircleAvatar(
-                            radius: AppSizes.avatarRadius,
+                            radius: AppSizes.radius300,
                             backgroundImage:
                                 user?.profileImagePath != null &&
                                     user!.profileImagePath!.isNotEmpty &&
@@ -94,11 +95,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         Positioned(
-                          bottom: AppSizes.bottomPositioned,
-                          right: AppSizes.rightPositioned,
+                          bottom: AppSizes.height25,
+                          right: AppSizes.width25,
                           child: Container(
-                            width: AppSizes.avatarWidth / 5,
-                            height: AppSizes.avatarHeight / 5,
+                            width: AppSizes.width600 / 5,
+                            height: AppSizes.height600 / 5,
                             decoration: BoxDecoration(
                               color: AppColors.offWhite,
                               border: Border.all(
@@ -184,9 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: EdgeInsets.all(AppSizes.pd12a),
                   decoration: BoxDecoration(
                     color: AppColors.white,
-                    borderRadius: BorderRadius.circular(
-                      AppSizes.borderRadius16,
-                    ),
+                    borderRadius: BorderRadius.circular(AppSizes.radius16),
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.shadowColor,
@@ -219,17 +218,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       ),
-                      CustomListTile(
-                        title: "Dark Mode",
-                        leadingIcon: Icons.dark_mode_outlined,
-                        trailing: Switch(
-                          value: isDarkMode,
-                          onChanged: (val) {
-                            setState(() {
-                              isDarkMode = val;
-                            });
-                          },
-                        ),
+                      BlocBuilder<ThemeCubit, ThemeState>(
+                        builder: (context, state) {
+                          return CustomListTile(
+                            title: "Dark Mode",
+                            leadingIcon: Icons.dark_mode_outlined,
+                            trailing: Switch(
+                              value: state.isDark,
+                              onChanged: (val) {
+                                context.read<ThemeCubit>().toggleTheme();
+                              },
+                            ),
+                          );
+                        },
                       ),
                       CustomListTile(
                         color: AppColors.red,

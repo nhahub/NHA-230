@@ -4,14 +4,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:tal3a/data/models/user_model.dart';
 import 'package:tal3a/firebase_options.dart';
 
 class FirebaseAuthService {
   static FirebaseAuthService instance = FirebaseAuthService._internal();
-  bool isloading = false;
   FirebaseAuthService._internal();
   String webClientid =
       "531231308653-sek6esieuvt592t7vqtmgapf4on52dgd.apps.googleusercontent.com";
@@ -22,7 +19,7 @@ class FirebaseAuthService {
     );
   }
 
-  signInemailPassword({required String email, required String password}) async {
+  signInEmailPassword({required String email, required String password}) async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -44,7 +41,6 @@ class FirebaseAuthService {
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
-      isloading = true;
       final signIn = GoogleSignIn.instance;
 
       await signIn.initialize(serverClientId: webClientid);
@@ -135,10 +131,9 @@ class FirebaseAuthService {
 
   Future<UserCredential?> signUpWithGoogle() async {
     try {
-      isloading = true;
       final signIn = GoogleSignIn.instance;
 
-      await signIn.initialize(serverClientId: webClientid);
+      await signIn.initialize(serverClientId:webClientid);
 
       final GoogleSignInAccount? googleUser = await signIn.authenticate();
 
@@ -187,20 +182,5 @@ class FirebaseAuthService {
       log(e.toString());
       throw "There was an error, Please try again later";
     }
-  }
-
- 
-
-  Future<void> signOut(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    // await context.read<UserCubit>().clearUser();
-    // navigationkey.currentState?.pushAndRemoveUntil(
-    //   MaterialPageRoute(
-    //     builder: (context) {
-    //       return LoginScreen();
-    //     },
-    //   ),
-    //   (route) => false,
-    // );
   }
 }

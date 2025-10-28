@@ -3,17 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tal3a/core/app_initializer.dart';
 import 'package:tal3a/core/core.dart';
-import 'package:tal3a/cubit/user_cubit.dart';
+import 'package:tal3a/core/themes/dark_theme.dart';
+import 'package:tal3a/cubit/theme/theme_state.dart';
+import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/features/splash_screen/splash_screen.dart';
+import 'package:tal3a/cubit/theme/theme_cubit.dart';
 
-void main() async {
+
+Future<void> main() async {
   await AppInitializer.init();
+
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => UserCubit()..loadUserFromLocal()),
+        BlocProvider<ThemeCubit>.value(value: AppInitializer.themeCubit),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -27,19 +33,20 @@ class MyApp extends StatelessWidget {
       designSize: const Size(1080, 1920),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, child) {
-        return MaterialApp(
-          title: "tal3a",
-          scaffoldMessengerKey: snackbarKey,
-          navigatorKey: navigationkey,
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme(context),
-          // initialRoute: '/',
-          // routes: {
-          //   '/': (context) => const SplashVideoScreen(),
-          //   '/home': (context) => const HomePage(),
-          // },
-          home: const SplashScreen(),
+      builder: (_, __) {
+        return BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp(
+              title: "Tal3a",
+              scaffoldMessengerKey: snackBarKey,
+              navigatorKey: navigationKey,
+              debugShowCheckedModeBanner: false,
+              theme: LightTheme.lightTheme(context),
+              darkTheme: DarkTheme.darkTheme(context),
+              themeMode: state.themeMode,
+              home: const SplashScreen(),
+            );
+          },
         );
       },
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/home/providers/category_provider.dart';
@@ -20,6 +19,7 @@ class CategoriesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Consumer<CategoryProvider>(
       builder: (context, categoryProvider, child) {
         final bool isSelected = categoryProvider.selectedIndex == index;
@@ -28,18 +28,18 @@ class CategoriesCard extends StatelessWidget {
             categoryProvider.select(index);
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
+            padding: EdgeInsets.symmetric(vertical: AppSizes.pd10v),
             child: Card(
-              color: isSelected ? AppColors.white : AppColors.offWhite,
+              color: isSelected ? theme.cardColor : theme.scaffoldBackgroundColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100.r),
+                borderRadius: BorderRadius.circular(AppSizes.radius100),
                 side: BorderSide(
-                  color: isSelected ? AppColors.primaryBlue : AppColors.offWhite,
-                  width: 4.w,
+                  color: isSelected ? AppColors.primaryBlue : theme.cardColor,
+                  width: AppSizes.width4,
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 35.w),
+                padding: EdgeInsets.symmetric(vertical: AppSizes.pd10v, horizontal: AppSizes.pd35h),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -47,9 +47,9 @@ class CategoriesCard extends StatelessWidget {
                       isSelected && activeIconPath != null
                           ? activeIconPath!
                           : iconPath,
-                      width: 50.w,
+                      width: AppSizes.width50,
                     ),
-                    SizedBox(width: 15.w),
+                    SizedBox(width:AppSizes.width15),
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(

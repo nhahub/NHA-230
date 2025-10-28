@@ -20,15 +20,12 @@ Future<bool> checkStoragePermission() async {
   }
 
   if (status.isGranted) {
-    print('✅ Storage permission granted');
     return true;
   } else if (status.isPermanentlyDenied) {
-    print('⚠️ Storage permission permanently denied');
     await openAppSettings();
     return false;
   } else {
     await openAppSettings();
-    print('❌ Storage permission denied');
     return false;
   }
 }

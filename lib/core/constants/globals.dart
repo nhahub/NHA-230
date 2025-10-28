@@ -1,4 +1,5 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
- GlobalKey<ScaffoldMessengerState> snackbarKey= GlobalKey<ScaffoldMessengerState>();
- GlobalKey<NavigatorState> navigationkey= GlobalKey<NavigatorState>();
+GlobalKey<ScaffoldMessengerState> snackBarKey =
+    GlobalKey<ScaffoldMessengerState>();
+GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();

@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tal3a/cubit/user_cubit.dart';
+import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/features/profile/logic/profile_controller.dart';
-import 'package:tal3a/features/profile/presenation/widgets/custom_list_tile.dart';
+import 'package:tal3a/features/profile/presentation/widgets/custom_list_tile.dart';
 
 import '../../../../core/core.dart';
 
@@ -15,14 +15,14 @@ class CustomBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      height: AppSizes.h300,
+      height: AppSizes.height300,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: AppSizes.pd16h, vertical: AppSizes.pd20v),
       decoration: BoxDecoration(
         gradient: AppColors.primaryGradient,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
+          topLeft: Radius.circular(AppSizes.radius16),
+          topRight: Radius.circular(AppSizes.radius16),
         ),
       ),
       child: Column(
@@ -30,7 +30,7 @@ class CustomBottomSheet extends StatelessWidget {
         children: [
           Text(
             "choose option to change photo",
-            style: theme.textTheme.headlineMedium,
+            style: theme.textTheme.labelLarge,
           ),
           Row(
             children: [
@@ -68,20 +68,19 @@ class CustomBottomSheet extends StatelessWidget {
                   },
                 ),
               ),
-             
             ],
           ),
-           Expanded(
-                child: CustomListTile(
-                  title: "Delete Photo",
-                  leadingIcon: Icons.delete,
-                  color: AppColors.white,
-                  onTap: () async {
-                    context.read<UserCubit>().deleteProfileImage();
-                    Navigator.of(context).pop(); 
-                  },
-                ),
-              ),
+          Expanded(
+            child: CustomListTile(
+              title: "Delete Photo",
+              leadingIcon: Icons.delete,
+              color: AppColors.white,
+              onTap: () async {
+                context.read<UserCubit>().deleteProfileImage();
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
         ],
       ),
     );

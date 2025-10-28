@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:tal3a/core/core.dart';
-import 'package:tal3a/cubit/user_cubit.dart';
+import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/data/models/user_model.dart';
 import 'package:tal3a/features/authentication/presentation/screens/login_screen.dart';
 import 'package:tal3a/features/authentication/presentation/widgets/custom_text_form_field.dart';
@@ -46,7 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 Image.asset(AppAssets.signupImage),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 36.w),
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.pd36h),
                   child: Column(
                     children: [
                       CustomTextFormField(
@@ -63,7 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         prefixIcon: Icons.person_outline_rounded,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 36.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
                           hintText: "Email",
                           controller: email,
@@ -92,7 +92,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         prefixIcon: Icons.lock,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 36.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
                           hintText: "Confirm Password",
                           controller: confirmPassword,
@@ -163,7 +163,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd15v),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -174,7 +174,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15.w),
+                              padding: EdgeInsets.symmetric(horizontal: AppSizes.pd15h),
                               child: Text(
                                 "OR",
                                 style: theme.textTheme.bodyLarge,
@@ -225,7 +225,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 (route) => false,
                               );
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
+                              snackBarKey.currentState?.showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     "There was an error, Please try again later",
@@ -239,7 +239,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             setState(() {
                               isloading = false;
                             });
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            snackBarKey.currentState?.showSnackBar(
                               SnackBar(
                                 content: Text(e.toString()),
                                 duration: Duration(seconds: 2),
@@ -250,7 +250,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSizes.pd15v),
                         child: GestureDetector(
                           onTap: () {
                             Navigator.of(context).pushAndRemoveUntil(

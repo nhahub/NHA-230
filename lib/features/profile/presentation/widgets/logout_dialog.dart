@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tal3a/core/core.dart';
-import 'package:tal3a/cubit/user_cubit.dart';
+import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/features/authentication/presentation/screens/login_screen.dart';
-import 'package:tal3a/services/firebase_auth_service.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
@@ -14,18 +13,18 @@ class LogoutDialog extends StatelessWidget {
     return AlertDialog(
       title: Text(
         "Logout",
-        style: theme.textTheme.headlineSmall!.copyWith(color: AppColors.red),
+        style: theme.textTheme.labelMedium!.copyWith(color: AppColors.red),
       ),
       content: Text(
         "Are you sure you want to logout?",
-        style: theme.textTheme.headlineSmall,
+        style: theme.textTheme.labelMedium,
       ),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text("Cancel", style: theme.textTheme.headlineSmall),
+          child: Text("Cancel", style: theme.textTheme.labelMedium),
         ),
         TextButton(
           onPressed: () async {
@@ -37,7 +36,7 @@ class LogoutDialog extends StatelessWidget {
           },
           child: Text(
             "Logout",
-            style: theme.textTheme.headlineSmall!.copyWith(
+            style: theme.textTheme.labelMedium!.copyWith(
               color: AppColors.red,
             ),
           ),
