@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tal3a/core/core.dart';
+
 
 class BackgroundContainer extends StatelessWidget {
   final Widget child;
@@ -8,13 +8,17 @@ class BackgroundContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Stack(
       children: [
         Positioned.fill(
-          child: Image.asset(
-            AppAssets.homeScreenBackground,
-            fit: BoxFit.cover,
-          ),
+          // child: Image.asset(
+          //   AppAssets.homeScreenBackground,
+          //   fit: BoxFit.cover,
+          // ),
+          child: Container(
+            color: theme.scaffoldBackgroundColor,
+          )
         ),
         child,
       ],

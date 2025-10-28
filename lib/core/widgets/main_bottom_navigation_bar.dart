@@ -8,11 +8,13 @@ class MainBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Selector<BottomNavigationBarProvider, int>(
       selector: (_, provider) => provider.currentIndex,
       builder: (context, currentIndex, child) {
         return SizedBox(height: AppSizes.height200,
           child: BottomNavigationBar(
+            backgroundColor: theme.scaffoldBackgroundColor,
             currentIndex: currentIndex,
             onTap: (index) {
               context.read<BottomNavigationBarProvider>().changeIndex(index);

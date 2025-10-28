@@ -88,7 +88,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              PromotionSlider(imagePaths: [AppAssets.promotion, AppAssets.promotion, AppAssets.promotion]),
+              PromotionSlider(imagePaths: [AppAssets.promotion, AppAssets.promotion, AppAssets.promotion]
+              ),
               SizedBox(height: AppSizes.height15),
               Row(
                 children: [

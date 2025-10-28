@@ -19,6 +19,7 @@ class CategoriesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Consumer<CategoryProvider>(
       builder: (context, categoryProvider, child) {
         final bool isSelected = categoryProvider.selectedIndex == index;
@@ -29,11 +30,11 @@ class CategoriesCard extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: AppSizes.pd10v),
             child: Card(
-              color: isSelected ? AppColors.white : AppColors.offWhite,
+              color: isSelected ? theme.cardColor : theme.scaffoldBackgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSizes.radius100),
                 side: BorderSide(
-                  color: isSelected ? AppColors.primaryBlue : AppColors.offWhite,
+                  color: isSelected ? AppColors.primaryBlue : theme.cardColor,
                   width: AppSizes.width4,
                 ),
               ),
