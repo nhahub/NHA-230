@@ -25,7 +25,9 @@ class AppSizes {
   static double borderRadius16 = 16.r;
 
   //*profile screen sizes
-  static double appBarHeight = 200.h;
+  static double appBarHeight = 250.h;
+
+  static double h300 = 300.h;
 
   static double avatarHeight = 600.h;
   static double avatarWidth = 600.w;

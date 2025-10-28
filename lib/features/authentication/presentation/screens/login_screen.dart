@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:tal3a/cubit/user_cubit.dart';
 import 'package:tal3a/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:tal3a/features/authentication/presentation/widgets/custom_text_form_field.dart';
-import 'package:tal3a/services/firebase_service.dart';
+import 'package:tal3a/features/navigation/root_page.dart';
+import 'package:tal3a/services/firebase_auth_service.dart';
+import 'package:tal3a/services/user_repositry.dart';
 import '../../../../core/core.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -72,20 +76,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          if (email.text.isEmpty) {
-                            snackbarKey.currentState?.showSnackBar(
-                              SnackBar(
-                                content: Text("Please Enter Your Email"),
-                                backgroundColor: AppColors.primaryBlue,
-                              ),
-                            );
-                          } else {
+                          if (formKey.currentState!.validate()) {
                             setState(() {
                               isloading = true;
                             });
-                            await FirebaseService.instance.forgetPassword(
-                              email: email.text,
-                            );
+                            try {
+                              final isSent = await FirebaseAuthService.instance
+                                  .forgetPassword(email: email.text);
+                              if (isSent) {
+                                snackbarKey.currentState?.showSnackBar(
+                                  SnackBar(
+                                    content: Text("Password reset email sent"),
+                                    duration: Duration(seconds: 2),
+                                    backgroundColor: AppColors.primaryBlue,
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              snackbarKey.currentState?.showSnackBar(
+                                SnackBar(
+                                  content: Text(e.toString()),
+                                  duration: Duration(seconds: 2),
+                                  backgroundColor: AppColors.primaryBlue,
+                                ),
+                              );
+                            }
                             setState(() {
                               isloading = false;
                             });
@@ -106,17 +121,50 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: CustomElevatedButton(
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              setState(() {
-                                isloading = true;
-                              });
-                              await FirebaseService.instance
-                                  .signInemailPassword(
-                                    email: email.text,
-                                    password: password.text,
+                              try {
+                                final credential = await FirebaseAuthService
+                                    .instance
+                                    .signInemailPassword(
+                                      email: email.text,
+                                      password: password.text,
+                                    );
+                                     print("*******************");
+                              print("user id: ${credential?.user?.uid}");
+                                if (credential?.user != null) {
+                                  final userModel = await UserRepository()
+                                      .getUserFromFirestore(
+                                        credential?.user?.uid,
+                                      );
+                                  await context.read<UserCubit>().saveUser(
+                                    userModel,
                                   );
-                              setState(() {
-                                isloading = false;
-                              });
+                                  navigationkey.currentState?.pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (_) => const RootPage(),
+                                    ),
+                                  );
+                                } else {
+                                  snackbarKey.currentState?.showSnackBar(
+                                    SnackBar(
+                                      content: Text("Failed to login"),
+                                      backgroundColor: AppColors.primaryBlue,
+                                    ),
+                                  );
+                                }
+                                setState(() {
+                                  isloading = false;
+                                });
+                              } catch (e) {
+                                setState(() {
+                                  isloading = false;
+                                });
+                                snackbarKey.currentState?.showSnackBar(
+                                  SnackBar(
+                                    content: Text(e.toString()),
+                                    backgroundColor: AppColors.primaryBlue,
+                                  ),
+                                );
+                              }
                             }
                           },
                           backgroundColor: theme.primaryColor,
@@ -170,10 +218,46 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               isloading = true;
                             });
-                            await FirebaseService.instance.signInWithGoogle();
-                            setState(() {
-                              isloading = false;
-                            });
+                            try {
+                              final credential = await FirebaseAuthService
+                                  .instance
+                                  .signInWithGoogle();
+                             
+                              if (credential?.user != null) {
+                                final userModel = await UserRepository()
+                                    .getUserFromFirestore(
+                                      credential!.user!.uid,
+                                    );
+                                await context.read<UserCubit>().saveUser(
+                                  userModel,
+                                );
+                                navigationkey.currentState?.pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (_) => const RootPage(),
+                                  ),
+                                );
+                              } else {
+                                snackbarKey.currentState?.showSnackBar(
+                                  SnackBar(
+                                    content: Text("Failed to login"),
+                                    backgroundColor: AppColors.primaryBlue,
+                                  ),
+                                );
+                              }
+                              setState(() {
+                                isloading = false;
+                              });
+                            } catch (e) {
+                              setState(() {
+                                isloading = false;
+                              });
+                              snackbarKey.currentState?.showSnackBar(
+                                SnackBar(
+                                  content: Text(e.toString()),
+                                  backgroundColor: AppColors.primaryBlue,
+                                ),
+                              );
+                            }
                           },
                         ),
                       ),

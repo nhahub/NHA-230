@@ -9,8 +9,8 @@ import 'package:tal3a/features/profile/presenation/screens/profile_screen.dart';
 
 final List<Widget> _screens = [const MapScreen(), HomeScreen(), const ProfileScreen()];
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class RootPage extends StatelessWidget {
+  const RootPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -37,9 +37,6 @@ dependencies:
   video_player: ^2.6.1
   lottie: ^3.3.2
   flutter_svg: ^2.0.7
-  shared_preferences: ^2.5.3
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   firebase_core: ^4.1.1
   firebase_auth: ^6.1.0
@@ -47,7 +44,11 @@ dependencies:
   modal_progress_hud_nsn: ^0.5.1
   google_sign_in: ^7.2.0
   cloud_firestore: ^6.0.2
-  
+  permission_handler: ^12.0.1
+  path_provider: ^2.1.5
+  image_picker: ^1.2.0
+  hive_ce_flutter: ^2.3.3  
+  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   flutter_test:

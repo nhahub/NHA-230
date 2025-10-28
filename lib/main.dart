@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tal3a/core/app_initializer.dart';
 import 'package:tal3a/core/core.dart';
-import 'package:tal3a/features/home/screens/home_page.dart';
-import 'package:tal3a/features/profile/presenation/screens/profile_screen.dart';
+import 'package:tal3a/cubit/user_cubit.dart';
 import 'package:tal3a/features/splash_screen/splash_screen.dart';
-import 'package:tal3a/services/firebase_service.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await FirebaseService.instance.init();
-  runApp(const MyApp());
+  await AppInitializer.init();
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => UserCubit()..loadUserFromLocal()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,6 +29,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp(
+          title: "tal3a",
           scaffoldMessengerKey: snackbarKey,
           navigatorKey: navigationkey,
           debugShowCheckedModeBanner: false,
@@ -32,7 +39,7 @@ class MyApp extends StatelessWidget {
           //   '/': (context) => const SplashVideoScreen(),
           //   '/home': (context) => const HomePage(),
           // },
-          home: HomePage(),
+          home: const SplashScreen(),
         );
       },
     );

@@ -63,13 +63,13 @@ class AppTheme {
         headlineMedium: GoogleFonts.montserrat(
           fontSize: 60.sp,
           fontWeight: FontWeight.w600,
-          color: AppColors.black,
-        ),
+          color: AppColors.white,
+        ),//*used in bottomsheet
         headlineSmall: GoogleFonts.montserrat(
           fontSize: 50.sp,
           fontWeight: FontWeight.bold,
           color: AppColors.black,
-        ),
+        ), //*used in listtiles
       ),
       inputDecorationTheme: InputDecorationThemeData(
         hintStyle: TextStyle(color: AppColors.placeholderColor, fontSize: 40.sp),

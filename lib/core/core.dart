@@ -3,6 +3,8 @@ export 'package:tal3a/core/constants/app_strings.dart';
 export 'package:tal3a/core/constants/globals.dart';
 export 'package:tal3a/core/constants/app_assets.dart';
 export 'package:tal3a/core/constants/app_colors..dart';
+export 'package:tal3a/core/constants/app_sizes.dart';
+
 
 // Themes
 export 'package:tal3a/core/themes/light_theme.dart';
