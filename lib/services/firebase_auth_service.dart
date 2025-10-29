@@ -1,21 +1,16 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:tal3a/core/core.dart';
-import 'package:tal3a/features/authentication/presentation/screens/login_screen.dart';
-import 'package:tal3a/features/home/screens/home_page.dart';
 import 'package:tal3a/firebase_options.dart';
 
-
-class FirebaseService {
-  static FirebaseService instance = FirebaseService._internal();
-  bool isLoading = false;
-  FirebaseService._internal();
-  String webClientId =
+class FirebaseAuthService {
+  static FirebaseAuthService instance = FirebaseAuthService._internal();
+  FirebaseAuthService._internal();
+  String webClientid =
       "531231308653-sek6esieuvt592t7vqtmgapf4on52dgd.apps.googleusercontent.com";
 
   init() async {
@@ -26,54 +21,29 @@ class FirebaseService {
 
   signInEmailPassword({required String email, required String password}) async {
     try {
-      isLoading = true;
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      navigationKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (context) {
-            return HomePage();
-          },
-        ),
-      );
+      return credential;
+    } on SocketException {
+      throw "No Internet Connection";
     } on FirebaseAuthException catch (e) {
-      isLoading = false;
       if (e.code == 'user-not-found') {
-        snackBarKey.currentState?.showSnackBar(
-          SnackBar(
-            content: Text('Try Adding Valid User'),
-            duration: Duration(seconds: 2),
-            backgroundColor:  AppColors.primaryBlue,
-          ),
-        );
+        throw "No Account Provided For That Email";
       } else if (e.code == 'wrong-password') {
-        snackBarKey.currentState?.showSnackBar(
-          SnackBar(
-            content: Text('Wrong Password Provided For That User'),
-            duration: Duration(seconds: 2),
-            backgroundColor: AppColors.primaryBlue,
-          ),
-        );
+        throw "Wrong Password Provided For That User";
       } else {
-        snackBarKey.currentState?.showSnackBar(
-          SnackBar(
-            content: Text('User not found'),
-            duration: Duration(seconds: 2),
-            backgroundColor:  AppColors.primaryBlue,
-          ),
-        );
+        throw "User not found";
       }
     }
   }
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
-      isLoading = true;
       final signIn = GoogleSignIn.instance;
 
-      await signIn.initialize(serverClientId: webClientId);
+      await signIn.initialize(serverClientId: webClientid);
 
       final GoogleSignInAccount? googleUser = await signIn.authenticate();
 
@@ -92,7 +62,7 @@ class FirebaseService {
       })();
 
       if (idToken == null && accessToken == null) {
-        throw Exception('');
+        throw "No Account Provided For That Email";
       }
 
       final credential = GoogleAuthProvider.credential(
@@ -104,50 +74,30 @@ class FirebaseService {
         credential,
       );
 
-      navigationKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (context) {
-            return HomePage();
-          },
-        ),
-      );
-
       return userCred;
+    } on SocketException {
+      throw "No Internet Connection";
+    } on FirebaseAuthException catch (e) {
+      throw e.message ?? "There was an error, Please try again later";
     } catch (e) {
-      snackBarKey.currentState?.showSnackBar(
-        SnackBar(
-          content: Text('No Account Provided For That Email'),
-          duration: Duration(seconds: 2),
-          backgroundColor:  AppColors.primaryBlue,
-        ),
-      );
+      throw e.toString();
     }
-    return null;
   }
 
   forgetPassword({required String email}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-
-      snackBarKey.currentState?.showSnackBar(
-        SnackBar(
-          content: Text(
-            'If this email is registered, a reset link has been sent.',
-          ),
-          duration: Duration(seconds: 2),
-          backgroundColor:  AppColors.primaryBlue,
-        ),
-      );
+      return true;
+    } on SocketException {
+      throw "No Internet Connection";
     } on FirebaseAuthException catch (e) {
-      String message = 'Unexpected error has happened';
       if (e.code == 'user-not-found') {
-        message = 'There is no user for that email';
+        throw 'There is no user for that email';
       } else if (e.code == 'invalid-email') {
-        message = 'Your email is invalid';
+        throw 'Your email is invalid';
+      } else {
+        throw 'Unexpected error has happened';
       }
-      snackBarKey.currentState?.showSnackBar(
-        SnackBar(content: Text(message), backgroundColor:  AppColors.primaryBlue),
-      );
     }
   }
 
@@ -159,7 +109,7 @@ class FirebaseService {
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await FirebaseFirestore.instance
+      final credintals = await FirebaseFirestore.instance
           .collection('users')
           .doc(credential.user!.uid)
           .set({
@@ -167,33 +117,23 @@ class FirebaseService {
             'email': email,
             'createdAt': FieldValue.serverTimestamp(),
           });
-
-      navigationKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (context) {
-            return LoginScreen();
-          },
-        ),
-      );
+      return credintals;
     } on FirebaseAuthException catch (e) {
-      String message = 'Unexpected error has happened';
       if (e.code == 'weak-password') {
-        message = "Your password is weak";
+        throw "Your password is weak";
       } else if (e.code == 'email-already-in-use') {
-        message = "The email is already used";
+        throw "The email is already used";
+      } else {
+        throw "There was an error, Please try again later";
       }
-      snackBarKey.currentState?.showSnackBar(
-        SnackBar(content: Text(message), backgroundColor:  AppColors.primaryBlue),
-      );
     }
   }
 
   Future<UserCredential?> signUpWithGoogle() async {
     try {
-      isLoading = true;
       final signIn = GoogleSignIn.instance;
 
-      await signIn.initialize(serverClientId: webClientId);
+      await signIn.initialize(serverClientId:webClientid);
 
       final GoogleSignInAccount? googleUser = await signIn.authenticate();
 
@@ -223,7 +163,6 @@ class FirebaseService {
       final userCred = await FirebaseAuth.instance.signInWithCredential(
         credential,
       );
-
       if (userCred.additionalUserInfo!.isNewUser) {
         await FirebaseFirestore.instance
             .collection('users')
@@ -235,25 +174,13 @@ class FirebaseService {
               'createdAt': FieldValue.serverTimestamp(),
             });
       }
-      navigationKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (context) {
-            return LoginScreen();
-          },
-        ),
-      );
 
       return userCred;
+    } on SocketException{
+      throw "No Internet Connection";
     } catch (e) {
       log(e.toString());
-      snackBarKey.currentState?.showSnackBar(
-        SnackBar(
-          content: Text('There was an error'),
-          duration: Duration(seconds: 2),
-          backgroundColor:  AppColors.primaryBlue,
-        ),
-      );
+      throw "There was an error, Please try again later";
     }
-    return null;
   }
 }

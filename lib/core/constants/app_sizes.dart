@@ -95,6 +95,7 @@ class AppSizes {
   static double height140 = 140.h;
   static double height152 = 152.h;
   static double height200 = 200.h;
+  static double height300 = 300.h;
   static double height320 = 320.h;
   static double height400 = 400.h;
   static double height480 = 480.h;

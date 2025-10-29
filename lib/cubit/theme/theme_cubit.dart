@@ -1,6 +1,8 @@
-import 'package:bloc/bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'theme_state.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
+
 
 class ThemeCubit extends Cubit<ThemeState> {
   static const String _boxName = 'settings';

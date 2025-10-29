@@ -1,32 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tal3a/core/app_initializer.dart';
 import 'package:tal3a/core/core.dart';
-import 'package:tal3a/features/home/screens/home_page.dart';
-import 'package:tal3a/services/firebase_service.dart';
+import 'package:tal3a/core/themes/dark_theme.dart';
+import 'package:tal3a/cubit/theme/theme_state.dart';
+import 'package:tal3a/cubit/user/user_cubit.dart';
+import 'package:tal3a/features/splash_screen/splash_screen.dart';
+import 'package:tal3a/cubit/theme/theme_cubit.dart';
 
 
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await FirebaseService.instance.init();
-  await Hive.initFlutter();
-
-
-  const String boxName = 'settings';
-  const String keyIsDark = 'isDark';
-
-
-  final box = await Hive.openBox(boxName);
-  final bool isDark = box.get(keyIsDark, defaultValue: false) as bool;
-  final themeCubit = ThemeCubit(initialIsDark: isDark);
-
-  await themeCubit.loadFromBox();
+Future<void> main() async {
+  await AppInitializer.init();
 
   runApp(
-    BlocProvider<ThemeCubit>.value(
-      value: themeCubit,
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => UserCubit()..loadUserFromLocal()),
+        BlocProvider<ThemeCubit>.value(value: AppInitializer.themeCubit),
+      ],
       child: const MyApp(),
     ),
   );
@@ -41,18 +33,18 @@ class MyApp extends StatelessWidget {
       designSize: const Size(1080, 1920),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, child) {
+      builder: (_, __) {
         return BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, state) {
             return MaterialApp(
+              title: "Tal3a",
               scaffoldMessengerKey: snackBarKey,
               navigatorKey: navigationKey,
               debugShowCheckedModeBanner: false,
-              theme: AppTheme.lightTheme(context),
-              darkTheme: AppTheme.darkTheme(context),
+              theme: LightTheme.lightTheme(context),
+              darkTheme: DarkTheme.darkTheme(context),
               themeMode: state.themeMode,
-              // routes: AppRoutes.routes,
-              home: HomePage(),
+              home: const SplashScreen(),
             );
           },
         );
