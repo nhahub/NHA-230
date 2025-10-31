@@ -14,19 +14,25 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState() {
-    super.initState();
-    // Wait for animation, then check user state
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {
-        _navigateBasedOnUser();
-      }
-    });
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Lottie.asset(
+          'assets/animations/splash_screen_2.json',
+          onLoaded: (composition) {
+            Future.delayed(Duration(seconds: 5), () {
+              if (mounted) _navigateBasedOnUser();
+            });
+          },
+        ),
+      ),
+    );
   }
 
   void _navigateBasedOnUser() {
     final user = context.read<UserCubit>().state;
-    
+
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const RootPage()),
@@ -36,15 +42,5 @@ class _SplashScreenState extends State<SplashScreen> {
         MaterialPageRoute(builder: (_) => const OnboardingFirstScreen()),
       );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Lottie.asset('assets/animations/splash_screen_2.json'),
-      ),
-    );
   }
 }

@@ -54,7 +54,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: BlocConsumer<UserCubit, UserModel?>(
         listener: (context, user) {
-          // Side effects (show message, navigate, etc.)
           if (user?.profileImagePath != null &&
               user!.profileImagePath!.isNotEmpty) {
             snackBarKey.currentState?.showSnackBar(
@@ -84,14 +83,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             shape: BoxShape.circle,
                           ),
                           child: CircleAvatar(
+                            key: UniqueKey(),
                             radius: AppSizes.radius300,
+                            backgroundColor:
+                                Colors.white, // خلفية بسيطة تحت الأيقونة
                             backgroundImage:
-                                user?.profileImagePath != null &&
+                                (user?.profileImagePath != null &&
                                     user!.profileImagePath!.isNotEmpty &&
-                                    File(user.profileImagePath!).existsSync()
+                                    File(user.profileImagePath!).existsSync())
                                 ? FileImage(File(user.profileImagePath!))
-                                : AssetImage(AppAssets.profileImage)
-                                      as ImageProvider,
+                                      as ImageProvider
+                                : null, 
+                            child:
+                                (user?.profileImagePath == null ||
+                                    user!.profileImagePath!.isEmpty ||
+                                    !File(user.profileImagePath!).existsSync())
+                                ? Icon(
+                                    Icons.person,
+                                    size: AppSizes.radius300,
+                                    color: AppColors.black,
+                                  )
+                                : null,
                           ),
                         ),
                         Positioned(
