@@ -10,7 +10,6 @@ static final String taxi = '$_imagePath/taxi.png';
 static final String tram = '$_imagePath/tram.png';
 static final String signupImage = '$_imagePath/signup_image.png';
 static final String loginImage = '$_imagePath/login_image.png';
-static  String profileImage = '$_imagePath/profie_image.png';
 
 //icons
 static final String coffeeIcon = '$_iconPath/Coffee_icon.png';

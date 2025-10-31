@@ -15,9 +15,10 @@ class CustomBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      height: AppSizes.height300,
+      height: AppSizes.height400,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: AppSizes.pd16h, vertical: AppSizes.pd20v),
+      padding: EdgeInsets.symmetric(
+          horizontal: AppSizes.pd16h, vertical: AppSizes.pd20v),
       decoration: BoxDecoration(
         gradient: AppColors.primaryGradient,
         borderRadius: BorderRadius.only(
@@ -40,13 +41,17 @@ class CustomBottomSheet extends StatelessWidget {
                   leadingIcon: Icons.camera,
                   color: AppColors.white,
                   onTap: () async {
-                    final imagePath =
-                        await ProfileController.pickProfileImageFromCamera();
-                    if (imagePath != null) {
-                      context.read<UserCubit>().updateProfileImage(
-                        File(imagePath),
-                      );
-                      Navigator.of(context).pop();
+                    final savedImagePath =
+                        await ProfileController.pickProfileImageFromCamera();  
+                    if (savedImagePath != null && context.mounted) {                      
+                      final currentUser = context.read<UserCubit>().state;
+                      if (currentUser?.profileImagePath != null) {
+                        FileImage(File(currentUser!.profileImagePath!)).evict();
+                      }
+                      await context.read<UserCubit>().updateProfileImagePath(savedImagePath);
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
                     }
                   },
                 ),
@@ -57,13 +62,18 @@ class CustomBottomSheet extends StatelessWidget {
                   leadingIcon: Icons.photo_library,
                   color: AppColors.white,
                   onTap: () async {
-                    final imagePath =
+                    final savedImagePath =
                         await ProfileController.pickProfileImageFromGallery();
-                    if (imagePath != null) {
-                      context.read<UserCubit>().updateProfileImage(
-                        File(imagePath),
-                      );
-                      Navigator.of(context).pop();
+                                        
+                    if (savedImagePath != null && context.mounted) {
+                      final currentUser = context.read<UserCubit>().state;
+                      if (currentUser?.profileImagePath != null) {
+                        FileImage(File(currentUser!.profileImagePath!)).evict();
+                      }
+                      await context.read<UserCubit>().updateProfileImagePath(savedImagePath);
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
                     }
                   },
                 ),
@@ -76,8 +86,20 @@ class CustomBottomSheet extends StatelessWidget {
               leadingIcon: Icons.delete,
               color: AppColors.white,
               onTap: () async {
-                context.read<UserCubit>().deleteProfileImage();
-                Navigator.of(context).pop();
+                // Clear image cache
+                imageCache.clear();
+                imageCache.clearLiveImages();
+                
+                final currentUser = context.read<UserCubit>().state;
+                if (currentUser?.profileImagePath != null) {
+                  FileImage(File(currentUser!.profileImagePath!)).evict();
+                }
+                
+                await context.read<UserCubit>().deleteProfileImage();
+                
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ),

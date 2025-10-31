@@ -23,14 +23,6 @@ class UserCubit extends Cubit<UserModel?> {
     emit(null);
   }
 
-  Future<void> updateProfileImage(File newImage) async {
-    if (state == null) return;
-    final imagePath = await ImageProfileHandler.saveProfileImage(newImage);
-    final updatedUser = state!.copyWith(profileImagePath: imagePath);
-    await UserLocalData().writeUserData(updatedUser);
-    emit(updatedUser);
-  }
-
   Future<void> deleteProfileImage() async {
     if (state == null) return;
     await ImageProfileHandler.deleteProfileImage();
@@ -45,4 +37,12 @@ class UserCubit extends Cubit<UserModel?> {
     await UserLocalData().writeUserData(updatedUser);
     emit(updatedUser);
   } 
+  Future<void> updateProfileImagePath(String imagePath) async {
+  if (state == null) return;
+  
+  final updatedUser = state!.copyWith(profileImagePath: imagePath);
+  await UserLocalData().writeUserData(updatedUser);
+    
+  emit(updatedUser);
+}
 }
