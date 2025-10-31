@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tal3a/core/core.dart';
+import 'package:tal3a/cubit/localization/local_state.dart';
+import 'package:tal3a/cubit/localization/locale_cubit.dart';
 import 'package:tal3a/cubit/theme/theme_cubit.dart';
 import 'package:tal3a/cubit/theme/theme_state.dart';
 import 'package:tal3a/cubit/user/user_cubit.dart';
@@ -32,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isDarkMode = false;
   bool isEditing = false;
   String currentLanguage = "English";
+  String langCode = "en";
   TextEditingController usernameController = TextEditingController();
   FocusNode textFocus = FocusNode();
 
@@ -85,15 +88,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: CircleAvatar(
                             key: UniqueKey(),
                             radius: AppSizes.radius300,
-                            backgroundColor:
-                                Colors.white, // خلفية بسيطة تحت الأيقونة
+                            backgroundColor: Colors.white,
                             backgroundImage:
                                 (user?.profileImagePath != null &&
                                     user!.profileImagePath!.isNotEmpty &&
                                     File(user.profileImagePath!).existsSync())
                                 ? FileImage(File(user.profileImagePath!))
                                       as ImageProvider
-                                : null, 
+                                : null,
                             child:
                                 (user?.profileImagePath == null ||
                                     user!.profileImagePath!.isEmpty ||
@@ -219,16 +221,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         ),
                       ),
-                      CustomListTile(
-                        title: "Language",
-                        leadingIcon: Icons.language_rounded,
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(currentLanguage),
-                            const Icon(Icons.arrow_forward_ios_rounded),
-                          ],
-                        ),
+                      BlocBuilder<LocaleCubit, LocaleState>(
+                        builder: (context, state) {
+                          return CustomListTile(
+                            title: state.locale.languageCode == "en" ? "English" : "Arabic",
+                            leadingIcon: Icons.language_rounded,
+                            onTap: () {
+                              String newLangCode = state.locale.languageCode == "en"? "ar" : "en";
+                              LocaleCubit().toggleLocale(newLangCode);
+                            },
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(currentLanguage),
+                                const Icon(Icons.arrow_forward_ios_rounded),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                       BlocBuilder<ThemeCubit, ThemeState>(
                         builder: (context, state) {
