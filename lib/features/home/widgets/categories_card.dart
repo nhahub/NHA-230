@@ -25,12 +25,14 @@ class CategoriesCard extends StatelessWidget {
         final bool isSelected = categoryProvider.selectedIndex == index;
         return GestureDetector(
           onTap: () {
-            categoryProvider.select(index);
+            categoryProvider.select(index, title);
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: AppSizes.pd10v),
             child: Card(
-              color: isSelected ? theme.cardColor : theme.scaffoldBackgroundColor,
+              color: isSelected
+                  ? theme.cardColor
+                  : theme.scaffoldBackgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSizes.radius100),
                 side: BorderSide(
@@ -39,7 +41,10 @@ class CategoriesCard extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: AppSizes.pd10v, horizontal: AppSizes.pd35h),
+                padding: EdgeInsets.symmetric(
+                  vertical: AppSizes.pd10v,
+                  horizontal: AppSizes.pd35h,
+                ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -49,11 +54,13 @@ class CategoriesCard extends StatelessWidget {
                           : iconPath,
                       width: AppSizes.width50,
                     ),
-                    SizedBox(width:AppSizes.width15),
+                    SizedBox(width: AppSizes.width15),
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: isSelected ? AppColors.primaryBlue : AppColors.placeholderColor,
+                        color: isSelected
+                            ? AppColors.primaryBlue
+                            : AppColors.placeholderColor,
                       ),
                     ),
                   ],
