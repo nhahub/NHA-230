@@ -87,6 +87,7 @@ class AppSizes {
   static double height56 = 56.h;
   static double height72 = 72.h;
   static double height80 = 80.h;
+  static double height85 = 85.h;
   static double height90 = 90.h;
   static double height95 = 95.h;
   static double height100 = 100.h;
