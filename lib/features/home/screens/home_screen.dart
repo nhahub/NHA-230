@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/features/home/providers/category_provider.dart';
 import 'package:tal3a/features/home/screens/search_screen.dart';
 import 'package:tal3a/features/home/widgets/background_container.dart';
@@ -7,11 +8,12 @@ import 'package:tal3a/features/home/widgets/categories_card.dart';
 import 'package:tal3a/features/home/widgets/promotion_slider.dart';
 import 'package:tal3a/core/core.dart';
 
-
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+ const HomeScreen({super.key});
 
-  final List<Map<String, String>> categories = [
+  List<Map<String, String>> getCategories(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return  [
     {'title': 'Restaurants', 'icon': AppAssets.restaurantIcon},
     {'title': 'Cafes', 'icon': AppAssets.coffeeIcon},
     {
@@ -20,24 +22,25 @@ class HomeScreen extends StatelessWidget {
       'activeIcon': AppAssets.mallIconSelected,
     },
     {
-      'title': 'Malls',
-      'icon': AppAssets.mallIconUnselected,
-      'activeIcon': AppAssets.mallIconSelected,
+      'title': 'Beaches',
+      'icon': AppAssets.beachIcon,
     },
     {
-      'title': 'Malls',
-      'icon': AppAssets.mallIconUnselected,
-      'activeIcon': AppAssets.mallIconSelected,
+      'title': 'Amusement parks',
+      'icon': AppAssets.parkIcon,
     },
     {
-      'title': 'Malls',
-      'icon': AppAssets.mallIconUnselected,
-      'activeIcon': AppAssets.mallIconSelected,
+      'title': 'Tourist attractions',
+      'icon': AppAssets.tourismAttractionIcon,
     },
   ];
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final localizations = AppLocalizations.of(context)!;
+    final categories = getCategories(context);
     return Scaffold(
       body: BackgroundContainer(
         child: Center(
@@ -57,8 +60,8 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Good evening',
-                          style: Theme.of(context).textTheme.titleMedium,
+                          localizations.goodEvening,
+                          style: theme.textTheme.titleMedium,
                         ),
                         SizedBox(height: AppSizes.height10),
                         SizedBox(
@@ -74,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                               );
                             },
                             decoration: InputDecoration(
-                              hintText: "Search",
+                              hintText: localizations.search,
                               prefixIcon: Icon(
                                 Icons.search,
                                 color: AppColors.placeholderColor,
@@ -88,7 +91,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              PromotionSlider(imagePaths: [AppAssets.promotion, AppAssets.promotion, AppAssets.promotion]
+              PromotionSlider(
+                imagePaths: [
+                  AppAssets.promotion,
+                  AppAssets.promotion,
+                  AppAssets.promotion,
+                ],
               ),
               SizedBox(height: AppSizes.height15),
               Row(
@@ -110,7 +118,8 @@ class HomeScreen extends StatelessWidget {
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemCount: categories.length,
-                          separatorBuilder: (_, __) => SizedBox(width: AppSizes.width12),
+                          separatorBuilder: (_, __) =>
+                              SizedBox(width: AppSizes.width12),
                           itemBuilder: (context, index) {
                             final category = categories[index];
                             return CategoriesCard(

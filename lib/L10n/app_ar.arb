@@ -1,3 +1,26 @@
 {
-    "search":"ابحث"
+  "@@locale": "ar",
+  "emailLabel": "البريد الإلكتروني",
+  "passwordLabel": "كلمة المرور",
+  "confirmPasswordLabel": "تأكيد كلمة المرور",
+  "nameLabel": "الاسم الكامل",
+  "forgotPassword": "هل نسيت كلمة المرور؟",
+  "loginButton": "تسجيل الدخول",
+  "signupButton": "إنشاء حساب",
+  "noAccount": "ليس لديك حساب؟",
+  "haveAccount": "هل لديك حساب بالفعل؟",
+  "or":"أو",
+  "googleSignIn": "المتابعة عبر جوجل",
+  "gooleSignUp" : "إنشاء حساب عبر جوجل",
+  "invalidEmail": "يرجى إدخال بريد إلكتروني صالح",
+  "invalidPassword": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+  "passwordsNotMatch": "كلمتا المرور غير متطابقتين",
+  "enterName":"يرجى إدخال الاسم",
+  "errorTryAgain" : "حدث خطأ, حاول مرة أخرى",
+  "resetPasswordSent":"تم إرسال رسالة إعادة تعيين كلمة المرور",
+  "restaurants": "مطاعم",
+  "cafes": "مقاهي",
+  "malls": "مولات",
+  "goodEvening": "مساء الخير",
+  "search":"ابحث"
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:tal3a/features/authentication/presentation/widgets/custom_text_form_field.dart';
@@ -29,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final localizations = AppLocalizations.of(context)!;
     return ModalProgressHUD(
       inAsyncCall: isLoading,
       child: Scaffold(
@@ -45,11 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       CustomTextFormField(
-                        hintText: "Email",
+                        hintText: localizations.emailLabel,
                         controller: email,
                         validator: (value) {
                           if (value!.isEmpty || !value.contains("@")) {
-                            return "Please Enter Valid Email";
+                            return localizations.invalidEmail;
                           } else {
                             return null;
                           }
@@ -60,11 +62,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
-                          hintText: "Password",
+                          hintText: localizations.passwordLabel,
                           controller: password,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 6) {
-                              return "Please Enter Valid Password";
+                              return localizations.invalidPassword;
                             } else {
                               return null;
                             }
@@ -85,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (isSent) {
                                 snackBarKey.currentState?.showSnackBar(
                                   SnackBar(
-                                    content: Text("Password reset email sent"),
+                                    content: Text(localizations.resetPasswordSent),
                                     duration: Duration(seconds: 2),
                                     backgroundColor: AppColors.primaryBlue,
                                   ),
@@ -109,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "Forget Password?",
+                              localizations.forgotPassword,
                               style: theme.textTheme.displaySmall,
                             ),
                           ],
@@ -144,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 } else {
                                   snackBarKey.currentState?.showSnackBar(
                                     SnackBar(
-                                      content: Text("Failed to login"),
+                                      content: Text(localizations.errorTryAgain),
                                       backgroundColor: AppColors.primaryBlue,
                                     ),
                                   );
@@ -167,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           backgroundColor: theme.primaryColor,
                           child: Text(
-                            "Sign in",
+                            localizations.loginButton,
                             style: theme.textTheme.displayLarge,
                           ),
                         ),
@@ -185,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.symmetric(
                               horizontal: AppSizes.pd15h,
                             ),
-                            child: Text("OR", style: theme.textTheme.bodyLarge),
+                            child: Text(localizations.or, style: theme.textTheme.bodyLarge),
                           ),
                           Expanded(
                             child: Divider(
@@ -207,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: SvgPicture.asset(AppAssets.googleIcon),
                               ),
                               Text(
-                                "Sign in with google",
+                                localizations.googleSignIn,
                                 style: theme.textTheme.displayLarge!.copyWith(
                                   color: Colors.black38,
                                 ),
@@ -239,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               } else {
                                 snackBarKey.currentState?.showSnackBar(
                                   SnackBar(
-                                    content: Text("Failed to login"),
+                                    content: Text(localizations.errorTryAgain,),
                                     backgroundColor: AppColors.primaryBlue,
                                   ),
                                 );
@@ -274,11 +276,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "Don't have an account?  ",
+                                text: localizations.noAccount,
                                 style: theme.textTheme.displayMedium,
                               ),
                               TextSpan(
-                                text: "Sign up",
+                                text: localizations.signupButton,
                                 style: theme.textTheme.displaySmall,
                               ),
                             ],

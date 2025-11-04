@@ -98,6 +98,138 @@ abstract class AppLocalizations {
     Locale('en'),
   ];
 
+  /// No description provided for @emailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
+
+  /// No description provided for @confirmPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPasswordLabel;
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get nameLabel;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your password?'**
+  String get forgotPassword;
+
+  /// No description provided for @loginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In'**
+  String get loginButton;
+
+  /// No description provided for @signupButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signupButton;
+
+  /// No description provided for @noAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t have an account?'**
+  String get noAccount;
+
+  /// No description provided for @haveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get haveAccount;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'OR'**
+  String get or;
+
+  /// No description provided for @googleSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get googleSignIn;
+
+  /// No description provided for @gooleSignUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up with Google'**
+  String get gooleSignUp;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get invalidEmail;
+
+  /// No description provided for @invalidPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters long'**
+  String get invalidPassword;
+
+  /// No description provided for @passwordsNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsNotMatch;
+
+  /// No description provided for @enterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get enterName;
+
+  /// No description provided for @errorTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'There was an error, Please try again later'**
+  String get errorTryAgain;
+
+  /// No description provided for @resetPasswordSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset email sent'**
+  String get resetPasswordSent;
+
+  /// No description provided for @restaurants.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurants'**
+  String get restaurants;
+
+  /// No description provided for @cafes.
+  ///
+  /// In en, this message translates to:
+  /// **'Cafes'**
+  String get cafes;
+
+  /// No description provided for @malls.
+  ///
+  /// In en, this message translates to:
+  /// **'Malls'**
+  String get malls;
+
+  /// No description provided for @goodEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get goodEvening;
+
   /// No description provided for @search.
   ///
   /// In en, this message translates to:

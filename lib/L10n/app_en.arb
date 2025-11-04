@@ -1,3 +1,26 @@
 {
-    "search":"search"
+  "@@locale": "en",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "confirmPasswordLabel": "Confirm Password",
+  "nameLabel": "Full Name",
+  "forgotPassword": "Forgot your password?",
+  "loginButton": "Log In",
+  "signupButton": "Sign Up",
+  "noAccount": "Don’t have an account?",
+  "haveAccount": "Already have an account?",
+  "or" : "OR",
+  "googleSignIn": "Continue with Google",
+  "gooleSignUp" : "Sign up with Google",
+  "invalidEmail": "Please enter a valid email address",
+  "invalidPassword": "Password must be at least 6 characters long",
+  "passwordsNotMatch": "Passwords do not match",
+  "enterName" :"Please enter your name",
+  "errorTryAgain": "There was an error, Please try again later",
+  "resetPasswordSent" :"Password reset email sent",
+  "restaurants": "Restaurants",
+  "cafes": "Cafes",
+  "malls": "Malls",
+  "goodEvening": "Good evening",
+  "search":"search"
 }
