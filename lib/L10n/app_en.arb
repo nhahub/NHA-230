@@ -21,6 +21,17 @@
   "restaurants": "Restaurants",
   "cafes": "Cafes",
   "malls": "Malls",
+  "beaches":"Beaches",
+  "amusementParks":"Amusement parks",
+  "touristAttraction":"Tourist attractions",
   "goodEvening": "Good evening",
-  "search":"search"
+  "noData":"No data available",
+  "search":"search",
+  "searchPlaceOrAddress":"Search place or address",
+  "searchForPlace": "Search for a place",
+  "centerMap":"Center map on current location",
+  "myLocation" :"My Location",
+  "showRoute" : "Show route",
+  "hideRoute" : "Hide route",
+  "clearDestination" : "Clear destination"
 }

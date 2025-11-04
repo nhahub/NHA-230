@@ -224,17 +224,83 @@ abstract class AppLocalizations {
   /// **'Malls'**
   String get malls;
 
+  /// No description provided for @beaches.
+  ///
+  /// In en, this message translates to:
+  /// **'Beaches'**
+  String get beaches;
+
+  /// No description provided for @amusementParks.
+  ///
+  /// In en, this message translates to:
+  /// **'Amusement parks'**
+  String get amusementParks;
+
+  /// No description provided for @touristAttraction.
+  ///
+  /// In en, this message translates to:
+  /// **'Tourist attractions'**
+  String get touristAttraction;
+
   /// No description provided for @goodEvening.
   ///
   /// In en, this message translates to:
   /// **'Good evening'**
   String get goodEvening;
 
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data available'**
+  String get noData;
+
   /// No description provided for @search.
   ///
   /// In en, this message translates to:
   /// **'search'**
   String get search;
+
+  /// No description provided for @searchPlaceOrAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Search place or address'**
+  String get searchPlaceOrAddress;
+
+  /// No description provided for @searchForPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a place'**
+  String get searchForPlace;
+
+  /// No description provided for @centerMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Center map on current location'**
+  String get centerMap;
+
+  /// No description provided for @myLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'My Location'**
+  String get myLocation;
+
+  /// No description provided for @showRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Show route'**
+  String get showRoute;
+
+  /// No description provided for @hideRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide route'**
+  String get hideRoute;
+
+  /// No description provided for @clearDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear destination'**
+  String get clearDestination;
 }
 
 class _AppLocalizationsDelegate

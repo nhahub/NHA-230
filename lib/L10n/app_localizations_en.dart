@@ -72,8 +72,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get malls => 'Malls';
 
   @override
+  String get beaches => 'Beaches';
+
+  @override
+  String get amusementParks => 'Amusement parks';
+
+  @override
+  String get touristAttraction => 'Tourist attractions';
+
+  @override
   String get goodEvening => 'Good evening';
 
   @override
+  String get noData => 'No data available';
+
+  @override
   String get search => 'search';
+
+  @override
+  String get searchPlaceOrAddress => 'Search place or address';
+
+  @override
+  String get searchForPlace => 'Search for a place';
+
+  @override
+  String get centerMap => 'Center map on current location';
+
+  @override
+  String get myLocation => 'My Location';
+
+  @override
+  String get showRoute => 'Show route';
+
+  @override
+  String get hideRoute => 'Hide route';
+
+  @override
+  String get clearDestination => 'Clear destination';
 }

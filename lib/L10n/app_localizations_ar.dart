@@ -72,8 +72,41 @@ class AppLocalizationsAr extends AppLocalizations {
   String get malls => 'مولات';
 
   @override
+  String get beaches => 'شواطئ';
+
+  @override
+  String get amusementParks => 'مدن الملاهي';
+
+  @override
+  String get touristAttraction => 'معالم سياحية';
+
+  @override
   String get goodEvening => 'مساء الخير';
 
   @override
+  String get noData => 'لا يوجد بيانات لعرضها';
+
+  @override
   String get search => 'ابحث';
+
+  @override
+  String get searchPlaceOrAddress => 'ابحث عن مكان أو عنوان';
+
+  @override
+  String get searchForPlace => 'ابحث عن مكان';
+
+  @override
+  String get centerMap => 'توسيط الخريطة على موقعي الحالي';
+
+  @override
+  String get myLocation => 'موقعي';
+
+  @override
+  String get showRoute => 'إظهار المسار';
+
+  @override
+  String get hideRoute => 'إخفاء المسار';
+
+  @override
+  String get clearDestination => 'مسح الوجهة';
 }

@@ -9,7 +9,6 @@ import 'package:tal3a/features/home/widgets/background_container.dart';
 import 'package:tal3a/features/home/widgets/categories_card.dart';
 import 'package:tal3a/features/home/widgets/place_card.dart';
 import 'package:tal3a/features/home/widgets/promotion_slider.dart';
-import 'package:tal3a/core/core.dart';
 
 class HomeScreen extends StatelessWidget {
  const HomeScreen({super.key});
@@ -17,23 +16,23 @@ class HomeScreen extends StatelessWidget {
   List<Map<String, String>> getCategories(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     return  [
-    {'title': 'Restaurants', 'icon': AppAssets.restaurantIcon},
-    {'title': 'Cafes', 'icon': AppAssets.coffeeIcon},
+    {'title': localizations.restaurants, 'icon': AppAssets.restaurantIcon},
+    {'title': localizations.cafes, 'icon': AppAssets.coffeeIcon},
     {
-      'title': 'Malls',
+      'title': localizations.malls,
       'icon': AppAssets.mallIconUnselected,
       'activeIcon': AppAssets.mallIconSelected,
     },
     {
-      'title': 'Beaches',
+      'title': localizations.beaches,
       'icon': AppAssets.beachIcon,
     },
     {
-      'title': 'Amusement parks',
+      'title': localizations.amusementParks,
       'icon': AppAssets.parkIcon,
     },
     {
-      'title': 'Tourist attractions',
+      'title': localizations.touristAttraction,
       'icon': AppAssets.tourismAttractionIcon,
     },
   ];
@@ -41,6 +40,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final categories = getCategories(context);
     return  ChangeNotifierProvider(
       create: (_) => CategoryProvider(),
       child: Scaffold(
@@ -61,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Good evening',
+                            localizations.goodEvening,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           SizedBox(height: AppSizes.height10),
@@ -78,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                                 );
                               },
                               decoration: InputDecoration(
-                                hintText: "Search",
+                                hintText: localizations.search,
                                 prefixIcon: Icon(
                                   Icons.search,
                                   color: AppColors.placeholderColor,
@@ -165,8 +166,8 @@ class HomeScreen extends StatelessWidget {
                       }
 
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return const SliverToBoxAdapter(
-                          child: Center(child: Text('No data available')),
+                        return SliverToBoxAdapter(
+                          child: Center(child: Text(localizations.noData)),
                         );
                       }
 

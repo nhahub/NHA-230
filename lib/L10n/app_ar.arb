@@ -21,6 +21,17 @@
   "restaurants": "مطاعم",
   "cafes": "مقاهي",
   "malls": "مولات",
+  "beaches": "شواطئ",
+  "amusementParks":"مدن الملاهي",
+  "touristAttraction":"معالم سياحية",
   "goodEvening": "مساء الخير",
-  "search":"ابحث"
+  "noData":"لا يوجد بيانات لعرضها",
+  "search":"ابحث",
+  "searchPlaceOrAddress":"ابحث عن مكان أو عنوان",
+  "searchForPlace":"ابحث عن مكان",
+   "centerMap": "توسيط الخريطة على موقعي الحالي",
+  "myLocation": "موقعي",
+  "showRoute": "إظهار المسار",
+  "hideRoute": "إخفاء المسار",
+  "clearDestination": "مسح الوجهة"
 }
