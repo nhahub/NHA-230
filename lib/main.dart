@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,11 +13,16 @@ import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/features/splash_screen/splash_screen.dart';
 import 'package:tal3a/cubit/theme/theme_cubit.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tal3a/firebase_options.dart';
+
 
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await AppInitializer.init();
-
   runApp(
     MultiBlocProvider(
       providers: [

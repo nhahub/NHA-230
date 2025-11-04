@@ -37,7 +37,7 @@ dependencies:
   video_player: ^2.6.1
   lottie: ^3.3.2
   flutter_svg: ^2.0.7
-  # The following adds the Cupertino Icons font to your application.
+  # The following adds the Cupertino icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   firebase_core: ^4.1.1
@@ -52,6 +52,7 @@ dependencies:
   hive_ce_flutter: ^2.3.3  
   flutter_bloc: ^9.1.1
   flutter_map: ^8.2.2
+  url_launcher: ^6.3.2
   location: ^8.0.1
   latlong2: ^0.9.1
   http: ^1.5.0
@@ -71,7 +72,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/Icons/app_icon.png"
+  image_path: "assets/iicons/app_icon.png"
 
 
  

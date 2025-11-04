@@ -7,6 +7,7 @@ class AppSizes {
   static double pd12h = 12.w;
   static double pd15h = 15.w;
   static double pd16h = 16.w;
+  static double pd20h = 20.w;
   static double pd24h = 24.w;
   static double pd28h = 28.w;
   static double pd32h = 32.w;
@@ -81,10 +82,12 @@ class AppSizes {
   static double height30 = 30.h;
   static double height32 = 32.h;
   static double height36 = 36.h;
+  static double height40 = 40.h;
   static double height48 = 48.h;
   static double height56 = 56.h;
   static double height72 = 72.h;
   static double height80 = 80.h;
+  static double height85 = 85.h;
   static double height90 = 90.h;
   static double height95 = 95.h;
   static double height100 = 100.h;
@@ -99,8 +102,10 @@ class AppSizes {
   static double height320 = 320.h;
   static double height400 = 400.h;
   static double height480 = 480.h;
+  static double height500 = 500.h;
   static double height540 = 540.h;
   static double height600 = 600.h;
+  static double height680 = 680.h;
   static double height800 = 800.h;
 
 
