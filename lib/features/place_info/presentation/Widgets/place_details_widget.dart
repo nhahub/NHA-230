@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tal3a/core/constants/app_colors..dart';
-import 'package:tal3a/core/constants/app_sizes.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
+import 'package:tal3a/core/core.dart';
 import 'info_item_widget.dart';
 
 class PlaceDetailsWidget extends StatelessWidget {
@@ -10,12 +10,13 @@ class PlaceDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
           child: Text(
-            placeData['Name'] ?? 'Unnamed Place',
+            placeData['Name'] ?? localizations.unnamedPlace,
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -34,12 +35,12 @@ class PlaceDetailsWidget extends StatelessWidget {
           indent: AppSizes.width100,
         ),
         SizedBox(height: AppSizes.height16),
-        InfoItemWidget(label: "Type", value: placeData['Type']),
+        InfoItemWidget(label: localizations.type, value: placeData['Type']),
         if (placeData['Rating'] != null) ...[
           Row(
             children: [
               Text(
-                "Rating: ",
+                localizations.rating,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: AppColors.primaryBlue,
@@ -67,7 +68,7 @@ class PlaceDetailsWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Opening Hours: ',
+                localizations.openingHours,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: AppColors.primaryBlue,
@@ -92,7 +93,7 @@ class PlaceDetailsWidget extends StatelessWidget {
             ],
           ),
         InfoItemWidget(
-          label: "Best Time to Visit",
+          label: localizations.bestTimeToVisit,
           value: placeData['Best Time to Visit'],
         ),
       ],

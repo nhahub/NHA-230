@@ -109,4 +109,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clearDestination => 'Clear destination';
+
+  @override
+  String get map => 'Map';
+
+  @override
+  String get home => 'home';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get goToLocation => 'Go tp location';
+
+  @override
+  String get branches => '📍 Branches:';
+
+  @override
+  String get unnamedPlace => 'Unnamed Place';
+
+  @override
+  String get type => 'Type';
+
+  @override
+  String get rating => 'Rating: ';
+
+  @override
+  String get openingHours => 'Opening Hours: ';
+
+  @override
+  String get bestTimeToVisit => 'Best Time to Visit';
+
+  @override
+  String get visitOnSocialMedia => 'Visit on Social Media';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get arabic => 'Arabic';
+
+  @override
+  String get tal3a => 'Tal3a';
+
+  @override
+  String get profileUpdated => 'Profile Updated!';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get logOut => 'Log Out';
 }

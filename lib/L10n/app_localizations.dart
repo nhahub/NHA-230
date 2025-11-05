@@ -301,6 +301,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear destination'**
   String get clearDestination;
+
+  /// No description provided for @map.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get map;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'home'**
+  String get home;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @goToLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Go tp location'**
+  String get goToLocation;
+
+  /// No description provided for @branches.
+  ///
+  /// In en, this message translates to:
+  /// **'📍 Branches:'**
+  String get branches;
+
+  /// No description provided for @unnamedPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Unnamed Place'**
+  String get unnamedPlace;
+
+  /// No description provided for @type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// No description provided for @rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating: '**
+  String get rating;
+
+  /// No description provided for @openingHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Hours: '**
+  String get openingHours;
+
+  /// No description provided for @bestTimeToVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Time to Visit'**
+  String get bestTimeToVisit;
+
+  /// No description provided for @visitOnSocialMedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit on Social Media'**
+  String get visitOnSocialMedia;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @arabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get arabic;
+
+  /// No description provided for @tal3a.
+  ///
+  /// In en, this message translates to:
+  /// **'Tal3a'**
+  String get tal3a;
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Updated!'**
+  String get profileUpdated;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @logOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get logOut;
 }
 
 class _AppLocalizationsDelegate

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/cubit/localization/local_state.dart';
 import 'package:tal3a/cubit/localization/locale_cubit.dart';
@@ -33,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool notificationsEnabled = true;
   bool isDarkMode = false;
   bool isEditing = false;
-  String currentLanguage = "English";
+  String currentLanguage = "";
   String langCode = "en";
   TextEditingController usernameController = TextEditingController();
   FocusNode textFocus = FocusNode();
@@ -41,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -49,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           height: AppSizes.height200,
           decoration: BoxDecoration(gradient: AppColors.primaryGradient),
         ),
-        title: Text("Tal3a", style: theme.textTheme.headlineLarge),
+        title: Text(localizations.tal3a, style: theme.textTheme.headlineLarge),
         leading: SvgPicture.asset(
           AppAssets.appBarLeadingIcon,
           colorFilter: ColorFilter.mode(AppColors.offWhite, BlendMode.srcIn),
@@ -60,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (user?.profileImagePath != null &&
               user!.profileImagePath!.isNotEmpty) {
             snackBarKey.currentState?.showSnackBar(
-              SnackBar(content: Text('Profile updated!')),
+              SnackBar(content: Text(localizations.profileUpdated)),
             );
           }
         },
@@ -212,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomListTile(
-                        title: "Notifications",
+                        title: localizations.notifications,
                         leadingIcon: Icons.notifications_none_rounded,
                         trailing: Switch(
                           value: notificationsEnabled,
@@ -223,17 +224,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       BlocBuilder<LocaleCubit, LocaleState>(
                         builder: (context, state) {
+                          currentLanguage = state.locale.languageCode == "en"
+                              ? localizations.english
+                              : localizations.arabic;
                           return CustomListTile(
-                            title: state.locale.languageCode == "en" ? "English" : "Arabic",
+                            title: localizations.language,
                             leadingIcon: Icons.language_rounded,
                             onTap: () {
-                              String newLangCode = state.locale.languageCode == "en"? "ar" : "en";
+                              String newLangCode =
+                                  state.locale.languageCode == "en"
+                                  ? "ar"
+                                  : "en";
                               LocaleCubit().toggleLocale(newLangCode);
                             },
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(currentLanguage),
+                                Text(
+                                  state.locale.languageCode == "en"
+                                      ? localizations.english
+                                      : localizations.arabic,
+                                ),
                                 const Icon(Icons.arrow_forward_ios_rounded),
                               ],
                             ),
@@ -243,7 +254,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       BlocBuilder<ThemeCubit, ThemeState>(
                         builder: (context, state) {
                           return CustomListTile(
-                            title: "Dark Mode",
+                            title: localizations.darkMode,
                             leadingIcon: Icons.dark_mode_outlined,
                             trailing: Switch(
                               value: state.isDark,
@@ -257,7 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       CustomListTile(
                         color: AppColors.red,
                         leadingIcon: Icons.logout,
-                        title: "Log Out",
+                        title: localizations.darkMode,
                         onTap: () {
                           showDialog(
                             context: context,
