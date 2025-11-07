@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// No description provided for @noAccount.
   ///
   /// In en, this message translates to:
-  /// **'Don’t have an account?'**
+  /// **'Don’t have an account? '**
   String get noAccount;
 
   /// No description provided for @haveAccount.

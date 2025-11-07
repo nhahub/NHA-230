@@ -266,7 +266,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               children: [
                                 TextSpan(
                                   text: localizations.haveAccount,
-                                  style: theme.textTheme.displayMedium,
+                                  style: theme.textTheme.displaySmall!.copyWith(color: AppColors.black),
                                 ),
                                 TextSpan(
                                   text: localizations.loginButton,

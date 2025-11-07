@@ -7,7 +7,7 @@
   "forgotPassword": "Forgot your password?",
   "loginButton": "Log In",
   "signupButton": "Sign Up",
-  "noAccount": "Don’t have an account?",
+  "noAccount": "Don’t have an account? ",
   "haveAccount": "Already have an account?",
   "or" : "OR",
   "googleSignIn": "Continue with Google",

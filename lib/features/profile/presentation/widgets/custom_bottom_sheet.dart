@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tal3a/core/app_initializer.dart';
 import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/features/profile/logic/profile_controller.dart';
 import 'package:tal3a/features/profile/presentation/widgets/custom_list_tile.dart';
@@ -48,7 +49,7 @@ class CustomBottomSheet extends StatelessWidget {
                       if (currentUser?.profileImagePath != null) {
                         FileImage(File(currentUser!.profileImagePath!)).evict();
                       }
-                      await context.read<UserCubit>().updateProfileImagePath(savedImagePath);
+await AppInitializer.userCubit.updateProfileImagePath(savedImagePath);
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
@@ -70,7 +71,7 @@ class CustomBottomSheet extends StatelessWidget {
                       if (currentUser?.profileImagePath != null) {
                         FileImage(File(currentUser!.profileImagePath!)).evict();
                       }
-                      await context.read<UserCubit>().updateProfileImagePath(savedImagePath);
+                     await AppInitializer.userCubit.updateProfileImagePath(savedImagePath);
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
@@ -95,7 +96,7 @@ class CustomBottomSheet extends StatelessWidget {
                   FileImage(File(currentUser!.profileImagePath!)).evict();
                 }
                 
-                await context.read<UserCubit>().deleteProfileImage();
+               await AppInitializer.userCubit.deleteProfileImage();
                 
                 if (context.mounted) {
                   Navigator.of(context).pop();

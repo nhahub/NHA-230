@@ -20,7 +20,7 @@ class LocalizationsSettings extends UserSettings{
   }
 
   String getLocale(){
-    return settingsBox.get('localization');
+    return settingsBox.get('localization') ?? "en";
   }
 }
 

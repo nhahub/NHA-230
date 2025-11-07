@@ -235,7 +235,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   state.locale.languageCode == "en"
                                   ? "ar"
                                   : "en";
-                              LocaleCubit().toggleLocale(newLangCode);
+                              context.read<LocaleCubit>().toggleLocale(
+                                newLangCode,
+                              );
                             },
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -268,7 +270,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       CustomListTile(
                         color: AppColors.red,
                         leadingIcon: Icons.logout,
-                        title: localizations.darkMode,
+                        title: localizations.logOut,
                         onTap: () {
                           showDialog(
                             context: context,

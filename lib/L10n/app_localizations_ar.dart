@@ -30,7 +30,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signupButton => 'إنشاء حساب';
 
   @override
-  String get noAccount => 'ليس لديك حساب؟';
+  String get noAccount => ' ليس لديك حساب؟';
 
   @override
   String get haveAccount => 'هل لديك حساب بالفعل؟';

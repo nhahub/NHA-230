@@ -30,7 +30,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signupButton => 'Sign Up';
 
   @override
-  String get noAccount => 'Don’t have an account?';
+  String get noAccount => 'Don’t have an account? ';
 
   @override
   String get haveAccount => 'Already have an account?';
