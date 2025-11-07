@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/home/providers/category_provider.dart';
 import 'package:tal3a/features/home/screens/search_screen.dart';
@@ -10,32 +11,37 @@ import 'package:tal3a/features/home/widgets/place_card.dart';
 import 'package:tal3a/features/home/widgets/promotion_slider.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+ const HomeScreen({super.key});
 
-  final List<Map<String, String>> categories = [
-    {'title': 'Restaurants', 'icon': AppAssets.restaurantIcon},
-    {'title': 'Cafes', 'icon': AppAssets.coffeeIcon},
+  List<Map<String, String>> getCategories(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return  [
+    {'title': localizations.restaurants, 'icon': AppAssets.restaurantIcon},
+    {'title': localizations.cafes, 'icon': AppAssets.coffeeIcon},
     {
-      'title': 'Malls',
+      'title': localizations.malls,
       'icon': AppAssets.mallIconUnselected,
       'activeIcon': AppAssets.mallIconSelected,
     },
     {
-      'title': 'Beaches',
+      'title': localizations.beaches,
       'icon': AppAssets.beachIcon,
     },
     {
-      'title': 'Amusement parks',
+      'title': localizations.amusementParks,
       'icon': AppAssets.parkIcon,
     },
     {
-      'title': 'Tourist attractions',
+      'title': localizations.touristAttraction,
       'icon': AppAssets.tourismAttractionIcon,
     },
   ];
+  }
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final categories = getCategories(context);
     return  ChangeNotifierProvider(
       create: (_) => CategoryProvider(),
       child: Scaffold(
@@ -56,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Good evening',
+                            localizations.goodEvening,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           SizedBox(height: AppSizes.height10),
@@ -73,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                                 );
                               },
                               decoration: InputDecoration(
-                                hintText: "Search",
+                                hintText: localizations.search,
                                 prefixIcon: Icon(
                                   Icons.search,
                                   color: AppColors.placeholderColor,
@@ -160,8 +166,8 @@ class HomeScreen extends StatelessWidget {
                       }
 
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return const SliverToBoxAdapter(
-                          child: Center(child: Text('No data available')),
+                        return SliverToBoxAdapter(
+                          child: Center(child: Text(localizations.noData)),
                         );
                       }
 

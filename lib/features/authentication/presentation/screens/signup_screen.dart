@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/data/models/user_model.dart';
@@ -34,6 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.yellow,
       resizeToAvoidBottomInset: false,
@@ -50,11 +51,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     children: [
                       CustomTextFormField(
-                        hintText: "Full Name",
+                        hintText: localizations.nameLabel,
                         controller: name,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please Enter Your Name";
+                            return localizations.enterName;
                           } else {
                             return null;
                           }
@@ -65,11 +66,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
-                          hintText: "Email",
+                          hintText: localizations.emailLabel,
                           controller: email,
                           validator: (value) {
                             if (value!.isEmpty || !value.contains("@")) {
-                              return "Please Enter Valid Email";
+                              return localizations.invalidEmail;
                             } else {
                               return null;
                             }
@@ -79,11 +80,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       CustomTextFormField(
-                        hintText: "Password",
+                        hintText: localizations.passwordLabel,
                         controller: password,
                         validator: (value) {
                           if (value!.isEmpty || value.length < 6) {
-                            return "Please Enter Valid Password";
+                            return localizations.invalidPassword;
                           } else {
                             return null;
                           }
@@ -94,13 +95,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: AppSizes.pd36v),
                         child: CustomTextFormField(
-                          hintText: "Confirm Password",
+                          hintText: localizations.confirmPasswordLabel,
                           controller: confirmPassword,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 6) {
-                              return "Please Enter Valid Password";
+                              return localizations.invalidPassword;
                             } else if (value != password.text) {
-                              return "Unmatched Fields";
+                              return localizations.passwordsNotMatch;
                             } else {
                               return null;
                             }
@@ -135,7 +136,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      "There was an error, Please try again later",
+                                      localizations.errorTryAgain
                                     ),
                                     duration: Duration(seconds: 2),
                                     backgroundColor: AppColors.primaryBlue,
@@ -158,7 +159,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                         backgroundColor: theme.primaryColor,
                         child: Text(
-                          "Sign up",
+                          localizations.signupButton,
                           style: theme.textTheme.displayLarge,
                         ),
                       ),
@@ -176,7 +177,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: AppSizes.pd15h),
                               child: Text(
-                                "OR",
+                                localizations.or,
                                 style: theme.textTheme.bodyLarge,
                               ),
                             ),
@@ -195,11 +196,11 @@ class _SignupScreenState extends State<SignupScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(right: 15.w),
+                              padding: EdgeInsets.only(right: AppSizes.pd15h),
                               child: SvgPicture.asset(AppAssets.googleIcon),
                             ),
                             Text(
-                              "Sign up with google",
+                              localizations.gooleSignUp,
                               style: theme.textTheme.displayLarge!.copyWith(
                                 color: Colors.black38,
                               ),
@@ -228,7 +229,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               snackBarKey.currentState?.showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    "There was an error, Please try again later",
+                                    localizations.errorTryAgain,
                                   ),
                                   duration: Duration(seconds: 2),
                                   backgroundColor: AppColors.primaryBlue,
@@ -264,11 +265,11 @@ class _SignupScreenState extends State<SignupScreen> {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: "Already have an account?  ",
-                                  style: theme.textTheme.displayMedium,
+                                  text: localizations.haveAccount,
+                                  style: theme.textTheme.displaySmall!.copyWith(color: AppColors.black),
                                 ),
                                 TextSpan(
-                                  text: "Sign in",
+                                  text: localizations.loginButton,
                                   style: theme.textTheme.displaySmall,
                                 ),
                               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
 
 import '../constant/map_constants.dart';
@@ -154,6 +155,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: GestureDetector(
@@ -252,7 +254,7 @@ class _MapScreenState extends State<MapScreen> {
                               textInputAction: TextInputAction.search,
                               style: Theme.of(context).textTheme.displayMedium,
                               decoration: InputDecoration(
-                                hintText: 'Search place or address',
+                                hintText: localizations.searchPlaceOrAddress,
                                 hintStyle: Theme.of(context).textTheme.displayMedium,
                                 border: InputBorder.none,
                                 isCollapsed: true,
@@ -279,7 +281,7 @@ class _MapScreenState extends State<MapScreen> {
                               },
                             )
                                 : Text(
-                              'Search for a place',
+                              localizations.searchForPlace,
                               style: Theme.of(context).textTheme.displayMedium,
                             ),
                           ),
@@ -393,26 +395,26 @@ class _MapScreenState extends State<MapScreen> {
               child: Column(
                 children: [
                   Semantics(
-                    label: 'Center map on current location',
+                    label: localizations.centerMap,
                     button: true,
                     child: MapWidgets.buildFloatingButton(
                       context: context,
                       onTap: _moveToCurrent,
                       icon: Icons.my_location,
-                      tooltip: 'My Location',
+                      tooltip: localizations.myLocation,
                     ),
                   ),
                   SizedBox(height: AppSizes.height24),
                   if (routePoints.isNotEmpty)
                     Semantics(
-                      label: showRoute ? 'Hide route' : 'Show route',
+                      label: showRoute ? localizations.hideRoute : localizations.showRoute,
                       button: true,
                       child: MapWidgets.buildFloatingButton(
                         onTap: _toggleRoute,
                         icon: showRoute
                             ? Icons.visibility_off
                             : Icons.visibility,
-                        tooltip: showRoute ? 'Hide Route' : 'Show Route',
+                        tooltip: showRoute ? localizations.hideRoute : localizations.showRoute,
                         context: context,
                       ),
                     ),
@@ -420,13 +422,13 @@ class _MapScreenState extends State<MapScreen> {
                     SizedBox(height: AppSizes.height24),
                   if (markers.any((m) => m.key == const ValueKey('destination')))
                     Semantics(
-                      label: 'Clear destination',
+                      label: localizations.clearDestination,
                       button: true,
                       child: MapWidgets.buildFloatingButton(
                         context: context,
                         onTap: _clearDestination,
                         icon: Icons.clear,
-                        tooltip: 'Clear Destination',
+                        tooltip: localizations.clearDestination,
                       ),
                     ),
                 ],

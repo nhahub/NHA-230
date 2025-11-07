@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/constants/app_colors..dart';
 import 'package:tal3a/core/constants/app_sizes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,7 +25,7 @@ class BranchesWidget extends StatelessWidget {
     final theme = Theme
         .of(context)
         .textTheme;
-
+    final localizations = AppLocalizations.of(context)!;
     // ✅ الحالة الأولى: branchesData = String
     if (branchesData is String) {
       final mapLink = branchesData as String;
@@ -43,7 +44,7 @@ class BranchesWidget extends StatelessWidget {
           ),
           onPressed: () => _openLink(mapLink),
           child: Text(
-            "Go to Location",
+            localizations.goToLocation,
             style: theme.bodyLarge?.copyWith(
               color: Colors.white,
               fontSize: AppSizes.width56,
@@ -63,7 +64,7 @@ class BranchesWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "📍 Branches:",
+            localizations.branches,
             style: theme.headlineSmall?.copyWith(
               color: AppColors.primaryBlue,
               fontSize: AppSizes.width56,

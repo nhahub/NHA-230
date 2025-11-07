@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tal3a/core/constants/app_sizes.dart';
+import 'package:tal3a/core/core.dart' show AppSizes;
 
 class PlaceImageWidget extends StatelessWidget {
   final String imageUrl;

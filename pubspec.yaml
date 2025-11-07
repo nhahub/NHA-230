@@ -56,6 +56,9 @@ dependencies:
   location: ^8.0.1
   latlong2: ^0.9.1
   http: ^1.5.0
+  flutter_localization: ^0.3.3
+  flutter_localizations:
+    sdk: flutter
   
 
 dev_dependencies:
@@ -88,7 +91,9 @@ flutter_launcher_icons:
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
+  generate: true
   assets:
+    - lib/l10n/
     - assets/images/
     - assets/icons/
     - assets/animations/splash_screen_2.json

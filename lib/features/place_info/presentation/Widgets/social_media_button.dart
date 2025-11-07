@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/constants/app_colors..dart';
 import 'package:tal3a/core/constants/app_sizes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,7 +20,7 @@ class SocialMediaButton extends StatelessWidget {
         onPressed: () => _openLink(url),
         icon: const Icon(Icons.link, color: Colors.white),
         label: Text(
-          "Visit on Social Media",
+          AppLocalizations.of(context)!.visitOnSocialMedia,
           style: theme.textTheme.bodyLarge?.copyWith(
             color: Colors.white,
             fontSize: AppSizes.width56,

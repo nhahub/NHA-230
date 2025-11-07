@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tal3a/core/core.dart';
 import 'package:tal3a/cubit/user/user_cubit.dart';
 import 'package:tal3a/features/navigation/root_page.dart';
 import 'package:tal3a/features/onboarding/presentation/screens/onboarding_first_screen.dart';
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.white,
       body: Center(
         child: Lottie.asset(
-          'assets/animations/splash_screen_2.json',
+          AppAssets.splashAnimations,
           onLoaded: (composition) {
             Future.delayed(Duration(seconds: 5), () {
               if (mounted) _navigateBasedOnUser();

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tal3a/data/models/user_model.dart';
@@ -8,7 +7,7 @@ import 'package:tal3a/features/profile/data/local/image_profile_handler.dart';
 class UserCubit extends Cubit<UserModel?> {
   UserCubit() : super(null);
 
-  Future<void>  loadUserFromLocal() async {
+  Future<void> loadUserFromLocal() async {
     final user = UserLocalData().readUserData();
     if (user != null) emit(user);
   }
