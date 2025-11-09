@@ -7,7 +7,6 @@ class SearchService {
     if (searchTerm.isEmpty) return [];
 
     try {
-      // Assuming you have a 'places' collection in Firestore
       QuerySnapshot querySnapshot = await _firestore
           .collection('places')
           .where('name', isGreaterThanOrEqualTo: searchTerm)
