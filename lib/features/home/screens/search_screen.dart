@@ -59,8 +59,6 @@ class _SearchScreenState extends State<SearchScreen> {
                       title: Text(place['name'] ?? ''),
                       subtitle: Text(place['description'] ?? ''),
                       onTap: () {
-                        // Navigate to place details
-                        // Navigator.pushNamed(context, '/place-details', arguments: place);
                       },
                     );
                   },
