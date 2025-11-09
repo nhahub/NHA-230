@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,13 +15,9 @@ import 'package:tal3a/cubit/theme/theme_cubit.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tal3a/firebase_options.dart';
 
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await AppInitializer.init();
   runApp(
     MultiBlocProvider(
@@ -59,10 +54,7 @@ class MyApp extends StatelessWidget {
                   darkTheme: DarkTheme.darkTheme(context),
                   themeMode: state.themeMode,
                   locale: localState.locale,
-                  supportedLocales: const [
-                    Locale('en'), 
-                    Locale('ar'), 
-                  ],
+                  supportedLocales: const [Locale('en'), Locale('ar')],
                   localizationsDelegates: const [
                     AppLocalizations.delegate,
                     GlobalMaterialLocalizations.delegate,
