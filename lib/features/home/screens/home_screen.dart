@@ -11,38 +11,51 @@ import 'package:tal3a/features/home/widgets/place_card.dart';
 import 'package:tal3a/features/home/widgets/promotion_slider.dart';
 
 class HomeScreen extends StatelessWidget {
- const HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   List<Map<String, String>> getCategories(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    return  [
-    {'title': localizations.restaurants, 'icon': AppAssets.restaurantIcon},
-    {'title': localizations.cafes, 'icon': AppAssets.coffeeIcon},
-    {
-      'title': localizations.malls,
-      'icon': AppAssets.mallIconUnselected,
-      'activeIcon': AppAssets.mallIconSelected,
-    },
-    {
-      'title': localizations.beaches,
-      'icon': AppAssets.beachIcon,
-    },
-    {
-      'title': localizations.amusementParks,
-      'icon': AppAssets.parkIcon,
-    },
-    {
-      'title': localizations.touristAttraction,
-      'icon': AppAssets.tourismAttractionIcon,
-    },
-  ];
+
+    return [
+      {
+        'title': localizations.restaurants,
+        'icon': AppAssets.restaurantIcon,
+        'collection': 'Restaurants',
+      },
+      {
+        'title': localizations.cafes,
+        'icon': AppAssets.coffeeIcon,
+        'collection': 'Cafes',
+      },
+      {
+        'title': localizations.malls,
+        'icon': AppAssets.mallIconUnselected,
+        'activeIcon': AppAssets.mallIconSelected,
+        'collection': 'Malls',
+      },
+      {
+        'title': localizations.beaches,
+        'icon': AppAssets.beachIcon,
+        'collection': 'Beaches',
+      },
+      {
+        'title': localizations.amusementParks,
+        'icon': AppAssets.parkIcon,
+        'collection': 'Amusement parks',
+      },
+      {
+        'title': localizations.touristAttraction,
+        'icon': AppAssets.tourismAttractionIcon,
+        'collection': 'Tourist attractions',
+      },
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final categories = getCategories(context);
-    return  ChangeNotifierProvider(
+    return ChangeNotifierProvider(
       create: (_) => CategoryProvider(),
       child: Scaffold(
         body: BackgroundContainer(
@@ -133,7 +146,7 @@ class HomeScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     final category = categories[index];
                                     return CategoriesCard(
-                                      title: category['title']!,
+                                      title: category['collection']!,
                                       iconPath: category['icon']!,
                                       activeIconPath: category['activeIcon'],
                                       index: index,
@@ -176,21 +189,21 @@ class HomeScreen extends StatelessWidget {
                       return SliverPadding(
                         padding: EdgeInsets.all(AppSizes.pd20h),
                         sliver: SliverGrid(
-                          delegate: SliverChildBuilderDelegate(
-                                (context, index) {
-                              final data =
-                              items[index].data() as Map<String, dynamic>;
-                              return PlaceCard(data: data);
-                            },
-                            childCount: items.length,
-                          ),
+                          delegate: SliverChildBuilderDelegate((
+                            context,
+                            index,
+                          ) {
+                            final data =
+                                items[index].data() as Map<String, dynamic>;
+                            return PlaceCard(data: data);
+                          }, childCount: items.length),
                           gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 0.8,
-                          ),
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 0.8,
+                              ),
                         ),
                       );
                     },
