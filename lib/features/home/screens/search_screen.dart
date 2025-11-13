@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tal3a/features/home/services/search_service.dart';
+import 'package:tal3a/features/home/widgets/place_card.dart';
+import 'package:tal3a/core/constants/app_colors.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -36,12 +39,19 @@ class _SearchScreenState extends State<SearchScreen> {
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: theme.appBarTheme.backgroundColor,
+        elevation: 0,
         title: TextField(
           controller: _searchController,
           decoration: InputDecoration(
             hintText: 'Search places...',
-            border: InputBorder.none,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide.none,
+            ),
+            filled: true,
+            fillColor: theme.inputDecorationTheme.fillColor,
             hintStyle: TextStyle(color: theme.hintColor),
+            prefixIcon: const Icon(Icons.search),
           ),
           style: TextStyle(color: theme.textTheme.bodyLarge?.color),
           onChanged: _performSearch,
@@ -49,20 +59,50 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : _searchResults.isEmpty
-              ? const Center(child: Text('No results found'))
-              : ListView.builder(
-                  itemCount: _searchResults.length,
-                  itemBuilder: (context, index) {
-                    final place = _searchResults[index];
-                    return ListTile(
-                      title: Text(place['name'] ?? ''),
-                      subtitle: Text(place['description'] ?? ''),
-                      onTap: () {
+          : _searchResults.isEmpty && _searchController.text.isNotEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.search_off, size: 64.sp, color: Colors.grey),
+                      SizedBox(height: 16.h),
+                      Text('No results found', style: theme.textTheme.bodyLarge),
+                    ],
+                  ),
+                )
+              : _searchController.text.isEmpty
+                  ? Center(
+                      child: Text(
+                        'Start typing to search',
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                    )
+                  : ListView.builder(
+                      padding: EdgeInsets.all(16.w),
+                      itemCount: _searchResults.length,
+                      itemBuilder: (context, index) {
+                        final place = _searchResults[index];
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 12.h),
+                          child: PlaceCard(
+                            name: place['name'] ?? 'Unknown',
+                            address: place['address'] ?? 'No address',
+                            imageUrl: place['image'] ?? '',
+                            onTap: () {
+                              // Navigate to place details
+                              Navigator.pushNamed(
+                                context,
+                                '/place-info',
+                                arguments: {
+                                  ...place,
+                                  'collectionName': place['category'],
+                                },
+                              );
+                            },
+                          ),
+                        );
                       },
-                    );
-                  },
-                ),
+                    ),
     );
   }
 
