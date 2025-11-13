@@ -16,7 +16,11 @@ class SearchService {
     if (searchTerm.isEmpty) return [];
 
     try {
-      List<Map<String, dynamic>> allResults = [];
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('places')
+          .where('name', isGreaterThanOrEqualTo: searchTerm)
+          .where('name', isLessThanOrEqualTo: searchTerm + '\uf8ff')
+          .get();
 
       for (String collectionName in _collections) {
         QuerySnapshot querySnapshot = await _firestore
