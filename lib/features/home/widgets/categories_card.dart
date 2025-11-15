@@ -8,10 +8,12 @@ class CategoriesCard extends StatelessWidget {
   final String iconPath;
   final String? activeIconPath;
   final int index;
+  final String collection;
 
   const CategoriesCard({
     super.key,
     required this.title,
+    required this.collection,
     required this.iconPath,
     this.activeIconPath,
     required this.index,
@@ -25,7 +27,7 @@ class CategoriesCard extends StatelessWidget {
         final bool isSelected = categoryProvider.selectedIndex == index;
         return GestureDetector(
           onTap: () {
-            categoryProvider.select(index, title);
+            categoryProvider.select(index, collection);
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: AppSizes.pd10v),
