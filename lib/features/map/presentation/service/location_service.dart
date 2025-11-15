@@ -1,88 +1,53 @@
-import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart';
-import 'package:flutter_map/flutter_map.dart';
-
-import '../constant/map_constants.dart';
-
+import 'package:geolocator/geolocator.dart';
 
 class LocationService {
-  final MapController mapController;
-  final Function(LocationData) onLocationUpdate;
+  final Function(Position) onLocationUpdate;
   final Function(String) showSnackBar;
-  final Function(LocationData) updateCurrentMarker;
-
-  StreamSubscription<LocationData>? _locationSubscription;
-  Timer? _locationUpdateTimer;
+  final Function(Position) updateCurrentMarker;
 
   LocationService({
-    required this.mapController,
     required this.onLocationUpdate,
     required this.showSnackBar,
     required this.updateCurrentMarker,
   });
 
   Future<void> initLocation() async {
-    final location = Location();
-    bool serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        showSnackBar('Location service is required');
-        return;
-      }
-    }
-
-    PermissionStatus permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        showSnackBar('Location permission is required');
-        return;
-      }
-    }
-
     try {
-      final loc = await location.getLocation();
-      onLocationUpdate(loc);
-      updateCurrentMarker(loc);
-      mapController.move(
-        LatLng(loc.latitude!, loc.longitude!),
-        MapConstants.defaultZoom,
-      );
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        showSnackBar('Location services are disabled');
+        return;
+      }
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          showSnackBar('Location permissions are denied');
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        showSnackBar('Location permissions are permanently denied');
+        return;
+      }
+
+
+      Position position = await Geolocator.getCurrentPosition();
+      onLocationUpdate(position);
+      updateCurrentMarker(position);
     } catch (e) {
-      debugPrint('getLocation error: $e');
-      showSnackBar('Failed to get current location');
-    }
-
-    _locationSubscription = location.onLocationChanged.listen((loc) {
-      _locationUpdateTimer?.cancel();
-      _locationUpdateTimer = Timer(
-        const Duration(milliseconds: MapConstants.locationUpdateDebounceMs),
-            () {
-          onLocationUpdate(loc);
-          updateCurrentMarker(loc);
-        },
-      );
-    });
-  }
-
-  void moveToCurrentLocation(LocationData? currentLocation) {
-    if (currentLocation != null &&
-        currentLocation.latitude != null &&
-        currentLocation.longitude != null) {
-      mapController.move(
-        LatLng(currentLocation.latitude!, currentLocation.longitude!),
-        MapConstants.defaultZoom,
-      );
-    } else {
-      showSnackBar('Current location not available');
+      showSnackBar('Error getting location: $e');
     }
   }
 
-  void dispose() {
-    _locationSubscription?.cancel();
-    _locationUpdateTimer?.cancel();
+  Future<Position?> getCurrentLocation() async {
+    try {
+      return await Geolocator.getCurrentPosition();
+    } catch (e) {
+      showSnackBar('Error getting current location: $e');
+      return null;
+    }
   }
 }

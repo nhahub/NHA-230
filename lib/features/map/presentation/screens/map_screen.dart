@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
-
-import '../constant/map_constants.dart';
 import '../service/location_service.dart';
 import '../service/route_service.dart';
-import '../service/search_service.dart';
 import '../widget/map_widget.dart';
+
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -19,12 +16,12 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  final MapController _mapController = MapController();
   final TextEditingController searchController = TextEditingController();
 
-  LocationData? currentLocation;
-  List<Marker> markers = [];
-  List<LatLng> routePoints = [];
+  GoogleMapController? _mapController;
+  Position? currentLocation;
+  Set<Marker> markers = {};
+  Set<Polyline> polylines = {};
   List<Map<String, dynamic>> searchResults = [];
 
   bool showRoute = true;
@@ -38,7 +35,11 @@ class _MapScreenState extends State<MapScreen> {
 
   late LocationService _locationService;
   late RouteService _routeService;
-  late SearchService _searchService;
+
+  static const CameraPosition _initialCameraPosition = CameraPosition(
+    target: LatLng(31.2001, 29.9187),
+    zoom: 15.0,
+  );
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _MapScreenState extends State<MapScreen> {
 
     _routeService = RouteService(
       setIsLoadingRoute: (loading) => setState(() => isLoadingRoute = loading),
-      setRoutePoints: (points) => setState(() => routePoints = points),
+      setPolylines: (newPolylines) => setState(() => polylines = newPolylines),
       setShowRoute: (show) => setState(() => showRoute = show),
       setRouteInfo: (distance, duration) => setState(() {
         routeDistance = distance;
@@ -55,86 +56,98 @@ class _MapScreenState extends State<MapScreen> {
       showSnackBar: _showSnackBar,
     );
 
-    _searchService = SearchService(
-      setSearchResults: (results) => setState(() => searchResults = results),
-      setIsLoadingSearch: (loading) => setState(() => isLoadingSearch = loading),
-      showSnackBar: _showSnackBar,
-    );
 
     _locationService = LocationService(
-      mapController: _mapController,
-      onLocationUpdate: (loc) => setState(() => currentLocation = loc),
+      onLocationUpdate: (position) => setState(() => currentLocation = position),
       showSnackBar: _showSnackBar,
       updateCurrentMarker: _updateCurrentMarker,
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _locationService.initLocation();
+    _initLocation();
+  }
+
+  Future<void> _initLocation() async {
+    await _locationService.initLocation();
+  }
+
+  void _updateCurrentMarker(Position position) {
+    markers.removeWhere((marker) => marker.markerId == const MarkerId('current'));
+
+    markers.add(
+      Marker(
+        markerId: const MarkerId('current'),
+        position: LatLng(position.latitude, position.longitude),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+        infoWindow: const InfoWindow(title: 'Current Location'),
+      ),
+    );
+  }
+
+  void _addDestination(LatLng point) {
+    markers.removeWhere((marker) => marker.markerId == const MarkerId('destination'));
+
+    markers.add(
+      Marker(
+        markerId: const MarkerId('destination'),
+        position: point,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        infoWindow: const InfoWindow(title: 'Destination'),
+      ),
+    );
+
+    setState(() {
+      showRouteInfo = true;
     });
+
+    if (currentLocation != null) {
+      _routeService.fetchRoute(
+        LatLng(currentLocation!.latitude, currentLocation!.longitude),
+        point,
+      );
+    }
   }
 
-  @override
-  void dispose() {
-    _locationService.dispose();
-    _searchService.dispose();
-    searchController.dispose();
-    super.dispose();
-  }
 
-  void _updateCurrentMarker(LocationData loc) {
-    markers.removeWhere((m) => m.key == const ValueKey('current'));
-    if (loc.latitude != null && loc.longitude != null) {
-      markers.add(
-        Marker(
-          key: const ValueKey('current'),
-          width: AppSizes.width112,
-          height: AppSizes.height112,
-          point: LatLng(loc.latitude!, loc.longitude!),
-          child: MapWidgets.buildCurrentLocationMarker(context),
+
+  void _moveToCurrentLocation() {
+    if (currentLocation != null && _mapController != null) {
+      _mapController!.animateCamera(
+        CameraUpdate.newLatLng(
+          LatLng(currentLocation!.latitude, currentLocation!.longitude),
         ),
       );
     }
   }
 
-  void _addDestination(LatLng point) {
-    markers.removeWhere((m) => m.key == const ValueKey('destination'));
-    markers.add(
-      Marker(
-        key: const ValueKey('destination'),
-        width: AppSizes.width112,
-        height: AppSizes.height152,
-        point: point,
-        child: MapWidgets.buildDestinationPin(context),
-      ),
-    );
-    setState(() {
-      showRouteInfo = true;
-    });
-    _routeService.fetchRoute(currentLocation, point);
-  }
-
-  void _searchLocation(String query) {
-    _searchService.searchLocation(query, currentLocation);
-  }
-
-  void _moveToCurrent() {
-    _locationService.moveToCurrentLocation(currentLocation);
-  }
-
   void _toggleRoute() {
-    setState(() => showRoute = !showRoute);
+    setState(() {
+      showRoute = !showRoute;
+      if (!showRoute) {
+        polylines = {};
+      } else if (markers.any((m) => m.markerId == const MarkerId('destination')) &&
+          currentLocation != null) {
+        final destinationMarker = markers.firstWhere(
+                (m) => m.markerId == const MarkerId('destination')
+        );
+        _routeService.fetchRoute(
+          LatLng(currentLocation!.latitude, currentLocation!.longitude),
+          destinationMarker.position,
+        );
+      }
+    });
   }
 
   void _clearDestination() {
     setState(() {
-      markers.removeWhere((m) => m.key == const ValueKey('destination'));
-      routePoints = [];
+      markers.removeWhere((m) => m.markerId == const MarkerId('destination'));
+      polylines = {};
       showRoute = false;
       routeDistance = null;
       routeDuration = null;
       showRouteInfo = false;
     });
   }
+
 
   void _showSnackBar(String message) {
     if (mounted) {
@@ -153,9 +166,17 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   @override
+  void dispose() {
+    _mapController?.dispose();
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: GestureDetector(
@@ -169,226 +190,48 @@ class _MapScreenState extends State<MapScreen> {
         },
         child: Stack(
           children: [
-            FlutterMap(
-              mapController: _mapController,
-              options: MapOptions(
-                initialCenter: const LatLng(31.2001, 29.9187),
-                initialZoom: 15.0,
-                onTap: (tap, latlng) {
-                  _addDestination(latlng);
-                  if (searching) {
-                    setState(() {
-                      searching = false;
-                      searchResults = [];
-                    });
-                  }
-                },
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'com.tal3a.app',
-                  maxZoom: 19,
-                ),
-                if (routePoints.isNotEmpty && showRoute)
-                  PolylineLayer(
-                    polylines: [
-                      Polyline(
-                        points: routePoints,
-                        strokeWidth: AppSizes.width12,
-                        color: AppColors.primaryBlue,
-                        borderStrokeWidth: AppSizes.width4,
-                        borderColor: theme.scaffoldBackgroundColor,
-                      ),
-                    ],
-                  ),
-                MarkerLayer(markers: markers),
-              ],
+            GoogleMap(
+              onMapCreated: (controller) {
+                setState(() {
+                  _mapController = controller;
+                });
+              },
+              initialCameraPosition: _initialCameraPosition,
+              markers: markers,
+              polylines: showRoute ? polylines : {},
+              onTap: (latlng) {
+                _addDestination(latlng);
+                if (searching) {
+                  setState(() {
+                    searching = false;
+                    searchResults = [];
+                  });
+                }
+              },
+              myLocationEnabled: true,
+              myLocationButtonEnabled: false,
+              compassEnabled: true,
             ),
-
 
             // Loading Indicator for Route
             if (isLoadingRoute)
               MapWidgets.buildRouteLoadingIndicator(context),
 
-            // Search Bar
-            Positioned(
-              top: AppSizes.height120,
-              left: AppSizes.width32,
-              right: AppSizes.width32,
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() => searching = true);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppSizes.pd28h,
-                        vertical: AppSizes.pd20v,
-                      ),
-                      decoration: BoxDecoration(
-                        color: theme.scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(AppSizes.radius28),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: AppSizes.radius40,
-                            offset: Offset(0, AppSizes.height12),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.search,
-                            color: AppColors.placeholderColor,
-                            size: AppSizes.radius80,
-                          ),
-                          SizedBox(width: AppSizes.width24),
-                          Expanded(
-                            child: searching
-                                ? TextField(
-                              controller: searchController,
-                              autofocus: true,
-                              textInputAction: TextInputAction.search,
-                              style: Theme.of(context).textTheme.displayMedium,
-                              decoration: InputDecoration(
-                                hintText: localizations.searchPlaceOrAddress,
-                                hintStyle: Theme.of(context).textTheme.displayMedium,
-                                border: InputBorder.none,
-                                isCollapsed: true,
-                                suffixIcon:
-                                searchController.text.isNotEmpty
-                                    ? IconButton(
-                                  icon: Icon(
-                                    Icons.clear,
-                                    size: AppSizes.radius80,
-                                  ),
-                                  onPressed: () {
-                                    searchController.clear();
-                                    setState(() {
-                                      searchResults = [];
-                                      isLoadingSearch = false;
-                                    });
-                                  },
-                                )
-                                    : null,
-                              ),
-                              onChanged: _searchLocation,
-                              onSubmitted: (value) {
-                                setState(() => searching = false);
-                              },
-                            )
-                                : Text(
-                              localizations.searchForPlace,
-                              style: Theme.of(context).textTheme.displayMedium,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (isLoadingSearch)
-                    Container(
-                      margin: EdgeInsets.only(top: AppSizes.height8),
-                      padding: EdgeInsets.all(AppSizes.pd32a),
-                      decoration: BoxDecoration(
-                        color: theme.scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(AppSizes.radius20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: AppSizes.radius12,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: SizedBox(
-                          width: AppSizes.width48,
-                          height: AppSizes.height48,
-                          child: CircularProgressIndicator(
-                            strokeWidth: AppSizes.width6,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              AppColors.primaryBlue,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  if (searchResults.isNotEmpty && !isLoadingSearch)
-                    Container(
-                      margin: EdgeInsets.only(top: AppSizes.height8),
-                      constraints: BoxConstraints(maxHeight: AppSizes.height800),
-                      decoration: BoxDecoration(
-                        color: theme.scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(AppSizes.radius20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: AppSizes.radius12,
-                          ),
-                        ],
-                      ),
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: searchResults.length,
-                        separatorBuilder: (context, index) => Divider(
-                          height: AppSizes.height1,
-                          indent: AppSizes.width28,
-                          endIndent: AppSizes.width28,
-                        ),
-                        itemBuilder: (context, index) {
-                          final result = searchResults[index];
-                          return ListTile(
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: AppSizes.pd28h,
-                              vertical: AppSizes.pd16v,
-                            ),
-                            leading: Icon(
-                              Icons.location_on,
-                              color: AppColors.primaryBlue,
-                              size: AppSizes.radius50,
-                            ),
-                            title: Text(
-                              result['name'],
-                              style: Theme.of(context).textTheme.titleSmall,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            onTap: () {
-                              final lat = result['lat'] as double;
-                              final lon = result['lon'] as double;
-                              _mapController.move(
-                                LatLng(lat, lon),
-                                MapConstants.defaultZoom,
-                              );
-                              _addDestination(LatLng(lat, lon));
-                              setState(() {
-                                searching = false;
-                                searchResults = [];
-                                searchController.text = result['name'];
-                              });
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                ],
-              ),
-            ),
+
+            // Route Info Card
             if (showRouteInfo && routeDistance != null && routeDuration != null && showRoute)
               Positioned(
                 bottom: 0,
                 left: 0,
-                 right:0,
+                right: 0,
                 child: MapWidgets.buildRouteInfoCard(
                   context,
                   distance: routeDistance!,
                   duration: routeDuration!,
-
                 ),
               ),
+
+            // Floating Action Buttons
             Positioned(
               right: AppSizes.width32,
               top: AppSizes.height540,
@@ -399,13 +242,13 @@ class _MapScreenState extends State<MapScreen> {
                     button: true,
                     child: MapWidgets.buildFloatingButton(
                       context: context,
-                      onTap: _moveToCurrent,
+                      onTap: _moveToCurrentLocation,
                       icon: Icons.my_location,
                       tooltip: localizations.myLocation,
                     ),
                   ),
                   SizedBox(height: AppSizes.height24),
-                  if (routePoints.isNotEmpty)
+                  if (polylines.isNotEmpty)
                     Semantics(
                       label: showRoute ? localizations.hideRoute : localizations.showRoute,
                       button: true,
@@ -418,9 +261,9 @@ class _MapScreenState extends State<MapScreen> {
                         context: context,
                       ),
                     ),
-                  if (markers.any((m) => m.key == const ValueKey('destination')))
+                  if (markers.any((m) => m.markerId == const MarkerId('destination')))
                     SizedBox(height: AppSizes.height24),
-                  if (markers.any((m) => m.key == const ValueKey('destination')))
+                  if (markers.any((m) => m.markerId == const MarkerId('destination')))
                     Semantics(
                       label: localizations.clearDestination,
                       button: true,
