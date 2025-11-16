@@ -22,16 +22,22 @@ class OnboardingThirdScreen extends StatelessWidget {
             ),
             Positioned(
               bottom: AppSizes.height400,
-              left: AppSizes.width8,
+              left: 0,
+              right: 0,
               child: Text(
-                AppStrings.onboardingFirstLine,
+                AppStrings.onboardingThirdScreenFirstLine,
+                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
                 style: theme.textTheme.titleLarge,
               ),
             ),Positioned(
               bottom: AppSizes.height320,
-              left: AppSizes.width200,
+              left: 0,
+              right: 0,
               child: Text(
-                AppStrings.onboardingSecondLine,
+                AppStrings.onboardingThirdScreenSecondLine,
+                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
                 style: theme.textTheme.titleLarge,
               ),
             ),

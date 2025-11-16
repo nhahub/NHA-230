@@ -21,17 +21,21 @@ class OnboardingFirstScreen extends StatelessWidget {
           ),
           Positioned(
             bottom: AppSizes.height400,
-            left: AppSizes.width8,
+            left:0,
+            right: 0,
             child: Text(
-              AppStrings.onboardingFirstLine,
+              AppStrings.onboardingFirstScreenFirstLine,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
           Positioned(
             bottom: AppSizes.height320,
-            left: AppSizes.width200,
+            left:0,
+            right: 0,
             child: Text(
-              AppStrings.onboardingSecondLine,
+              AppStrings.onboardingFirstScreenSecondLine,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),

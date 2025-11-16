@@ -120,6 +120,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profile => 'الحساب الشخصي';
 
   @override
+  String get likedPlaces => 'الاماكن المفضلة';
+
+  @override
+  String get noLikedPlaces => 'لا توجد اماكن مفضلة';
+
+  @override
   String get goToLocation => 'أذهب إلى الموقع';
 
   @override

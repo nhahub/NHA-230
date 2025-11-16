@@ -2,84 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tal3a/core/core.dart';
 
 class MapWidgets {
-  static Widget buildCurrentLocationMarker(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Container(
-        width: AppSizes.width80,
-        height: AppSizes.height80,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppColors.primaryBlue, AppColors.secondaryBlue],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primaryBlue,
-              blurRadius: AppSizes.width16,
-            ),
-          ],
-        ),
-        child: Icon(
-          Icons.my_location,
-          size: AppSizes.radius36,
-          color: AppColors.white,
-        ),
-      ),
-    );
-  }
-
-  static Widget buildDestinationPin(BuildContext context) {
-    return SizedBox(
-      width: AppSizes.width100,
-      height: AppSizes.height140,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: AppSizes.width72,
-            height: AppSizes.height72,
-            decoration: BoxDecoration(
-              color: AppColors.yellow,
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primaryBlue, width: AppSizes.width4),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: AppSizes.radius12,
-                ),
-              ],
-            ),
-            child: Icon(
-              Icons.place,
-              size: AppSizes.radius36,
-              color: Colors.black87,
-            ),
-          ),
-          SizedBox(height: AppSizes.height12),
-          Transform.rotate(
-            angle: 3.1416 / 4,
-            child: Container(
-              width: AppSizes.width36,
-              height: AppSizes.height36,
-              decoration: BoxDecoration(
-                color: AppColors.primaryBlue,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: AppSizes.radius8,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   static Widget buildFloatingButton({
     required BuildContext context,
     required VoidCallback onTap,
@@ -132,7 +54,7 @@ class MapWidgets {
             borderRadius: BorderRadius.circular(AppSizes.radius28),
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
+                color: AppColors.darkGrey,
                 blurRadius: AppSizes.radius20,
               ),
             ],
@@ -162,7 +84,94 @@ class MapWidgets {
     );
   }
 
-  // Updated widget for displaying route information at bottom
+  static Widget buildSearchLoadingIndicator(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      margin: EdgeInsets.only(top: AppSizes.height8),
+      padding: EdgeInsets.all(AppSizes.pd32a),
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(AppSizes.radius20),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.darkGrey,
+            blurRadius: AppSizes.radius12,
+          ),
+        ],
+      ),
+      child: Center(
+        child: SizedBox(
+          width: AppSizes.width48,
+          height: AppSizes.height48,
+          child: CircularProgressIndicator(
+            strokeWidth: AppSizes.width6,
+            valueColor: AlwaysStoppedAnimation<Color>(
+              AppColors.primaryBlue,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget buildSearchResults(
+      BuildContext context, {
+        required List<Map<String, dynamic>> searchResults,
+        required Function(Map<String, dynamic>) onLocationSelected,
+      }) {
+    final theme = Theme.of(context);
+    return Container(
+      margin: EdgeInsets.only(top: AppSizes.height8),
+      constraints: BoxConstraints(maxHeight: AppSizes.height800),
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(AppSizes.radius20),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.darkGrey,
+            blurRadius: AppSizes.radius12,
+          ),
+        ],
+      ),
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemCount: searchResults.length,
+        separatorBuilder: (context, index) => Divider(
+          height: AppSizes.height1,
+          indent: AppSizes.width28,
+          endIndent: AppSizes.width28,
+        ),
+        itemBuilder: (context, index) {
+          final result = searchResults[index];
+          return ListTile(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: AppSizes.pd28h,
+              vertical: AppSizes.pd16v,
+            ),
+            leading: Icon(
+              Icons.location_on,
+              color: AppColors.primaryBlue,
+              size: AppSizes.radius50,
+            ),
+            title: Text(
+              result['name'],
+              style: Theme.of(context).textTheme.titleSmall,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: result['address'] != null ? Text(
+              result['address'],
+              style: Theme.of(context).textTheme.bodySmall,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ) : null,
+            onTap: () => onLocationSelected(result),
+          );
+        },
+      ),
+    );
+  }
+
   static Widget buildRouteInfoCard(
       BuildContext context, {
         required double distance,
@@ -170,10 +179,9 @@ class MapWidgets {
       }) {
     final theme = Theme.of(context);
 
-    // Convert meters to kilometers
+
     final distanceInKm = distance / 1000;
 
-    // Convert seconds to minutes
     final durationInMinutes = (duration / 60).ceil();
 
     return Container(
@@ -186,7 +194,7 @@ class MapWidgets {
         borderRadius: BorderRadius.circular(AppSizes.radius20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black26,
+            color: AppColors.darkGrey,
             blurRadius: AppSizes.radius16,
             offset: Offset(0, AppSizes.height8),
           ),
@@ -201,13 +209,13 @@ class MapWidgets {
         children: [
           _buildInfoItem(
             context,
-            icon: Icons.horizontal_distribute_sharp,
+            icon: Icons.route,
             value: '${distanceInKm.toStringAsFixed(1)} km',
           ),
           _buildInfoItem(
             context,
             icon: Icons.access_time,
-            value: '$durationInMinutes minutes',
+            value: '$durationInMinutes min',
           ),
           _buildInfoItem(
             context,
@@ -241,7 +249,6 @@ class MapWidgets {
             color: AppColors.primaryBlue,
           ),
         ),
-        SizedBox(height: AppSizes.height4),
       ],
     );
   }

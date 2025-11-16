@@ -37,6 +37,8 @@
   "map" : "Map",
   "home" : "home",
   "profile" : "Profile",
+  "likedPlaces" : "Liked Places",
+  "noLikedPlaces" : "No liked places",
   "goToLocation" : "Go tp location",
   "branches" : "📍 Branches:",
   "unnamedPlace" : "Unnamed Place",

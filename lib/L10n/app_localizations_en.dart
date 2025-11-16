@@ -120,6 +120,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile => 'Profile';
 
   @override
+  String get likedPlaces => 'Liked Places';
+
+  @override
+  String get noLikedPlaces => 'No liked places';
+
+  @override
   String get goToLocation => 'Go tp location';
 
   @override
