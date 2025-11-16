@@ -1,76 +1,93 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'dart:ui';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart';
-import '../constant/map_constants.dart';
+import 'dart:convert';
+import 'package:tal3a/core/core.dart';
+
 
 class RouteService {
   final Function(bool) setIsLoadingRoute;
-  final Function(List<LatLng>) setRoutePoints;
+  final Function(Set<Polyline>) setPolylines;
   final Function(bool) setShowRoute;
   final Function(double, double) setRouteInfo;
   final Function(String) showSnackBar;
 
   RouteService({
     required this.setIsLoadingRoute,
-    required this.setRoutePoints,
+    required this.setPolylines,
     required this.setShowRoute,
     required this.setRouteInfo,
     required this.showSnackBar,
   });
 
-  Future<void> fetchRoute(
-    LocationData? currentLocation,
-    LatLng destination,
-  ) async {
-    if (currentLocation == null) {
-      showSnackBar('Current location not available');
-      return;
-    }
-
+  Future<void> fetchRoute(LatLng origin, LatLng destination) async {
     setIsLoadingRoute(true);
 
-    final start = LatLng(currentLocation.latitude!, currentLocation.longitude!);
-
-    final url =
-        'https://api.openrouteservice.org/v2/directions/driving-car?api_key=${MapConstants.apiKey}&start=${start.longitude},${start.latitude}&end=${destination.longitude},${destination.latitude}';
-
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(
+        Uri.parse(
+          'https://router.project-osrm.org/route/v1/driving/'
+              '${origin.longitude},${origin.latitude};'
+              '${destination.longitude},${destination.latitude}'
+              '?overview=full&geometries=polyline',
+        ),
+      );
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        if (data['code'] == 'Ok') {
+          final route = data['routes'][0];
+          final distance = route['distance'] as double;
+          final duration = route['duration'] as double;
 
-        // تأكدي أن البيانات موجودة
-        if (data['features'] != null &&
-            data['features'].isNotEmpty &&
-            data['features'][0]['geometry'] != null &&
-            data['features'][0]['properties'] != null) {
-          final List<dynamic> coords =
-              data['features'][0]['geometry']['coordinates'];
-          final newPoints = coords.map((c) => LatLng(c[1], c[0])).toList();
+          final points = _decodePolyline(route['geometry']);
 
-          final summary = data['features'][0]['properties']['summary'];
-          final distance = summary['distance']?.toDouble() ?? 0.0;
-          final duration = summary['duration']?.toDouble() ?? 0.0;
-
-          // تأكدي أن القيم صحيحة قبل التحديث
-          if (distance > 0 && duration > 0) {
-            setRoutePoints(newPoints);
-            setShowRoute(true);
-            setRouteInfo(distance, duration);
-            setIsLoadingRoute(false);
-            return;
-          }
+          setRouteInfo(distance, duration);
+          setPolylines({
+            Polyline(
+              polylineId: const PolylineId('route'),
+              points: points,
+              color: AppColors.primaryBlue,
+              width: 5,
+            ),
+          });
+          setShowRoute(true);
         }
       }
-
-      setIsLoadingRoute(false);
-      showSnackBar('Could not find valid route');
     } catch (e) {
-      debugPrint('Route exception: $e');
+      showSnackBar('Error fetching route: $e');
+    } finally {
       setIsLoadingRoute(false);
-      showSnackBar('Network error. Please try again.');
     }
+  }
+
+  List<LatLng> _decodePolyline(String encoded) {
+    List<LatLng> points = [];
+    int index = 0, len = encoded.length;
+    int lat = 0, lng = 0;
+
+    while (index < len) {
+      int b, shift = 0, result = 0;
+      do {
+        b = encoded.codeUnitAt(index++) - 63;
+        result |= (b & 0x1f) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+      int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+      lat += dlat;
+
+      shift = 0;
+      result = 0;
+      do {
+        b = encoded.codeUnitAt(index++) - 63;
+        result |= (b & 0x1f) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+      int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+      lng += dlng;
+
+      points.add(LatLng(lat / 1E5, lng / 1E5));
+    }
+    return points;
   }
 }

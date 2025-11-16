@@ -14,12 +14,13 @@ class PlaceInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         flexibleSpace: Container(
-          color: AppColors.white,
+          color: theme.scaffoldBackgroundColor,
           padding: EdgeInsets.symmetric(
             horizontal: AppSizes.width40,
             vertical: AppSizes.height16,
@@ -56,7 +57,7 @@ class PlaceInfoScreen extends StatelessWidget {
               width: double.infinity,
               padding: EdgeInsets.all(AppSizes.pd32h),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.scaffoldBackgroundColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(AppSizes.pd70h),
                   topRight: Radius.circular(AppSizes.pd70h),
@@ -68,7 +69,7 @@ class PlaceInfoScreen extends StatelessWidget {
                   PlaceDetailsWidget(placeData: placeData),
                   SizedBox(height: AppSizes.height24),
                   Divider(
-                    color: Colors.black,
+                    // color: Colors.black,
                     thickness: 1.5,
                     endIndent: AppSizes.width100,
                     indent: AppSizes.width100,
