@@ -17,6 +17,7 @@ class AppSizes {
   static double pd40h = 40.w;
   static double pd48h = 48.w;
   static double pd56h = 56.w;
+  static double pd60h = 60.w;
   static double pd64h = 64.w;
   static double pd70h = 70.w;
   static double pd80h = 80.w;

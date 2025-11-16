@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
+import 'package:tal3a/features/favorites/presentation/screens/liked_screen.dart';
 import 'package:tal3a/features/home/providers/category_provider.dart';
 import 'package:tal3a/features/home/screens/search_screen.dart';
 import 'package:tal3a/features/home/widgets/background_container.dart';
 import 'package:tal3a/features/home/widgets/categories_card.dart';
 import 'package:tal3a/features/home/widgets/place_card.dart';
-import 'package:tal3a/features/home/widgets/promotion_slider.dart';
+import 'package:tal3a/features/home/widgets/liked_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -112,13 +113,6 @@ class HomeScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    PromotionSlider(
-                      imagePaths: [
-                        AppAssets.promotion,
-                        AppAssets.promotion,
-                        AppAssets.promotion,
-                      ],
-                    ),
                     SizedBox(height: AppSizes.height15),
 
                     // ====== Categories Row ======
@@ -146,7 +140,7 @@ class HomeScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     final category = categories[index];
                                     return CategoriesCard(
-                                      collection: category['collection]!,
+                                      collection: category['collection']!,
                                       title: category['title']!,
                                       iconPath: category['icon']!,
                                       activeIconPath: category['activeIcon'],
@@ -196,7 +190,11 @@ class HomeScreen extends StatelessWidget {
                           ) {
                             final data =
                                 items[index].data() as Map<String, dynamic>;
-                            return PlaceCard(data: data);
+                            return PlaceCard(
+                              data: data,
+                              collection: categoryProvider.currentCollection,
+                              placeId: items[index].id,
+                            );
                           }, childCount: items.length),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
