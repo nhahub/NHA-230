@@ -71,6 +71,21 @@ class DarkTheme {
           fontWeight: FontWeight.bold,
           color: AppColors.offWhite,
         ),
+        labelLarge: GoogleFonts.montserrat(
+          fontSize: 60.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.black,
+        ), //*used in bottomsheet
+        labelMedium: GoogleFonts.montserrat(
+          fontSize: 50.sp,
+          fontWeight: FontWeight.bold,
+          color: AppColors.offWhite,
+        ), //*used in listtiles
+        labelSmall: GoogleFonts.montserrat(
+              color: AppColors.offWhite,
+              fontWeight: FontWeight.bold,
+              fontSize: 64.sp,
+        ) //*used in place info
       ),
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: TextStyle(
@@ -108,6 +123,7 @@ class DarkTheme {
         }),
       ),
       cardColor: AppColors.darkGrey,
+      dividerColor: AppColors.offWhite
     );
   }
 }

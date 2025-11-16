@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/cubit/localization/local_state.dart';
@@ -24,6 +22,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool notificationsEnabled = true;
+  bool isEditing = false;
+  TextEditingController usernameController = TextEditingController();
+  FocusNode textFocus = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -31,31 +34,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
     usernameController.text = user?.username ?? 'username';
   }
 
-  bool notificationsEnabled = true;
-  bool isDarkMode = false;
-  bool isEditing = false;
-  String currentLanguage = "";
-  String langCode = "en";
-  TextEditingController usernameController = TextEditingController();
-  FocusNode textFocus = FocusNode();
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
+
+      // --------------------- APP BAR ---------------------
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         flexibleSpace: Container(
-          height: AppSizes.height200,
-          decoration: BoxDecoration(gradient: AppColors.primaryGradient),
-        ),
-        title: Text(localizations.tal3a, style: theme.textTheme.headlineLarge),
-        leading: SvgPicture.asset(
-          AppAssets.appBarLeadingIcon,
-          colorFilter: ColorFilter.mode(AppColors.offWhite, BlendMode.srcIn),
+          color: theme.scaffoldBackgroundColor,
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSizes.width40,
+            vertical: AppSizes.height16,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: theme.iconTheme.color,
+                  size: AppSizes.width70,
+                ),
+              ),
+              Expanded(
+                child: Image.asset(
+                  AppAssets.appbarIconLightTheme,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(width: AppSizes.width90),
+            ],
+          ),
         ),
       ),
+
+      // ----------------------- BODY -----------------------
       body: BlocConsumer<UserCubit, UserModel?>(
         listener: (context, user) {
           if (user?.profileImagePath != null &&
@@ -69,9 +88,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (!isEditing) {
             usernameController.text = user?.username ?? 'username';
           }
+
           return SingleChildScrollView(
             child: Column(
               children: [
+                // ---------------- PROFILE ICON ----------------
                 Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: AppSizes.pd12v),
@@ -83,32 +104,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           width: AppSizes.width600,
                           height: AppSizes.height600,
                           decoration: BoxDecoration(
-                            gradient: AppColors.primaryGradient,
+                            gradient: AppColors.primaryGradient, // gradient stays same
                             shape: BoxShape.circle,
                           ),
                           child: CircleAvatar(
                             key: UniqueKey(),
                             radius: AppSizes.radius300,
-                            backgroundColor: Colors.white,
+                            backgroundColor: theme.cardColor,
                             backgroundImage:
                                 (user?.profileImagePath != null &&
-                                    user!.profileImagePath!.isNotEmpty &&
-                                    File(user.profileImagePath!).existsSync())
-                                ? FileImage(File(user.profileImagePath!))
-                                      as ImageProvider
-                                : null,
-                            child:
-                                (user?.profileImagePath == null ||
+                                        user!.profileImagePath!.isNotEmpty &&
+                                        File(user.profileImagePath!).existsSync())
+                                    ? FileImage(File(user.profileImagePath!))
+                                        as ImageProvider
+                                    : null,
+                            child: (user?.profileImagePath == null ||
                                     user!.profileImagePath!.isEmpty ||
                                     !File(user.profileImagePath!).existsSync())
                                 ? Icon(
                                     Icons.person,
                                     size: AppSizes.radius300,
-                                    color: AppColors.black,
+                                    color: theme.iconTheme.color,
                                   )
                                 : null,
                           ),
                         ),
+
+                        // ------------- CAMERA ICON -------------
                         Positioned(
                           bottom: AppSizes.height25,
                           right: AppSizes.width25,
@@ -116,9 +138,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: AppSizes.width600 / 5,
                             height: AppSizes.height600 / 5,
                             decoration: BoxDecoration(
-                              color: AppColors.offWhite,
+                              color: theme.cardColor,
                               border: Border.all(
-                                color: AppColors.placeholderColor,
+                                color: theme.dividerColor,
                                 width: 1,
                               ),
                               shape: BoxShape.circle,
@@ -126,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: IconButton(
                               icon: Icon(
                                 Icons.camera_alt_outlined,
-                                color: AppColors.black,
+                                color: theme.iconTheme.color,
                               ),
                               onPressed: () async {
                                 await showModalBottomSheet(
@@ -141,6 +163,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
+
+                // ---------------- USERNAME ----------------
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -151,10 +175,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         focusNode: textFocus,
                         controller: usernameController,
                         textAlign: TextAlign.end,
-                        style: theme.textTheme.headlineMedium!.copyWith(
-                          color: AppColors.black,
-                        ),
-                        decoration: InputDecoration(
+                        style: theme.textTheme.headlineMedium,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           filled: false,
                         ),
@@ -176,9 +198,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           usernameController.text =
                               user?.username ?? 'username';
                         }
+
                         setState(() {
                           isEditing = !isEditing;
                         });
+
                         if (isEditing) {
                           Future.delayed(Duration(milliseconds: 100), () {
                             textFocus.requestFocus();
@@ -192,6 +216,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
+
+                // ---------------- SETTINGS CONTAINER ----------------
                 Container(
                   margin: EdgeInsets.symmetric(
                     horizontal: AppSizes.pd36h,
@@ -199,19 +225,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   padding: EdgeInsets.all(AppSizes.pd12a),
                   decoration: BoxDecoration(
-                    color: AppColors.white,
+                    color: theme.cardColor,
                     borderRadius: BorderRadius.circular(AppSizes.radius16),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.shadowColor,
+                        color: AppColors.placeholderColor,
                         blurRadius: 10,
-                        offset: const Offset(0, 5),
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
+
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // ---------------- Notifications ----------------
                       CustomListTile(
                         title: localizations.notifications,
                         leadingIcon: Icons.notifications_none_rounded,
@@ -222,22 +250,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         ),
                       ),
+
+                      // ---------------- Language ----------------
                       BlocBuilder<LocaleCubit, LocaleState>(
                         builder: (context, state) {
-                          currentLanguage = state.locale.languageCode == "en"
-                              ? localizations.english
-                              : localizations.arabic;
                           return CustomListTile(
                             title: localizations.language,
                             leadingIcon: Icons.language_rounded,
                             onTap: () {
                               String newLangCode =
                                   state.locale.languageCode == "en"
-                                  ? "ar"
-                                  : "en";
+                                      ? "ar"
+                                      : "en";
                               context.read<LocaleCubit>().toggleLocale(
-                                newLangCode,
-                              );
+                                    newLangCode,
+                                  );
                             },
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -246,6 +273,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   state.locale.languageCode == "en"
                                       ? localizations.english
                                       : localizations.arabic,
+                                  style: theme.textTheme.labelMedium,
                                 ),
                                 const Icon(Icons.arrow_forward_ios_rounded),
                               ],
@@ -253,6 +281,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           );
                         },
                       ),
+
+                      // ---------------- Dark Mode ----------------
                       BlocBuilder<ThemeCubit, ThemeState>(
                         builder: (context, state) {
                           return CustomListTile(
@@ -267,8 +297,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           );
                         },
                       ),
+
+                      // ---------------- Logout ----------------
                       CustomListTile(
-                        color: AppColors.red,
+                        color: Colors.red,
                         leadingIcon: Icons.logout,
                         title: localizations.logOut,
                         onTap: () {

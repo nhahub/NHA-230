@@ -28,10 +28,7 @@ class InfoItemWidget extends StatelessWidget {
           Expanded(
             child: Text(
               value!,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: AppSizes.width48,
-              ),
+              style: Theme.of(context).textTheme.titleMedium
             ),
           ),
         ],

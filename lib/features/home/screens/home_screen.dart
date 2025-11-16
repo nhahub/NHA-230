@@ -146,7 +146,7 @@ class HomeScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     final category = categories[index];
                                     return CategoriesCard(
-                                      collection: category['collection]!,
+                                      collection: category['collection']!,
                                       title: category['title']!,
                                       iconPath: category['icon']!,
                                       activeIconPath: category['activeIcon'],

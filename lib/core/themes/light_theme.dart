@@ -77,6 +77,11 @@ class LightTheme {
           fontWeight: FontWeight.bold,
           color: AppColors.black,
         ), //*used in listtiles
+        labelSmall: GoogleFonts.montserrat(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 64.sp,
+        ) //*used in place info
       ),
       inputDecorationTheme: InputDecorationThemeData(
         hintStyle: TextStyle(
@@ -113,6 +118,7 @@ class LightTheme {
         }),
       ),
       cardColor: AppColors.offWhite,
+      dividerColor: AppColors.black
     );
   }
 }

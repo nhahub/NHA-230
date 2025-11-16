@@ -20,16 +20,16 @@ class PlaceDetailsWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: AppSizes.width64,
-            ),
+            style: Theme.of(context).textTheme.labelSmall,
+            // style: TextStyle(
+            //   color: Colors.black,
+            //   fontWeight: FontWeight.bold,
+            //   fontSize: AppSizes.width64,
+            // ),
           ),
         ),
         SizedBox(height: AppSizes.height16),
         Divider(
-          color: Colors.black,
           thickness: 1.5,
           endIndent: AppSizes.width100,
           indent: AppSizes.width100,
@@ -55,11 +55,12 @@ class PlaceDetailsWidget extends StatelessWidget {
               SizedBox(width: AppSizes.width8),
               Text(
                 placeData['Rating'].toString(),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: AppSizes.width48,
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
+                // style: TextStyle(
+                //   color: Colors.black,
+                //   fontWeight: FontWeight.bold,
+                //   fontSize: AppSizes.width48,
+                // ),
               ),
             ],
           ),
@@ -77,17 +78,13 @@ class PlaceDetailsWidget extends StatelessWidget {
               ),
               Icon(
                 Icons.access_time_filled,
-                color: Colors.black,
                 size: AppSizes.width56,
               ),
               SizedBox(width: AppSizes.width8),
               Expanded(
                 child: Text(
                   placeData['Opening Hours'],
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: AppSizes.width48,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             ],
