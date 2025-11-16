@@ -131,7 +131,7 @@ class BranchesWidget extends StatelessWidget {
     );
   }
 
-    Future<void> _openLink(String? urlString) async {
+  Future<void> _openLink(String? urlString) async {
     if (urlString == null || urlString.trim().isEmpty) return;
 
     final trimmed = urlString.trim();

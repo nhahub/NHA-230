@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
+
 import '../service/location_service.dart';
 import '../service/route_service.dart';
 import '../widget/map_widget.dart';
@@ -17,7 +18,6 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final TextEditingController searchController = TextEditingController();
-
   GoogleMapController? _mapController;
   Position? currentLocation;
   Set<Marker> markers = {};
@@ -55,7 +55,6 @@ class _MapScreenState extends State<MapScreen> {
       }),
       showSnackBar: _showSnackBar,
     );
-
 
     _locationService = LocationService(
       onLocationUpdate: (position) => setState(() => currentLocation = position),
@@ -213,6 +212,7 @@ class _MapScreenState extends State<MapScreen> {
               compassEnabled: true,
             ),
 
+
             // Loading Indicator for Route
             if (isLoadingRoute)
               MapWidgets.buildRouteLoadingIndicator(context),
@@ -228,6 +228,7 @@ class _MapScreenState extends State<MapScreen> {
                   context,
                   distance: routeDistance!,
                   duration: routeDuration!,
+
                 ),
               ),
 
