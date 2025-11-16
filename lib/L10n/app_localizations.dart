@@ -320,6 +320,18 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get profile;
 
+  /// No description provided for @likedPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Liked Places'**
+  String get likedPlaces;
+
+  /// No description provided for @noLikedPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'No liked places'**
+  String get noLikedPlaces;
+
   /// No description provided for @goToLocation.
   ///
   /// In en, this message translates to:

@@ -19,12 +19,17 @@ class AppInitializer {
     await UserSettings.init();
     await UserLocalData().init();
 
+    // أنشئ الـ cubit مرة واحدة
+    userCubit = UserCubit();
+
+    // حمّل بيانات المستخدم والفافوريتس على نفس الـ cubit
+    await userCubit.loadUserFromLocal();
+    await userCubit.loadFavorites();
+
     themeCubit = ThemeCubit(initialIsDark: ThemeSettings().isDark());
 
     localeCubit = LocaleCubit(
       initialLocale: LocalizationsSettings().getLocale(),
     );
-
-    userCubit = UserCubit()..loadUserFromLocal();
   }
 }
