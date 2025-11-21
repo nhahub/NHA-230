@@ -179,4 +179,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingThirdScreenSecondLine => 'and start your trip';
+
+  @override
+  String get likedPlaces => 'Liked Places';
 }

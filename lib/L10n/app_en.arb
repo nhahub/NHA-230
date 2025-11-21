@@ -53,8 +53,11 @@
   "logOut" : "Log Out",
   "onboardingFirstScreenFirstLine": "Not sure where to go in Alexandria?",
   "onboardingFirstScreenSecondLine": "Tal3a will guide you!",
+  
   "onboardingSecondScreenFirstLine": "Restaurants, cafés, beaches…",
   "onboardingSecondScreenSecondLine": "Choose what suits you!",
+  
   "onboardingThirdScreenFirstLine": "Save the places you like",
-  "onboardingThirdScreenSecondLine": "and start your trip"
+  "onboardingThirdScreenSecondLine": "and start your trip",
+  "likedPlaces" : "Liked Places"
 }

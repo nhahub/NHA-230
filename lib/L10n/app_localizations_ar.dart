@@ -30,7 +30,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signupButton => 'إنشاء حساب';
 
   @override
-  String get noAccount => ' ليس لديك حساب؟';
+  String get noAccount => 'ليس لديك حساب؟';
 
   @override
   String get haveAccount => 'هل لديك حساب بالفعل؟';
@@ -42,7 +42,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get googleSignIn => 'المتابعة عبر جوجل';
 
   @override
-  String get gooleSignUp => 'إنشاء حساب عبر جوجل';
+  String get gooleSignUp => 'Sign up with Google';
 
   @override
   String get invalidEmail => 'يرجى إدخال بريد إلكتروني صالح';
@@ -57,7 +57,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterName => 'يرجى إدخال الاسم';
 
   @override
-  String get errorTryAgain => 'حدث خطأ, حاول مرة أخرى';
+  String get errorTryAgain => 'حدث خطأ، حاول مرة أخرى';
 
   @override
   String get resetPasswordSent => 'تم إرسال رسالة إعادة تعيين كلمة المرور';
@@ -111,10 +111,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get clearDestination => 'مسح الوجهة';
 
   @override
-  String get noLikedPlaces => 'لا توجد اماكن مفضلة';
+  String get noLikedPlaces => 'لا توجد أماكن مفضلة';
 
   @override
-  String get goToLocation => 'أذهب إلى الموقع';
+  String get goToLocation => 'اذهب إلى الموقع';
 
   @override
   String get branches => '📍 الفروع:';
@@ -126,7 +126,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get type => 'النوع';
 
   @override
-  String get rating => 'التقييم : ';
+  String get rating => 'التقييم:';
 
   @override
   String get openingHours => 'ساعات العمل';
@@ -178,4 +178,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardingThirdScreenSecondLine => 'وابدأ طلعتك';
+
+  @override
+  String get likedPlaces => 'الأماكن المفضلة';
 }

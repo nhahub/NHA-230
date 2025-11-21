@@ -439,6 +439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'and start your trip'**
   String get onboardingThirdScreenSecondLine;
+
+  /// No description provided for @likedPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Liked Places'**
+  String get likedPlaces;
 }
 
 class _AppLocalizationsDelegate
