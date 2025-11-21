@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Text(
                               localizations.forgotPassword,
-                              style: theme.textTheme.displaySmall,
+                              style: theme.textTheme. bodyLarge,
                             ),
                           ],
                         ),

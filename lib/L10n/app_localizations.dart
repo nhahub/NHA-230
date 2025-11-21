@@ -302,30 +302,6 @@ abstract class AppLocalizations {
   /// **'Clear destination'**
   String get clearDestination;
 
-  /// No description provided for @map.
-  ///
-  /// In en, this message translates to:
-  /// **'Map'**
-  String get map;
-
-  /// No description provided for @home.
-  ///
-  /// In en, this message translates to:
-  /// **'home'**
-  String get home;
-
-  /// No description provided for @profile.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile'**
-  String get profile;
-
-  /// No description provided for @likedPlaces.
-  ///
-  /// In en, this message translates to:
-  /// **'Liked Places'**
-  String get likedPlaces;
-
   /// No description provided for @noLikedPlaces.
   ///
   /// In en, this message translates to:
@@ -427,6 +403,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log Out'**
   String get logOut;
+
+  /// No description provided for @onboardingFirstScreenFirstLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure where to go in Alexandria?'**
+  String get onboardingFirstScreenFirstLine;
+
+  /// No description provided for @onboardingFirstScreenSecondLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Tal3a will guide you!'**
+  String get onboardingFirstScreenSecondLine;
+
+  /// No description provided for @onboardingSecondScreenFirstLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurants, cafés, beaches…'**
+  String get onboardingSecondScreenFirstLine;
+
+  /// No description provided for @onboardingSecondScreenSecondLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what suits you!'**
+  String get onboardingSecondScreenSecondLine;
+
+  /// No description provided for @onboardingThirdScreenFirstLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the places you like'**
+  String get onboardingThirdScreenFirstLine;
+
+  /// No description provided for @onboardingThirdScreenSecondLine.
+  ///
+  /// In en, this message translates to:
+  /// **'and start your trip'**
+  String get onboardingThirdScreenSecondLine;
 }
 
 class _AppLocalizationsDelegate

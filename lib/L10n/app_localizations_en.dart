@@ -111,18 +111,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clearDestination => 'Clear destination';
 
   @override
-  String get map => 'Map';
-
-  @override
-  String get home => 'home';
-
-  @override
-  String get profile => 'Profile';
-
-  @override
-  String get likedPlaces => 'Liked Places';
-
-  @override
   String get noLikedPlaces => 'No liked places';
 
   @override
@@ -172,4 +160,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logOut => 'Log Out';
+
+  @override
+  String get onboardingFirstScreenFirstLine =>
+      'Not sure where to go in Alexandria?';
+
+  @override
+  String get onboardingFirstScreenSecondLine => 'Tal3a will guide you!';
+
+  @override
+  String get onboardingSecondScreenFirstLine => 'Restaurants, cafés, beaches…';
+
+  @override
+  String get onboardingSecondScreenSecondLine => 'Choose what suits you!';
+
+  @override
+  String get onboardingThirdScreenFirstLine => 'Save the places you like';
+
+  @override
+  String get onboardingThirdScreenSecondLine => 'and start your trip';
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'onboarding_third _screen.dart';
 import 'package:tal3a/core/core.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
+
 
 class OnboardingSecondScreen extends StatelessWidget {
   const OnboardingSecondScreen({super.key});
@@ -9,6 +11,8 @@ class OnboardingSecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+        final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -25,7 +29,7 @@ class OnboardingSecondScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Text(
-              AppStrings.onboardingSecondScreenFirstLine,
+              localizations.onboardingSecondScreenFirstLine,
               textAlign: TextAlign.center,
               textDirection: TextDirection.rtl,
               style: Theme.of(context).textTheme.titleLarge,
@@ -36,7 +40,8 @@ class OnboardingSecondScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Text(
-              AppStrings.onboardingSecondScreenSecondLine,textAlign: TextAlign.center,
+              localizations.onboardingSecondScreenSecondLine,
+              textAlign: TextAlign.center,
               textDirection: TextDirection.rtl,
               style: theme.textTheme.titleLarge,
             ),

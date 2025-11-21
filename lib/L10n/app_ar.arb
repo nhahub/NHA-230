@@ -34,10 +34,6 @@
   "showRoute": "إظهار المسار",
   "hideRoute": "إخفاء المسار",
   "clearDestination": "مسح الوجهة",
-  "map" : "الخريطة",
-  "home" : "الصفحة الرئيسية",
-  "profile" : "الحساب الشخصي",
-  "likedPlaces" : "الاماكن المفضلة",
   "noLikedPlaces" : "لا توجد اماكن مفضلة",
   "goToLocation" : "أذهب إلى الموقع",
   "branches" : "📍 الفروع:",
@@ -54,5 +50,11 @@
   "notifications" : "الإشعارات",
   "language" : "اللغات",
   "darkMode" : "الوضع الداكن",
-  "logOut" : "تسجيل خروج"
+  "logOut" : "تسجيل خروج",
+   "onboardingFirstScreenFirstLine": "لو مش عارف تخرج فين فاسكندريه",
+  "onboardingFirstScreenSecondLine": "طلعه هيعرفك",
+  "onboardingSecondScreenFirstLine": "مطاعم، كافيهات، شواطئ…",
+  "onboardingSecondScreenSecondLine": "اختار اللي يناسبك!",
+  "onboardingThirdScreenFirstLine": "احفظ الأماكن اللي عجبتك",
+  "onboardingThirdScreenSecondLine": "وابدأ طلعتك"
 }

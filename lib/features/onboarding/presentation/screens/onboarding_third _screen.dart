@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tal3a/core/core.dart';
 import 'package:tal3a/features/authentication/presentation/screens/login_screen.dart';
+import 'package:tal3a/L10n/app_localizations.dart';
+
 
 
 class OnboardingThirdScreen extends StatelessWidget {
@@ -10,6 +12,7 @@ class OnboardingThirdScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+        final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       body: Stack(
           children: [
@@ -25,7 +28,7 @@ class OnboardingThirdScreen extends StatelessWidget {
               left: 0,
               right: 0,
               child: Text(
-                AppStrings.onboardingThirdScreenFirstLine,
+                localizations.onboardingThirdScreenFirstLine,
                 textDirection: TextDirection.rtl,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.titleLarge,
@@ -35,7 +38,7 @@ class OnboardingThirdScreen extends StatelessWidget {
               left: 0,
               right: 0,
               child: Text(
-                AppStrings.onboardingThirdScreenSecondLine,
+                localizations.onboardingThirdScreenSecondLine,
                 textDirection: TextDirection.rtl,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.titleLarge,

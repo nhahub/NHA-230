@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/constants/app_sizes.dart';
 import 'package:tal3a/features/home/providers/bottom_navigation_bar_provider.dart';
 
@@ -10,7 +9,6 @@ class MainBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final localizations = AppLocalizations.of(context)!;
 
     return Selector<BottomNavigationBarProvider, int>(
       selector: (_, provider) => provider.currentIndex,
@@ -45,7 +43,7 @@ class MainBottomNavBar extends StatelessWidget {
                       context,
                       index: 0,
                       icon: Icons.location_pin,
-                      label: localizations.map,
+                      label: "",
                       selected: currentIndex == 0,
                     ),
                   ),
@@ -54,7 +52,7 @@ class MainBottomNavBar extends StatelessWidget {
                       context,
                       index: 1,
                       icon: Icons.home,
-                      label: localizations.home,
+                      label:"",
                       selected: currentIndex == 1,
                     ),
                   ),
@@ -63,7 +61,7 @@ class MainBottomNavBar extends StatelessWidget {
                       context,
                       index: 2,
                       icon: Icons.favorite,
-                      label: localizations.likedPlaces,
+                      label: "",
                       selected: currentIndex == 2,
                     ),
                   ),
@@ -72,7 +70,7 @@ class MainBottomNavBar extends StatelessWidget {
                       context,
                       index: 3,
                       icon: Icons.person,
-                      label: localizations.profile,
+                      label: "",
                       selected: currentIndex == 3,
                     ),
                   ),

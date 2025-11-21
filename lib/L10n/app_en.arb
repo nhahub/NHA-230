@@ -34,10 +34,6 @@
   "showRoute" : "Show route",
   "hideRoute" : "Hide route",
   "clearDestination" : "Clear destination",
-  "map" : "Map",
-  "home" : "home",
-  "profile" : "Profile",
-  "likedPlaces" : "Liked Places",
   "noLikedPlaces" : "No liked places",
   "goToLocation" : "Go tp location",
   "branches" : "📍 Branches:",
@@ -54,5 +50,11 @@
   "notifications" : "Notifications",
   "language" : "Language",
   "darkMode" : "Dark Mode",
-  "logOut" : "Log Out"
+  "logOut" : "Log Out",
+  "onboardingFirstScreenFirstLine": "Not sure where to go in Alexandria?",
+  "onboardingFirstScreenSecondLine": "Tal3a will guide you!",
+  "onboardingSecondScreenFirstLine": "Restaurants, cafés, beaches…",
+  "onboardingSecondScreenSecondLine": "Choose what suits you!",
+  "onboardingThirdScreenFirstLine": "Save the places you like",
+  "onboardingThirdScreenSecondLine": "and start your trip"
 }

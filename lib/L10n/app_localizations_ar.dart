@@ -111,18 +111,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get clearDestination => 'مسح الوجهة';
 
   @override
-  String get map => 'الخريطة';
-
-  @override
-  String get home => 'الصفحة الرئيسية';
-
-  @override
-  String get profile => 'الحساب الشخصي';
-
-  @override
-  String get likedPlaces => 'الاماكن المفضلة';
-
-  @override
   String get noLikedPlaces => 'لا توجد اماكن مفضلة';
 
   @override
@@ -172,4 +160,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logOut => 'تسجيل خروج';
+
+  @override
+  String get onboardingFirstScreenFirstLine => 'لو مش عارف تخرج فين فاسكندريه';
+
+  @override
+  String get onboardingFirstScreenSecondLine => 'طلعه هيعرفك';
+
+  @override
+  String get onboardingSecondScreenFirstLine => 'مطاعم، كافيهات، شواطئ…';
+
+  @override
+  String get onboardingSecondScreenSecondLine => 'اختار اللي يناسبك!';
+
+  @override
+  String get onboardingThirdScreenFirstLine => 'احفظ الأماكن اللي عجبتك';
+
+  @override
+  String get onboardingThirdScreenSecondLine => 'وابدأ طلعتك';
 }
