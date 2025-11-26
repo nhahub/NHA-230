@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -113,6 +115,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       CustomElevatedButton(
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
+                            setState(() {
+                              isloading = true;
+                            });
                             try {
                               final credintal = await FirebaseAuthService
                                   .instance
@@ -122,10 +127,21 @@ class _SignupScreenState extends State<SignupScreen> {
                                     password: password.text,
                                   );
                               if (credintal != null) {
+                                
                                 final userModel = UserModel.fromFirebase(
                                   credintal.user!,
                                 );
-                                await context.read<UserCubit>().saveUser( userModel, );
+                                
+                                
+
+                                await context.read<UserCubit>().saveUser(
+                                  userModel,
+                                );
+
+                               
+                                setState(() {
+                                  isloading = false;
+                                });
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                     builder: (context) => RootPage(),
@@ -133,11 +149,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                   (route) => false,
                                 );
                               } else {
+                                setState(() {
+                                  isloading = false;
+                                });
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text(
-                                      localizations.errorTryAgain
-                                    ),
+                                    content: Text(localizations.errorTryAgain),
                                     duration: Duration(seconds: 2),
                                     backgroundColor: AppColors.primaryBlue,
                                   ),
@@ -175,7 +192,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: AppSizes.pd15h),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: AppSizes.pd15h,
+                              ),
                               child: Text(
                                 localizations.or,
                                 style: theme.textTheme.bodyLarge,
@@ -218,7 +237,13 @@ class _SignupScreenState extends State<SignupScreen> {
                               final userModel = UserModel.fromFirebase(
                                 credintal.user!,
                               );
-                              await context.read<UserCubit>().saveUser( userModel, );
+                              await context.read<UserCubit>().saveUser(
+                                userModel,
+                              );
+                              setState(() {
+                                isloading = false;
+                              });
+
                               Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                   builder: (context) => RootPage(),
@@ -226,11 +251,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                 (route) => false,
                               );
                             } else {
+                              setState(() {
+                                isloading = false;
+                              });
+
                               snackBarKey.currentState?.showSnackBar(
                                 SnackBar(
-                                  content: Text(
-                                    localizations.errorTryAgain,
-                                  ),
+                                  content: Text(localizations.errorTryAgain),
                                   duration: Duration(seconds: 2),
                                   backgroundColor: AppColors.primaryBlue,
                                 ),
@@ -266,7 +293,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               children: [
                                 TextSpan(
                                   text: localizations.haveAccount,
-                                  style: theme.textTheme.displaySmall!.copyWith(color: AppColors.black),
+                                  style: theme.textTheme.displaySmall!.copyWith(
+                                    color: AppColors.black,
+                                  ),
                                 ),
                                 TextSpan(
                                   text: localizations.loginButton,

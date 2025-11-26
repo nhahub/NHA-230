@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tal3a/data/models/user_model.dart';
 import 'package:tal3a/firebase_options.dart';
 
 class FirebaseAuthService {
@@ -117,14 +118,15 @@ class FirebaseAuthService {
             'email': email,
             'createdAt': FieldValue.serverTimestamp(),
           });
-      return credintals;
+      return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw "Your password is weak";
       } else if (e.code == 'email-already-in-use') {
         throw "The email is already used";
       } else {
-        throw "There was an error, Please try again later";
+        log(e.code);
+        throw e.code;
       }
     }
   }
@@ -133,7 +135,7 @@ class FirebaseAuthService {
     try {
       final signIn = GoogleSignIn.instance;
 
-      await signIn.initialize(serverClientId:webClientid);
+      await signIn.initialize(serverClientId: webClientid);
 
       final GoogleSignInAccount? googleUser = await signIn.authenticate();
 
@@ -176,7 +178,7 @@ class FirebaseAuthService {
       }
 
       return userCred;
-    } on SocketException{
+    } on SocketException {
       throw "No Internet Connection";
     } catch (e) {
       log(e.toString());

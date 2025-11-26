@@ -87,7 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (isSent) {
                                 snackBarKey.currentState?.showSnackBar(
                                   SnackBar(
-                                    content: Text(localizations.resetPasswordSent),
+                                    content: Text(
+                                      localizations.resetPasswordSent,
+                                    ),
                                     duration: Duration(seconds: 2),
                                     backgroundColor: AppColors.primaryBlue,
                                   ),
@@ -122,6 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: CustomElevatedButton(
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
+                              setState(() {
+                                isLoading = true;
+                              });
                               try {
                                 final credential = await FirebaseAuthService
                                     .instance
@@ -146,7 +151,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 } else {
                                   snackBarKey.currentState?.showSnackBar(
                                     SnackBar(
-                                      content: Text(localizations.errorTryAgain),
+                                      content: Text(
+                                        localizations.errorTryAgain,
+                                      ),
                                       backgroundColor: AppColors.primaryBlue,
                                     ),
                                   );
@@ -187,7 +194,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.symmetric(
                               horizontal: AppSizes.pd15h,
                             ),
-                            child: Text(localizations.or, style: theme.textTheme.bodyLarge),
+                            child: Text(
+                              localizations.or,
+                              style: theme.textTheme.bodyLarge,
+                            ),
                           ),
                           Expanded(
                             child: Divider(
@@ -241,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               } else {
                                 snackBarKey.currentState?.showSnackBar(
                                   SnackBar(
-                                    content: Text(localizations.errorTryAgain,),
+                                    content: Text(localizations.errorTryAgain),
                                     backgroundColor: AppColors.primaryBlue,
                                   ),
                                 );
@@ -277,7 +287,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               TextSpan(
                                 text: localizations.noAccount,
-                                style: theme.textTheme.displaySmall!.copyWith(color: AppColors.black),
+                                style: theme.textTheme.displaySmall!.copyWith(
+                                  color: AppColors.black,
+                                ),
                               ),
                               TextSpan(
                                 text: localizations.signupButton,
