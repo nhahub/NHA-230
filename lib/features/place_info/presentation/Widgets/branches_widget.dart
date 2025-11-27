@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_url_extractor/url_extractor.dart';
 import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/constants/app_colors..dart';
 import 'package:tal3a/core/constants/app_sizes.dart';
@@ -6,8 +8,13 @@ import 'package:url_launcher/url_launcher.dart';
 
 class BranchesWidget extends StatelessWidget {
   final dynamic branchesData;
+  final void Function(double lat, double lng)? onMapLinkTap;
 
-  const BranchesWidget({super.key, this.branchesData});
+  const BranchesWidget({
+    super.key,
+    this.branchesData,
+    this.onMapLinkTap,
+  });
 
   List<Map<String, dynamic>> get branchesList {
     if (branchesData == null) return [];
@@ -22,10 +29,9 @@ class BranchesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme
-        .of(context)
-        .textTheme;
+    final theme = Theme.of(context).textTheme;
     final localizations = AppLocalizations.of(context)!;
+
     // ✅ الحالة الأولى: branchesData = String
     if (branchesData is String) {
       final mapLink = branchesData as String;
@@ -42,7 +48,7 @@ class BranchesWidget extends StatelessWidget {
               vertical: AppSizes.height8,
             ),
           ),
-          onPressed: () => _openLink(mapLink),
+          onPressed: () => _handleMapLink(context, mapLink),
           child: Text(
             localizations.goToLocation,
             style: theme.bodyLarge?.copyWith(
@@ -72,10 +78,8 @@ class BranchesWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: AppSizes.height8),
-
-          // ✅ خلي الجزء بتاع الفروع قابل للتمرير فقط
           SizedBox(
-            height: AppSizes.height320, // ارتفاع محدد علشان السكروول يشتغل كويس
+            height: AppSizes.height320,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
@@ -87,7 +91,7 @@ class BranchesWidget extends StatelessWidget {
                   return GestureDetector(
                     onTap: mapLink == null || mapLink.isEmpty
                         ? null
-                        : () => _openLink(mapLink),
+                        : () => _handleMapLink(context, mapLink),
                     child: Container(
                       width: AppSizes.width400,
                       height: AppSizes.height90,
@@ -106,8 +110,10 @@ class BranchesWidget extends StatelessWidget {
                             offset: Offset(0, 3),
                           ),
                         ],
-                        border: Border.all(color: AppColors.shadowColor,
-                            width: 1),
+                        border: Border.all(
+                          color: AppColors.shadowColor,
+                          width: 1,
+                        ),
                       ),
                       child: Center(
                         child: Text(
@@ -129,6 +135,70 @@ class BranchesWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleMapLink(BuildContext context, String mapLink) async {
+    try {
+      // استخراج الإحداثيات من رابط Google Maps
+      final result = await GoogleMapsUrlExtractor.processGoogleMapsUrl(mapLink);
+
+      if (result != null && onMapLinkTap != null) {
+        final lat = result['latitude']!;
+        final lng = result['longitude']!;
+
+        // استدعاء الـ callback لإرسال الإحداثيات لشاشة الماب
+        onMapLinkTap!(lat, lng);
+        return;
+      }
+      final coords = _extractCoordinates(mapLink);
+      if (coords != null && onMapLinkTap != null) {
+        onMapLinkTap!(coords['lat']!, coords['lng']!);
+        return;
+      }
+      await _openLink(mapLink);
+
+    } catch (e) {
+      if (kDebugMode) {
+        print('⚠️ Error extracting coordinates: $e');
+      }
+    }
+  }
+
+
+
+  // ✅ استخراج الإحداثيات من رابط Google Maps
+  Map<String, double>? _extractCoordinates(String url) {
+    try {
+      // صيغة 1: https://maps.google.com/?q=31.2001,29.9187
+      if (url.contains('q=')) {
+        final match = RegExp(r'q=([-\d.]+),([-\d.]+)').firstMatch(url);
+        if (match != null) {
+          return {
+            'lat': double.parse(match.group(1)!),
+            'lng': double.parse(match.group(2)!),
+          };
+        }
+      }
+
+      // صيغة 2: https://www.google.com/maps/@31.2001,29.9187,15z
+      if (url.contains('@')) {
+        final match = RegExp(r'@([-\d.]+),([-\d.]+)').firstMatch(url);
+        if (match != null) {
+          return {
+            'lat': double.parse(match.group(1)!),
+            'lng': double.parse(match.group(2)!),
+          };
+        }
+      }
+
+      // صيغة 3: https://goo.gl/maps/xyz (يحتاج معالجة خاصة)
+      // يمكن إضافة معالجة للروابط المختصرة إذا لزم الأمر
+
+      return null;
+    } catch (e) {
+      debugPrint('⚠️ Error extracting coordinates: $e');
+      return null;
+    }
   }
 
   Future<void> _openLink(String? urlString) async {

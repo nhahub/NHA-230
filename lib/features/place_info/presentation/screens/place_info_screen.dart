@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tal3a/core/constants/app_colors..dart';
 import 'package:tal3a/core/constants/app_sizes.dart';
 import 'package:tal3a/core/constants/app_assets.dart';
+import '../../../map/presentation/screens/map_screen.dart';
+import '../Widgets/branches_widget.dart';
 import '../widgets/place_image_widget.dart';
 import '../widgets/place_details_widget.dart';
-import '../widgets/branches_widget.dart';
 import '../widgets/social_media_button.dart';
 
 class PlaceInfoScreen extends StatelessWidget {
@@ -69,13 +70,22 @@ class PlaceInfoScreen extends StatelessWidget {
                   PlaceDetailsWidget(placeData: placeData),
                   SizedBox(height: AppSizes.height24),
                   Divider(
-                    // color: Colors.black,
                     thickness: 1.5,
                     endIndent: AppSizes.width100,
                     indent: AppSizes.width100,
                   ),
                   SizedBox(height: AppSizes.height24),
-                  BranchesWidget(branchesData: placeData['Address']),
+                  BranchesWidget(
+                    branchesData: placeData['Address'],
+                    onMapLinkTap: (lat, lng) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MapScreen(lat: lat, lng: lng),
+                        ),
+                      );
+                    },
+                  ),
                   SizedBox(height: AppSizes.height24),
                   SocialMediaButton(url: placeData['Social Media Links']),
                 ],

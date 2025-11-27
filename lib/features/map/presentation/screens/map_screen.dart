@@ -1,16 +1,18 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:tal3a/L10n/app_localizations.dart';
 import 'package:tal3a/core/core.dart';
-
 import '../service/location_service.dart';
 import '../service/route_service.dart';
 import '../widget/map_widget.dart';
 
-
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+  final double? lat;
+  final double? lng;
+
+  const MapScreen({super.key, this.lat, this.lng});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -42,6 +44,7 @@ class _MapScreenState extends State<MapScreen> {
   );
 
   @override
+  @override
   void initState() {
     super.initState();
 
@@ -57,13 +60,63 @@ class _MapScreenState extends State<MapScreen> {
     );
 
     _locationService = LocationService(
-      onLocationUpdate: (position) => setState(() => currentLocation = position),
+      onLocationUpdate: (position) {
+        setState(() => currentLocation = position);
+
+        _updateCurrentMarker(position);
+
+        if (markers.any((m) => m.markerId == const MarkerId('destination'))) {
+          final destMarker = markers.firstWhere((m) => m.markerId == const MarkerId('destination')).position;
+          _routeService.fetchRoute(
+            LatLng(position.latitude, position.longitude),
+            destMarker,
+          );
+        }
+      },
+
       showSnackBar: _showSnackBar,
       updateCurrentMarker: _updateCurrentMarker,
     );
 
     _initLocation();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initDestinationFromLink();
+    });
   }
+
+  void _initDestinationFromLink() async {
+    if (widget.lat != null && widget.lng != null) {
+      final dest = LatLng(widget.lat!, widget.lng!);
+
+      while (currentLocation == null || _mapController == null) {
+        await Future.delayed(const Duration(milliseconds: 100));
+      }
+
+      setState(() {
+        _addDestination(dest);
+
+        final bounds = LatLngBounds(
+          southwest: LatLng(
+            min(currentLocation!.latitude, dest.latitude),
+            min(currentLocation!.longitude, dest.longitude),
+          ),
+          northeast: LatLng(
+            max(currentLocation!.latitude, dest.latitude),
+            max(currentLocation!.longitude, dest.longitude),
+          ),
+        );
+
+        _mapController!.animateCamera(
+          CameraUpdate.newLatLngBounds(bounds, 100), // 100 = padding
+        );
+      });
+    }
+  }
+
+
+
+
 
   Future<void> _initLocation() async {
     await _locationService.initLocation();
@@ -106,8 +159,6 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-
-
   void _moveToCurrentLocation() {
     if (currentLocation != null && _mapController != null) {
       _mapController!.animateCamera(
@@ -118,6 +169,20 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  void _moveToLocation(LatLng location) {
+    if (_mapController != null) {
+      _mapController!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: location,
+            zoom: 17.5,
+          ),
+        ),
+      );
+    }
+  }
+
+
   void _toggleRoute() {
     setState(() {
       showRoute = !showRoute;
@@ -125,9 +190,8 @@ class _MapScreenState extends State<MapScreen> {
         polylines = {};
       } else if (markers.any((m) => m.markerId == const MarkerId('destination')) &&
           currentLocation != null) {
-        final destinationMarker = markers.firstWhere(
-                (m) => m.markerId == const MarkerId('destination')
-        );
+        final destinationMarker =
+        markers.firstWhere((m) => m.markerId == const MarkerId('destination'));
         _routeService.fetchRoute(
           LatLng(currentLocation!.latitude, currentLocation!.longitude),
           destinationMarker.position,
@@ -146,7 +210,6 @@ class _MapScreenState extends State<MapScreen> {
       showRouteInfo = false;
     });
   }
-
 
   void _showSnackBar(String message) {
     if (mounted) {
@@ -191,9 +254,7 @@ class _MapScreenState extends State<MapScreen> {
           children: [
             GoogleMap(
               onMapCreated: (controller) {
-                setState(() {
-                  _mapController = controller;
-                });
+                _mapController = controller;
               },
               initialCameraPosition: _initialCameraPosition,
               markers: markers,
@@ -211,14 +272,8 @@ class _MapScreenState extends State<MapScreen> {
               myLocationButtonEnabled: false,
               compassEnabled: true,
             ),
-
-
-            // Loading Indicator for Route
             if (isLoadingRoute)
               MapWidgets.buildRouteLoadingIndicator(context),
-
-
-            // Route Info Card
             if (showRouteInfo && routeDistance != null && routeDuration != null && showRoute)
               Positioned(
                 bottom: 0,
@@ -228,11 +283,8 @@ class _MapScreenState extends State<MapScreen> {
                   context,
                   distance: routeDistance!,
                   duration: routeDuration!,
-
                 ),
               ),
-
-            // Floating Action Buttons
             Positioned(
               right: AppSizes.width32,
               top: AppSizes.height540,
@@ -255,9 +307,7 @@ class _MapScreenState extends State<MapScreen> {
                       button: true,
                       child: MapWidgets.buildFloatingButton(
                         onTap: _toggleRoute,
-                        icon: showRoute
-                            ? Icons.visibility_off
-                            : Icons.visibility,
+                        icon: showRoute ? Icons.visibility_off : Icons.visibility,
                         tooltip: showRoute ? localizations.hideRoute : localizations.showRoute,
                         context: context,
                       ),
