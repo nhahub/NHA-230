@@ -54,6 +54,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   google_maps_flutter: ^2.3.1
   geolocator: ^11.0.0
+  google_maps_url_extractor: ^2.0.1
   url_launcher: ^6.3.2
   location: ^8.0.1
   latlong2: ^0.9.1

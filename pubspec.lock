@@ -589,6 +589,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.14+3"
+  google_maps_url_extractor:
+    dependency: "direct main"
+    description:
+      name: google_maps_url_extractor
+      sha256: "1307b15334a5f536873b94eb4e2f3f8c6f37a6c75f8ef803253ac4dbc0d424c7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   google_sign_in:
     dependency: "direct main"
     description:
