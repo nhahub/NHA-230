@@ -15,7 +15,8 @@ class LocationService {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        showSnackBar('Location services are disabled');
+        await Future.delayed(const Duration(seconds: 2)); // ⭐ مهم جدًا
+        serviceEnabled = await Geolocator.isLocationServiceEnabled();
         return;
       }
 
@@ -33,8 +34,10 @@ class LocationService {
         return;
       }
 
-
-      Position position = await Geolocator.getCurrentPosition();
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+        timeLimit: Duration(seconds: 10),
+      );
       onLocationUpdate(position);
       updateCurrentMarker(position);
     } catch (e) {
