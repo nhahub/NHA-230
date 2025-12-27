@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tal3a/core/constants/app_colors..dart';
 import 'package:tal3a/core/constants/app_sizes.dart';
+import 'package:tal3a/features/place_info/presentation/Widgets/place_details_widget.dart';
 import '../widgets/place_image_widget.dart';
-import '../widgets/place_details_card.dart';
 import '../widgets/branches_widget.dart';
 import '../widgets/social_media_button.dart';
 
@@ -37,7 +37,7 @@ class PlaceInfoScreen extends StatelessWidget {
 
           /// CONTENT
           Positioned.fill(
-            top: AppSizes.height520,
+            top: AppSizes.height500,
             child: SingleChildScrollView(
               child: Column(
                 children: [

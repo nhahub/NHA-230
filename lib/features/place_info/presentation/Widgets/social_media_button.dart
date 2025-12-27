@@ -21,7 +21,7 @@ class SocialMediaButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
         ),
         child: TextButton.icon(
-          onPressed: () => _open(url),
+          onPressed: () => _open(url!),
           icon: Icon(Icons.link, color: Colors.white),
           label: Text(
             "Visit on social media",
